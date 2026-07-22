@@ -1,0 +1,97 @@
+/*
+Theme Name: Donde te duele
+Description: Tema a medida para la clínica online (Diseño Pop/Pastel).
+Author: IA / Usuario
+Version: 2.0
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Archivo+SemiExpanded:wght@500&family=Roboto+Condensed:wght@400;700&display=swap');
+
+:root {
+  --bg-cream: #fdfaf1;
+  --bg-yellow: #fffa64;
+  --bg-purple: #e59bf0;
+  --bg-orange: #ffa872;
+  --bg-green: #bfd43b;
+  --text-dark: #3b2017;
+  --border-color: #3b2017;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  font-family: 'Roboto Condensed', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800;
+  margin-top: 0;
+  color: var(--text-dark);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Utilitarios */
+.btn-border {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  padding: 12px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-border:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 0px var(--border-color);
+}
+
+.section-padding {
+  padding: 60px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 30px;
+}
+
+/* === WOOCOMMERCE STYLES === */
+.woocommerce a.button, .woocommerce button.button, .woocommerce input.button, .woocommerce #respond input#submit { background-color: var(--bg-green); color: var(--text-dark); border: 2px solid var(--border-color); border-radius: 8px; font-weight: bold; text-transform: uppercase; transition: transform 0.2s, box-shadow 0.2s; }
+.woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover, .woocommerce #respond input#submit:hover { transform: translateY(-3px); box-shadow: 4px 4px 0px var(--border-color); background-color: var(--bg-green); color: var(--text-dark); }
+.woocommerce-checkout .woocommerce form .form-row input.input-text, .woocommerce-checkout .woocommerce form .form-row textarea { border: 2px solid var(--border-color); border-radius: 6px; padding: 10px; background-color: #fff; }
+.woocommerce-checkout #payment { background-color: var(--bg-cream); border-radius: 10px; border: 2px solid var(--border-color); }
+.woocommerce-cart .cart-collaterals .cart_totals { background-color: var(--bg-cream); border: 2px solid var(--border-color); border-radius: 10px; padding: 20px; }
+
