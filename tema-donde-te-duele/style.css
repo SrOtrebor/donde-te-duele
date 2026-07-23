@@ -205,3 +205,69 @@ a {
     display: none !important;
   }
 }
+
+/* ============================================================ */
+/* WOOCOMMERCE CUSTOM STYLES                                    */
+/* ============================================================ */
+.woocommerce-cart .woocommerce, .woocommerce-checkout .woocommerce {
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    font-family: 'Archivo', sans-serif;
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.woocommerce table.shop_table {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.woocommerce table.shop_table th, .woocommerce table.shop_table td {
+    border-top: 1px solid var(--border-color);
+}
+
+.woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button {
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt {
+    background-color: var(--bg-purple);
+    color: var(--text-dark);
+}
+
+.woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover {
+    background-color: var(--text-dark);
+    color: var(--bg-cream);
+}
+
+.woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    color: var(--text-dark);
+    font-family: 'Archivo', sans-serif;
+}
+
+.woocommerce h2, .woocommerce h3 {
+    font-family: 'Archivo SemiExpanded', Archivo, sans-serif;
+    color: var(--text-dark);
+}
+
+.woocommerce-message, .woocommerce-info, .woocommerce-error {
+    border-top-color: var(--bg-purple);
+    background-color: var(--bg-yellow);
+    color: var(--text-dark);
+}
+
+.woocommerce-message::before, .woocommerce-info::before {
+    color: var(--bg-purple);
+}
