@@ -207,67 +207,175 @@ a {
 }
 
 /* ============================================================ */
-/* WOOCOMMERCE CUSTOM STYLES                                    */
+/* WOOCOMMERCE CUSTOM STYLES - PREMIUM DESIGN                   */
 /* ============================================================ */
-.woocommerce-cart .woocommerce, .woocommerce-checkout .woocommerce {
+
+/* Fondo general de la página de Checkout y Carrito */
+body.woocommerce-checkout, body.woocommerce-cart {
     background-color: var(--bg-cream);
+}
+
+/* Contenedor principal estilo Tarjeta Flotante */
+.woocommerce-cart .woocommerce, .woocommerce-checkout .woocommerce {
+    background-color: #ffffff;
     color: var(--text-dark);
     font-family: 'Archivo', sans-serif;
-    padding: 40px 20px;
-    max-width: 1000px;
-    margin: 0 auto;
+    padding: 50px;
+    max-width: 1100px;
+    margin: 60px auto;
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    box-shadow: 8px 8px 0px var(--bg-purple);
 }
 
+/* Layout en dos columnas para el Checkout */
+.woocommerce-checkout .woocommerce form.checkout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+@media (max-width: 800px) {
+    .woocommerce-checkout .woocommerce form.checkout {
+        grid-template-columns: 1fr;
+    }
+    .woocommerce-cart .woocommerce, .woocommerce-checkout .woocommerce {
+        padding: 30px 20px;
+        margin: 30px auto;
+    }
+}
+
+/* Quitar floats default de WooCommerce */
+.woocommerce-checkout .col2-set {
+    width: 100%;
+    float: none;
+}
+.woocommerce-checkout .col2-set .col-1, .woocommerce-checkout .col2-set .col-2 {
+    width: 100%;
+    float: none;
+}
+.woocommerce-checkout #order_review_heading, .woocommerce-checkout #order_review {
+    width: 100%;
+    float: none;
+}
+
+/* Títulos */
+.woocommerce h2, .woocommerce h3, .woocommerce h1 {
+    font-family: 'Archivo SemiExpanded', Archivo, sans-serif;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    font-size: 28px;
+    margin-bottom: 25px;
+    border-bottom: 2px dashed var(--bg-orange);
+    padding-bottom: 10px;
+}
+
+/* Campos de formulario */
+.woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea, .woocommerce form .form-row select {
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 15px;
+    background-color: #fafafa;
+    color: var(--text-dark);
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+.woocommerce form .form-row label {
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+/* Focus en campos */
+.woocommerce form .form-row input.input-text:focus, .woocommerce form .form-row textarea:focus, .woocommerce form .form-row select:focus {
+    border-color: var(--bg-purple);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(229,155,240,0.3);
+    background-color: #fff;
+}
+
+/* Tabla de Orden (Resumen) */
 .woocommerce table.shop_table {
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    border-collapse: separate;
+    overflow: hidden;
+    margin-bottom: 30px;
 }
-
+.woocommerce table.shop_table th {
+    background-color: var(--bg-yellow);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
+    border-bottom: 2px solid var(--border-color);
+}
 .woocommerce table.shop_table th, .woocommerce table.shop_table td {
-    border-top: 1px solid var(--border-color);
+    padding: 15px;
+    border-top: none;
+}
+.woocommerce table.shop_table tbody tr:not(:last-child) td {
+    border-bottom: 1px dashed var(--border-color);
 }
 
+/* Botones y botón de Pago (Place Order) */
 .woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button {
     background-color: var(--bg-cream);
     color: var(--text-dark);
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
     font-family: 'Roboto Condensed', sans-serif;
     text-transform: uppercase;
     font-weight: 700;
-    transition: all 0.3s ease;
+    padding: 12px 30px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt {
     background-color: var(--bg-purple);
+    font-size: 20px;
+    padding: 18px 40px;
+    box-shadow: 4px 4px 0px var(--border-color);
+    width: 100%;
+    margin-top: 20px;
+}
+
+.woocommerce #respond input#submit.alt:hover, .woocommerce a.button.alt:hover, .woocommerce button.button.alt:hover, .woocommerce input.button.alt:hover {
+    background-color: var(--bg-orange);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--border-color);
     color: var(--text-dark);
 }
 
-.woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover {
-    background-color: var(--text-dark);
-    color: var(--bg-cream);
-}
-
-.woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea {
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #fff;
-    color: var(--text-dark);
-    font-family: 'Archivo', sans-serif;
-}
-
-.woocommerce h2, .woocommerce h3 {
-    font-family: 'Archivo SemiExpanded', Archivo, sans-serif;
-    color: var(--text-dark);
-}
-
+/* Mensajes de información y error */
 .woocommerce-message, .woocommerce-info, .woocommerce-error {
-    border-top-color: var(--bg-purple);
+    border: 2px solid var(--border-color);
+    border-top-color: var(--border-color);
+    border-radius: 10px;
     background-color: var(--bg-yellow);
     color: var(--text-dark);
+    font-weight: 700;
+    box-shadow: 4px 4px 0px var(--border-color);
+}
+.woocommerce-error {
+    background-color: #ffb8b8;
+}
+.woocommerce-message::before, .woocommerce-info::before {
+    color: var(--text-dark);
 }
 
-.woocommerce-message::before, .woocommerce-info::before {
-    color: var(--bg-purple);
+/* Método de pago Box */
+#add_payment_method #payment, .woocommerce-cart #payment, .woocommerce-checkout #payment {
+    background: #fafafa;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    padding: 20px;
 }
+#add_payment_method #payment ul.payment_methods, .woocommerce-cart #payment ul.payment_methods, .woocommerce-checkout #payment ul.payment_methods {
+    border-bottom: 2px solid var(--border-color);
+}
+
