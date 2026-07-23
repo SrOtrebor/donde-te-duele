@@ -150,11 +150,37 @@ get_header(); ?>
             <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
                 <!-- Icono de documento -->
                 <div style="margin-bottom:20px;">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/Group%2019.svg" alt="Material Descargable" style="width:100px; height:auto;">
+                    <svg width="70" height="90" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+                        <path d="M4 2.5C4 1.67157 4.67157 1 5.5 1H14.5L19.5 6V27.5C19.5 28.3284 18.8284 29 18 29H5.5C4.67157 29 4 28.3284 4 27.5V2.5Z" stroke="#3b2017" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M14 1V6.5H19.5" stroke="#3b2017" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M7 11H16.5" stroke="#3b2017" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M7 16H16.5" stroke="#3b2017" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M7 21H14.5" stroke="#3b2017" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
                 </div>
                 <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">MATERIAL<br>DESCARGABLE<br>POR TEMA</h3>
             </div>
         </div>
+        
+        <!-- Banners de Precio -->
+        <div class="flex-responsive" style="display:flex; max-width:1000px; margin:40px auto 30px; border:1px solid #3b2017; border-radius:5px; overflow:hidden; width:100%;">
+            <div style="flex:1; background-color:#e59bf0; padding:20px 30px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                <span style="font-size:24px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017;">¡Aprovechá!</span>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:12px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1.1; text-align:right;">PRECIO<br>LANZAMIENTO</span>
+                    <span style="font-size:48px; font-weight:800; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1;">$95.000</span>
+                </div>
+            </div>
+            <div style="flex:1; background-color:#eed9f2; padding:20px 30px; display:flex; align-items:center; justify-content:center; gap:15px; border-left:1px solid #3b2017;">
+                <span style="font-size:12px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1.1; text-align:right;">PRECIO<br>REGULAR</span>
+                <div style="position:relative; display:inline-block;">
+                    <span style="font-size:38px; font-weight:400; font-family:'Archivo',sans-serif; color:#3b2017; line-height:1;">$300.000</span>
+                    <div style="position:absolute; top:50%; left:-5%; width:110%; height:2px; background-color:#3b2017; transform:rotate(-8deg);"></div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="btn-temporada" style="margin: 0 auto; background-color:#fdfaf1; padding: 15px 60px;">LO QUIERO</a>
     </section>
 
     <!-- QUÉ VAS A EXPLORAR SECTION -->
@@ -292,7 +318,7 @@ get_header(); ?>
             </div>
 
             <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="accordion-header" style="padding:15px 20px; font-family:'Roboto Condensed',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                     <span>¿INCLUYE MATERIAL COMPLEMENTARIO?</span>
                     <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
@@ -302,7 +328,7 @@ get_header(); ?>
             </div>
 
             <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="accordion-header" style="padding:15px 20px; font-family:'Roboto Condensed',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                     <span>¿QUÉ TEMAS INCLUYE ESTA TEMPORADA?</span>
                     <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>

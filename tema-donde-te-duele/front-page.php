@@ -178,7 +178,7 @@ get_header(); ?>
             </div>
             <!-- Ilustración de plataforma/reunión online -->
             <div style="flex:1; display:flex; justify-content:center;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/Group%20117.svg" alt="Plataforma online" style="max-width:100%; height:auto; max-height:420px;">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/Group%20127.png" alt="Plataforma online" style="max-width:100%; height:auto; max-height:420px;">
             </div>
         </div>
     </section>
@@ -241,7 +241,7 @@ get_header(); ?>
             </div>
             <!-- Tarjeta 3 -->
             <div style="background:#fffa64; border:2px solid #3b2017; border-radius:10px; padding:40px 30px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:465px; box-sizing:border-box;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/COMPU-08%201.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/COMPU-08%201.svg" alt="Icono" style="height:85px; margin-bottom:20px;">
                 <h3 style="font-size:24px; font-weight:700; font-family:'Roboto Condensed',sans-serif; color:#3b2017; text-transform:uppercase; margin:0 0 15px; line-height:1.2;">ACCESO ONLINE<br>Y A TU PROPIO<br>RITMO</h3>
                 <p style="font-size:18px; font-family:Archivo,sans-serif; color:#3b2017; margin:0; line-height:1.4;">Disponible cuando quieras,<br>desde cualquier lugar.</p>
             </div>
