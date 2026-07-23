@@ -16,5 +16,6 @@
 <header style="width:100%; position:relative; line-height:0;">
     <!-- SVG de fondo de la barra de navegación -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/Group 86.svg" alt="" style="width:100%; display:block;">
-    <!-- Se removió el logo superpuesto porque Group 86.svg ya lo incluye -->
+    <!-- Enlace transparente superpuesto justo al medio donde está el logo (ancho aprox 250px) -->
+    <a href="<?php echo home_url('/'); ?>" style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:250px; height:100%; display:block;" title="Inicio"></a>
 </header>

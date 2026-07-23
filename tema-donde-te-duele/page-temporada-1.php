@@ -110,7 +110,7 @@ get_header(); ?>
 
         </div>
         
-        <a href="#" class="btn-temporada">QUIERO SER PARTE</a>
+        <a href="#" class="btn-temporada" style="align-self: center;">QUIERO SER PARTE</a>
     </section>
 
     <!-- QUÉ TE LLEVÁS SECTION -->
