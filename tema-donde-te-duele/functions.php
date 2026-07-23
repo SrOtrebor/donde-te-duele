@@ -106,24 +106,41 @@ function dtd_grilla_episodios_shortcode($atts) {
         $link_end = '</a>';
     }
 
-    $episodios = array(
-        array(
-            'titulo' => 'EPISODIO 1: AMOR - Por Especialista',
-            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Entendiendo los vínculos', 'Bloque 2 | Dependencia emocional', 'Bloque 3 | Amor propio', 'Bloque 4 | Herramientas prácticas')
-        ),
-        array(
-            'titulo' => 'EPISODIO 2: TRABAJO - Por Maxi González',
-            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Las historias que aprendimos sobre el dinero', 'Bloque 2 | Dinero, identidad y valor personal', 'Bloque 3 | Reescribir la narrativa', 'Bloque 4 | Herramientas para comenzar a aplicar')
-        ),
-        array(
-            'titulo' => 'EPISODIO 3: DUELO - Por Mery Molinero',
-            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Las pérdidas que nos transforman', 'Bloque 2 | Lo que todavía no pudo cerrarse', 'Bloque 3 | Transformación y sentido', 'Bloque 4 | Herramientas para comenzar a aplicar')
-        ),
-        array(
-            'titulo' => 'EPISODIO 4: CRECIMIENTO - Por César Trombino',
-            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Cuando la vida te pide evolucionar', 'Bloque 2 | Lo que todavía no pudo cerrarse', 'Bloque 3 | Transformación y sentido', 'Bloque 4 | Herramientas para comenzar a aplicar')
-        )
+    // OBTENER LOS EPISODIOS DESDE LA BASE DE DATOS (CPT)
+    $args = array(
+        'post_type'      => 'episodio',
+        'posts_per_page' => -1,
+        'orderby'        => 'menu_order',
+        'order'          => 'ASC'
     );
+    $query = new WP_Query( $args );
+    $episodios = array();
+
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $especialista = get_post_meta($post_id, '_dtd_especialista', true);
+            $titulo = get_the_title();
+            if (!empty($especialista)) {
+                $titulo .= ' - Por ' . $especialista;
+            }
+
+            $bloques = array();
+            for ($i = 0; $i <= 4; $i++) {
+                $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
+                if (!empty($b_titulo)) {
+                    $bloques[] = $b_titulo;
+                }
+            }
+
+            $episodios[] = array(
+                'titulo'  => $titulo,
+                'bloques' => $bloques
+            );
+        }
+        wp_reset_postdata();
+    }
 
     $html = '<style>
         .dtd-accordion-container { max-width: 900px; margin: 40px auto; font-family: "Archivo", sans-serif; color: #3b2017; }
