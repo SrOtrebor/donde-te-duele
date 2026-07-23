@@ -116,8 +116,6 @@ get_header(); ?>
             </div>
 
         </div>
-        
-        <a href="#" class="btn-temporada" style="align-self: center;">QUIERO SER PARTE</a>
     </section>
 
     <!-- QUÉ TE LLEVÁS SECTION -->
@@ -150,7 +148,7 @@ get_header(); ?>
             <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
                 <!-- Icono de documento -->
                 <div style="margin-bottom:20px;">
-                    <svg width="70" height="90" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+                    <svg width="72" height="90" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
                         <path d="M4 2.5C4 1.67157 4.67157 1 5.5 1H14.5L19.5 6V27.5C19.5 28.3284 18.8284 29 18 29H5.5C4.67157 29 4 28.3284 4 27.5V2.5Z" stroke="#3b2017" stroke-width="1.5" stroke-linejoin="round"/>
                         <path d="M14 1V6.5H19.5" stroke="#3b2017" stroke-width="1.5" stroke-linejoin="round"/>
                         <path d="M7 11H16.5" stroke="#3b2017" stroke-width="1.5" stroke-linecap="round"/>
@@ -167,14 +165,14 @@ get_header(); ?>
             <div style="flex:1; background-color:#e59bf0; padding:20px 30px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
                 <span style="font-size:24px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017;">¡Aprovechá!</span>
                 <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:12px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1.1; text-align:right;">PRECIO<br>LANZAMIENTO</span>
+                    <span style="font-size:12px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1.1; text-align:left;">PRECIO<br>LANZAMIENTO</span>
                     <span style="font-size:48px; font-weight:800; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1;">$95.000</span>
                 </div>
             </div>
             <div style="flex:1; background-color:#eed9f2; padding:20px 30px; display:flex; align-items:center; justify-content:center; gap:15px; border-left:1px solid #3b2017;">
-                <span style="font-size:12px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1.1; text-align:right;">PRECIO<br>REGULAR</span>
+                <span style="font-size:12px; font-weight:700; text-transform:uppercase; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1.1; text-align:left;">PRECIO<br>REGULAR</span>
                 <div style="position:relative; display:inline-block;">
-                    <span style="font-size:38px; font-weight:400; font-family:'Archivo',sans-serif; color:#3b2017; line-height:1;">$300.000</span>
+                    <span style="font-size:38px; font-weight:400; font-family:'Roboto Condensed',sans-serif; color:#3b2017; line-height:1;">$300.000</span>
                     <div style="position:absolute; top:50%; left:-5%; width:110%; height:2px; background-color:#3b2017; transform:rotate(-8deg);"></div>
                 </div>
             </div>
