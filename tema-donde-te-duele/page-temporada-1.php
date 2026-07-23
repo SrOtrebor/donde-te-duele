@@ -148,13 +148,7 @@ get_header(); ?>
             <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
                 <!-- Icono de documento -->
                 <div style="margin-bottom:20px;">
-                    <svg width="72" height="90" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-                        <path d="M4 2.5C4 1.67157 4.67157 1 5.5 1H14.5L19.5 6V27.5C19.5 28.3284 18.8284 29 18 29H5.5C4.67157 29 4 28.3284 4 27.5V2.5Z" stroke="#3b2017" stroke-width="1.5" stroke-linejoin="round"/>
-                        <path d="M14 1V6.5H19.5" stroke="#3b2017" stroke-width="1.5" stroke-linejoin="round"/>
-                        <path d="M7 11H16.5" stroke="#3b2017" stroke-width="1.5" stroke-linecap="round"/>
-                        <path d="M7 16H16.5" stroke="#3b2017" stroke-width="1.5" stroke-linecap="round"/>
-                        <path d="M7 21H14.5" stroke="#3b2017" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/docu.png" alt="Material Descargable" style="width:72px; height:auto; display:block; margin:0 auto;">
                 </div>
                 <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">MATERIAL<br>DESCARGABLE<br>POR TEMA</h3>
             </div>
