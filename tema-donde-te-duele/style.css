@@ -2,7 +2,7 @@
 Theme Name: Donde te duele
 Description: Tema a medida para la clínica online (Diseño Pop/Pastel).
 Author: IA / Usuario
-Version: 1.0.2
+Version: 1.0.3
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Archivo+SemiExpanded:wght@500&family=Roboto+Condensed:wght@400;700&display=swap');
@@ -243,6 +243,19 @@ body.woocommerce-checkout, body.woocommerce-cart {
     .woocommerce-cart .woocommerce, .woocommerce-checkout .woocommerce {
         padding: 30px 20px;
         margin: 30px auto;
+    }
+    .woocommerce-cart table.cart td.actions .coupon {
+        width: 100% !important;
+        float: none !important;
+        margin-bottom: 20px !important;
+    }
+    .woocommerce-cart table.cart td.actions .button {
+        width: 100% !important;
+        float: none !important;
+    }
+    .woocommerce-cart .cart-collaterals .cart_totals {
+        width: 100% !important;
+        float: none !important;
     }
 }
 
