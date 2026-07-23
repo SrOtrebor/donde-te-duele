@@ -76,3 +76,119 @@ function dtd_restringir_contenido($atts, $content = null) {
                 </div>';
     }
 }
+
+// ==============================================================================
+// SHORTCODE PARA LA GRILLA DE EPISODIOS (ACORDEONES)
+// ==============================================================================
+add_shortcode('grilla_episodios', 'dtd_grilla_episodios_shortcode');
+function dtd_grilla_episodios_shortcode($atts) {
+    $a = shortcode_atts(array(
+        'producto_id' => '26'
+    ), $atts);
+
+    $producto_id = intval($a['producto_id']);
+    $has_bought = false;
+
+    if ( is_user_logged_in() ) {
+        $current_user = wp_get_current_user();
+        if ( current_user_can('manage_options') || wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id ) ) {
+            $has_bought = true;
+        }
+    }
+
+    $icon_url = $has_bought ? get_template_directory_uri() . '/assets/play.png' : get_template_directory_uri() . '/assets/candado.png';
+    $cart_url = wc_get_page_permalink('shop'); // O checkout
+    if (!$has_bought) {
+        $link_start = '<a href="'.esc_url($cart_url).'?add-to-cart='.$producto_id.'" style="text-decoration:none; color:inherit;">';
+        $link_end = '</a>';
+    } else {
+        $link_start = '<a href="#" style="text-decoration:none; color:inherit;">';
+        $link_end = '</a>';
+    }
+
+    $episodios = array(
+        array(
+            'titulo' => 'EPISODIO 1: AMOR - Por Especialista',
+            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Entendiendo los vínculos', 'Bloque 2 | Dependencia emocional', 'Bloque 3 | Amor propio', 'Bloque 4 | Herramientas prácticas')
+        ),
+        array(
+            'titulo' => 'EPISODIO 2: TRABAJO - Por Maxi González',
+            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Las historias que aprendimos sobre el dinero', 'Bloque 2 | Dinero, identidad y valor personal', 'Bloque 3 | Reescribir la narrativa', 'Bloque 4 | Herramientas para comenzar a aplicar')
+        ),
+        array(
+            'titulo' => 'EPISODIO 3: DUELO - Por Mery Molinero',
+            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Las pérdidas que nos transforman', 'Bloque 2 | Lo que todavía no pudo cerrarse', 'Bloque 3 | Transformación y sentido', 'Bloque 4 | Herramientas para comenzar a aplicar')
+        ),
+        array(
+            'titulo' => 'EPISODIO 4: CRECIMIENTO - Por César Trombino',
+            'bloques' => array('Bloque 0 | Presentación', 'Bloque 1 | Cuando la vida te pide evolucionar', 'Bloque 2 | Lo que todavía no pudo cerrarse', 'Bloque 3 | Transformación y sentido', 'Bloque 4 | Herramientas para comenzar a aplicar')
+        )
+    );
+
+    $html = '<style>
+        .dtd-accordion-container { max-width: 900px; margin: 40px auto; font-family: "Archivo", sans-serif; color: #3b2017; }
+        .dtd-accordion { border: 1px solid #3b2017; border-radius: 8px; margin-bottom: 30px; background: #fdfaf1; overflow: hidden; box-shadow: 2px 2px 0px rgba(59,32,23,0.1); }
+        .dtd-accordion-header { background: #bfd43b; padding: 18px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 18px; border-bottom: 1px solid #3b2017; transition: background 0.2s; }
+        .dtd-accordion-header:hover { background: #a9bc34; }
+        .dtd-accordion-content { display: none; padding: 30px; }
+        .dtd-accordion-content.active { display: block; }
+        .dtd-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+        .dtd-block { width: 180px; text-align: left; transition: transform 0.2s; }
+        .dtd-block:hover { transform: translateY(-3px); }
+        .dtd-thumb { background: #e0e0e0; width: 100%; aspect-ratio: 16/10; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; }
+        .dtd-thumb img { width: 45px; height: 45px; object-fit: contain; }
+        .dtd-text { font-size: 13px; line-height: 1.3; }
+        .dtd-arrow { font-size: 16px; font-weight: bold; transform: rotate(0deg); transition: transform 0.3s; }
+        .dtd-accordion.open .dtd-arrow { transform: rotate(180deg); }
+        @media (max-width: 600px) {
+            .dtd-block { width: 100%; display: flex; gap: 15px; align-items: center; }
+            .dtd-thumb { width: 120px; margin-bottom: 0; }
+        }
+    </style>';
+
+    $html .= '<div class="dtd-accordion-container">';
+
+    foreach ($episodios as $index => $ep) {
+        $isOpenClass = ($index === 0) ? 'open' : '';
+        $isContentActive = ($index === 0) ? 'active' : '';
+
+        $html .= '<div class="dtd-accordion ' . $isOpenClass . '">';
+        $html .= '<div class="dtd-accordion-header" onclick="toggleDtdAccordion(this)">';
+        $html .= '<span>' . esc_html($ep['titulo']) . '</span>';
+        $html .= '<span class="dtd-arrow">^</span>';
+        $html .= '</div>';
+        $html .= '<div class="dtd-accordion-content ' . $isContentActive . '">';
+        $html .= '<div class="dtd-grid">';
+        
+        foreach ($ep['bloques'] as $bloque) {
+            $html .= '<div class="dtd-block">';
+            $html .= $link_start;
+            $html .= '<div class="dtd-thumb"><img src="' . esc_url($icon_url) . '" alt="icon" /></div>';
+            $html .= '<div class="dtd-text">' . esc_html($bloque) . '</div>';
+            $html .= $link_end;
+            $html .= '</div>';
+        }
+        
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '</div>';
+    }
+
+    $html .= '</div>';
+
+    $html .= '<script>
+        function toggleDtdAccordion(el) {
+            var accordion = el.parentElement;
+            var content = el.nextElementSibling;
+            if (content.classList.contains("active")) {
+                content.classList.remove("active");
+                accordion.classList.remove("open");
+            } else {
+                content.classList.add("active");
+                accordion.classList.add("open");
+            }
+        }
+    </script>';
+
+    return $html;
+}
