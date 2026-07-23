@@ -28,3 +28,7 @@ add_action( 'after_setup_theme', 'donde_te_duele_setup' );
 // Hacer relativas las rutas del tema para que las imágenes funcionen en Local WP Live Links
 add_filter( 'template_directory_uri', 'wp_make_link_relative' );
 add_filter( 'stylesheet_directory_uri', 'wp_make_link_relative' );
+
+// Incluir registro de Custom Post Type y Metaboxes para Episodios
+require_once get_template_directory() . '/inc/episodios-cpt.php';
+require_once get_template_directory() . '/inc/import-episodios.php';

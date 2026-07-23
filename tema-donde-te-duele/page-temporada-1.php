@@ -161,134 +161,68 @@ get_header(); ?>
         
         <div style="text-align:left; max-width:1000px; margin:0 auto 40px; width:100%;">
             <p style="font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; font-size:22px; margin-bottom:20px;">Conocé el contenido de cada episodio</p>
-            
-            <!-- ACORDEÓN 1 -->
-            <div style="border:1px solid #3b2017; border-radius:5px; margin-bottom:15px; overflow:hidden; background-color:var(--bg-green);">
-                <div style="padding:15px 20px; font-weight:700; font-size:14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <span>EPISODIO 1: AMOR - Por Claudio A. González</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                </div>
-                <div style="background-color:var(--bg-cream); padding:30px; border-top:1px solid #3b2017; display:flex; flex-wrap:wrap; gap:20px;">
-                    <!-- Thumbnails de videos simulados -->
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                        </div>
-                        <p style="font-size:12px; margin:0; line-height:1.2; color:#3b2017;">Bloque 0 | Presentación</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:12px; margin:0; line-height:1.2; color:#3b2017;">Bloque 1 | Los vínculos<br>que heredamos</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:12px; margin:0; line-height:1.2; color:#3b2017;">Bloque 2 | Las lealtades<br>invisibles</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:12px; margin:0; line-height:1.2; color:#3b2017;">Bloque 3 | Amar desde un<br>nuevo lugar</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:12px; margin:0; line-height:1.2; color:#3b2017;">Bloque 4 | Herramientas<br>para comenzar a aplicar</p>
-                    </div>
-                </div>
-            </div>
+            <?php
+            $args = array(
+                'post_type'      => 'episodio',
+                'posts_per_page' => -1,
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC'
+            );
+            $episodios_query = new WP_Query( $args );
 
-            <!-- ACORDEÓN 2 -->
-            <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; margin-bottom:15px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-weight:700; font-family:'Archivo',sans-serif; font-size:16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <span>EPISODIO 2: TRABAJO - Por Maxi González</span>
-                    <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </div>
-                <div class="accordion-body" style="display:none; background-color:var(--bg-cream); padding:30px; border-top:1px solid #3b2017; flex-wrap:wrap; gap:20px;">
-                    <!-- Thumbnails de videos simulados -->
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+            if ( $episodios_query->have_posts() ) :
+                while ( $episodios_query->have_posts() ) : $episodios_query->the_post();
+                    $especialista = get_post_meta( get_the_ID(), '_dtd_especialista', true );
+            ?>
+                    <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; margin-bottom:15px; overflow:hidden; background-color:var(--bg-green);">
+                        <div class="accordion-header" style="padding:15px 20px; font-weight:700; font-family:'Archivo',sans-serif; font-size:16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                            <span><?php echo esc_html( get_the_title() ); ?> - Por <?php echo esc_html( $especialista ); ?></span>
+                            <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                         </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 0 | Presentación</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
+                        <div class="accordion-body" style="display:none; background-color:var(--bg-cream); padding:30px; border-top:1px solid #3b2017;">
+                            
+                            <div style="display:flex; flex-direction:column; gap:20px;">
+                            <?php
+                            for ( $i = 0; $i <= 4; $i++ ) {
+                                $b_titulo   = get_post_meta( get_the_ID(), "_dtd_bloque_{$i}_titulo", true );
+                                $b_objetivo = get_post_meta( get_the_ID(), "_dtd_bloque_{$i}_objetivo", true );
+                                $b_preguntas = get_post_meta( get_the_ID(), "_dtd_bloque_{$i}_preguntas", true );
+                                
+                                if ( ! empty( $b_titulo ) ) {
+                                    ?>
+                                    <div style="background-color:#ffffff; padding:20px; border:1px solid #3b2017; border-radius:8px;">
+                                        <h4 style="margin:0 0 10px; font-size:16px; font-family:'Archivo SemiExpanded',Archivo,sans-serif; color:#3b2017;">
+                                            <?php echo esc_html( $b_titulo ); ?>
+                                        </h4>
+                                        <?php if ( ! empty( $b_objetivo ) ) : ?>
+                                            <p style="font-size:14px; margin:0 0 10px; line-height:1.4; font-family:'Archivo',sans-serif; color:#3b2017;">
+                                                <strong>Objetivo:</strong> <?php echo esc_html( $b_objetivo ); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                        <?php if ( ! empty( $b_preguntas ) ) : ?>
+                                            <p style="font-size:14px; margin:0; line-height:1.4; font-family:'Archivo',sans-serif; color:#3b2017;">
+                                                <strong>Preguntas guía:</strong><br>
+                                                <?php echo nl2br( esc_html( $b_preguntas ) ); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </div>
+
                         </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 1 | Tu relación<br>con el dinero</p>
                     </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 2 | Valor<br>personal y profesional</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ACORDEÓN 3 -->
-            <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; margin-bottom:15px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-weight:700; font-family:'Archivo',sans-serif; font-size:16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <span>EPISODIO 3: DUELO - Por Mery Molinero</span>
-                    <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </div>
-                <div class="accordion-body" style="display:none; background-color:var(--bg-cream); padding:30px; border-top:1px solid #3b2017; flex-wrap:wrap; gap:20px;">
-                    <!-- Thumbnails de videos simulados -->
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                        </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 0 | Presentación</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 1 | Atajos<br>ante el dolor</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 2 | Integrar<br>la pérdida</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ACORDEÓN 4 -->
-            <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; margin-bottom:15px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-weight:700; font-family:'Archivo',sans-serif; font-size:16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <span>EPISODIO 4: CRECIMIENTO - Por César Trombino</span>
-                    <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </div>
-                <div class="accordion-body" style="display:none; background-color:var(--bg-cream); padding:30px; border-top:1px solid #3b2017; flex-wrap:wrap; gap:20px;">
-                    <!-- Thumbnails de videos simulados -->
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                        </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 0 | Presentación</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 1 | Cuando la vida<br>nos frena</p>
-                    </div>
-                    <div style="width:calc(33% - 14px); text-align:left;">
-                        <div style="background-color:#dcdcdc; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b2017" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="11" width="6" height="6" rx="1" ry="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>
-                        </div>
-                        <p style="font-size:14px; font-family:'Archivo',sans-serif; margin:0; line-height:1.2; color:#3b2017;">Bloque 2 | Nuevas<br>herramientas</p>
-                    </div>
-                </div>
-            </div>
+            <?php
+                endwhile;
+                wp_reset_postdata();
+            else :
+            ?>
+                <p style="font-family:'Archivo',sans-serif; color:#3b2017;">Próximamente más episodios...</p>
+            <?php
+            endif;
+            ?>
 
         </div>
 
