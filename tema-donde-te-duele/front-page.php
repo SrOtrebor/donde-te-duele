@@ -12,12 +12,12 @@ get_header(); ?>
     border: 2px solid #3b2017;
     border-radius: 10px;
     padding: 18px 40px;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 700;
     text-transform: uppercase;
     color: #3b2017;
     text-decoration: none;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
     font-family: 'Roboto Condensed', sans-serif;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease;
@@ -37,7 +37,7 @@ get_header(); ?>
 }
 </style>
 
-<main class="landing-page" style="font-family: 'Roboto Condensed', sans-serif; color: #3b2017; background-color: #fdfaf1; max-width: 1440px; margin: 0 auto; overflow: hidden;">
+<main class="landing-page" style="font-family: 'Roboto Condensed', sans-serif; color: #3b2017; background-color: #fdfaf1; width: 100%; overflow-x: hidden;">
 
     <!-- HERO SECTION: Grid exacto según mapa de íconos -->
     <!-- ============================================================ -->
@@ -53,11 +53,16 @@ get_header(); ?>
     ?>
     <style>
     #hero-section {
-        display: flex;
         width: 100%;
         background: #fdfaf1;
         border-top: 1px solid #3b2017;
         border-bottom: 1px solid #3b2017;
+    }
+    .hero-inner {
+        display: flex;
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
     }
     .hero-side {
         width: 16%;
@@ -111,6 +116,7 @@ get_header(); ?>
     </style>
 
     <section id="hero-section">
+        <div class="hero-inner">
 
         <!-- COLUMNA IZQUIERDA: 2×5 grid -->
         <div class="hero-side left">
@@ -128,9 +134,9 @@ get_header(); ?>
 
         <!-- CENTRO -->
         <div id="hero-center-area">
-            <p style="font-size:14px; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; margin:0 0 6px; color:#3b2017; font-family:'Roboto Condensed',sans-serif;">CLÍNICA ONLINE</p>
+            <p style="font-size:18px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 6px; color:#3b2017; font-family:'Roboto Condensed',sans-serif;">CLÍNICA ONLINE</p>
             <h1 style="font-size:clamp(30px,4vw,62px); font-weight:700; line-height:1.05; text-transform:uppercase; margin:0 0 22px; color:#3b2017; font-family:'Roboto Condensed',sans-serif;">DÓNDE TE DUELE<br>LA VIDA HOY</h1>
-            <a href="#temporada1" class="btn-dtd" style="font-size:13px; padding:12px 28px;">VER DE QUÉ SE TRATA</a>
+            <a href="#temporada1" class="btn-dtd" style="font-size:16px; padding:12px 28px;">VER DE QUÉ SE TRATA</a>
         </div>
 
         <!-- COLUMNA DERECHA: 2×5 grid -->
@@ -147,15 +153,16 @@ get_header(); ?>
             <?php echo hero_cell('Vector-21.svg', $ico); ?>
         </div>
 
+        </div>
     </section>
 
     <!-- ============================================================ -->
     <!-- SECCIÓN AMARILLA - La Clínica Online                         -->
     <!-- ============================================================ -->
-    <section style="background-color:#fffa64; padding:70px 100px; border-top:1px solid #3b2017; border-bottom:1px solid #3b2017;">
+    <section style="background-color:#fffa64; padding:70px 100px; min-height:100vh; display:flex; align-items:center;">
         <div style="display:flex; align-items:center; gap:60px; max-width:1200px; margin:0 auto;">
             <div style="flex:1.2; text-align:left;">
-                <p style="font-size:24px; line-height:1.5; font-family:Archivo, sans-serif; margin:0 0 30px; color:#3b2017;">
+                <p style="font-size:28px; line-height:1.5; font-family:Archivo, sans-serif; margin:0 0 30px; color:#3b2017;">
                     La <strong>Clínica Online</strong> reúne distintas miradas sobre los conflictos que atraviesan la vida cotidiana para <strong>ayudarte a comprender su origen y abrir nuevas posibilidades de transformación.</strong>
                 </p>
                 <p style="font-size:20px; font-family:Archivo,sans-serif; margin:0 0 15px; color:#3b2017;">Encontrarás:</p>
@@ -171,7 +178,7 @@ get_header(); ?>
             </div>
             <!-- Ilustración de plataforma/reunión online -->
             <div style="flex:1; display:flex; justify-content:center;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/Group 117.svg" alt="Plataforma online" style="max-width:100%; height:auto; max-height:420px;">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/Group%20117.svg" alt="Plataforma online" style="max-width:100%; height:auto; max-height:420px;">
             </div>
         </div>
     </section>
@@ -179,7 +186,7 @@ get_header(); ?>
     <!-- ============================================================ -->
     <!-- SECCIÓN VIOLETA - Temporada 1                                -->
     <!-- ============================================================ -->
-    <section id="temporada1" style="background-color:#e59bf0; padding:70px 100px; border-bottom:1px solid #3b2017;">
+    <section id="temporada1" style="background-color:#e59bf0; padding:70px 100px; min-height:100vh; display:flex; align-items:center;">
         <div style="display:flex; align-items:flex-start; gap:60px; max-width:1200px; margin:0 auto;">
             <div style="flex:1; text-align:left;">
                 <!-- Badge "TEMPORADA 1" = Frame 262 SVG -->
@@ -216,27 +223,27 @@ get_header(); ?>
     <!-- ============================================================ -->
     <!-- SECCIÓN NARANJA - ¿Qué vas a recibir? (tarjetas SVG)        -->
     <!-- ============================================================ -->
-    <section style="background-color:#ffa872; padding:70px 100px; border-bottom:1px solid #3b2017;">
+    <section style="background-color:#ffa872; padding:70px 100px; min-height:100vh; display:flex; flex-direction:column; justify-content:center;">
         <h2 style="text-align:center; font-size:36px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin:0 0 50px; color:#3b2017;">¿Qué vas a recibir?</h2>
         <!-- Usamos los SVG completos de Figma que ya incluyen fondo + ícono + texto -->
         <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:30px; max-width:1280px; margin:0 auto;">
             <!-- Tarjeta 1 -->
             <div style="background:#fffa64; border:2px solid #3b2017; border-radius:10px; padding:40px 30px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:465px; box-sizing:border-box;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/Group 19.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
-                <h3 style="font-size:20px; font-weight:700; font-family:'Roboto Condensed',sans-serif; color:#3b2017; text-transform:uppercase; margin:0 0 15px; line-height:1.2;">CONVERSACIONES<br>CON REFERENTES<br>DEL BIENESTAR</h3>
-                <p style="font-size:16px; font-family:Archivo,sans-serif; color:#3b2017; margin:0; line-height:1.4;">Distintas disciplinas para<br>ampliar tu mirada.</p>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/Group%2019.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
+                <h3 style="font-size:24px; font-weight:700; font-family:'Roboto Condensed',sans-serif; color:#3b2017; text-transform:uppercase; margin:0 0 15px; line-height:1.2;">CONVERSACIONES<br>CON REFERENTES<br>DEL BIENESTAR</h3>
+                <p style="font-size:18px; font-family:Archivo,sans-serif; color:#3b2017; margin:0; line-height:1.4;">Distintas disciplinas para<br>ampliar tu mirada.</p>
             </div>
             <!-- Tarjeta 2 -->
             <div style="background:#fffa64; border:2px solid #3b2017; border-radius:10px; padding:40px 30px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:465px; box-sizing:border-box;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/Group 35.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
-                <h3 style="font-size:20px; font-weight:700; font-family:'Roboto Condensed',sans-serif; color:#3b2017; text-transform:uppercase; margin:0 0 15px; line-height:1.2;">HERRAMIENTAS<br>PARA TU VIDA<br>COTIDIANA</h3>
-                <p style="font-size:16px; font-family:Archivo,sans-serif; color:#3b2017; margin:0; line-height:1.4;">Ejercicios, recursos y<br>materiales para seguir<br>profundizando.</p>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/Group%2035.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
+                <h3 style="font-size:24px; font-weight:700; font-family:'Roboto Condensed',sans-serif; color:#3b2017; text-transform:uppercase; margin:0 0 15px; line-height:1.2;">HERRAMIENTAS<br>PARA TU VIDA<br>COTIDIANA</h3>
+                <p style="font-size:18px; font-family:Archivo,sans-serif; color:#3b2017; margin:0; line-height:1.4;">Ejercicios, recursos y<br>materiales para seguir<br>profundizando.</p>
             </div>
             <!-- Tarjeta 3 -->
             <div style="background:#fffa64; border:2px solid #3b2017; border-radius:10px; padding:40px 30px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:465px; box-sizing:border-box;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/COMPU-08 1.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
-                <h3 style="font-size:20px; font-weight:700; font-family:'Roboto Condensed',sans-serif; color:#3b2017; text-transform:uppercase; margin:0 0 15px; line-height:1.2;">ACCESO ONLINE<br>Y A TU PROPIO<br>RITMO</h3>
-                <p style="font-size:16px; font-family:Archivo,sans-serif; color:#3b2017; margin:0; line-height:1.4;">Disponible cuando quieras,<br>desde cualquier lugar.</p>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/COMPU-08%201.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
+                <h3 style="font-size:24px; font-weight:700; font-family:'Roboto Condensed',sans-serif; color:#3b2017; text-transform:uppercase; margin:0 0 15px; line-height:1.2;">ACCESO ONLINE<br>Y A TU PROPIO<br>RITMO</h3>
+                <p style="font-size:18px; font-family:Archivo,sans-serif; color:#3b2017; margin:0; line-height:1.4;">Disponible cuando quieras,<br>desde cualquier lugar.</p>
             </div>
         </div>
     </section>
@@ -244,7 +251,7 @@ get_header(); ?>
     <!-- ============================================================ -->
     <!-- SECCIÓN CREMA - Esto es para vos (tarjetas SVG completas)   -->
     <!-- ============================================================ -->
-    <section style="background-color:#fdfaf1; padding:70px 100px; border-bottom:1px solid #3b2017;">
+    <section style="background-color:#fdfaf1; padding:70px 100px; min-height:100vh; display:flex; flex-direction:column; justify-content:center;">
         <h2 style="text-align:center; font-size:36px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin:0 0 50px; color:#3b2017;">Esto es para vos</h2>
         <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1280px; margin:0 auto;">
             <!-- Tarjeta 1 -->
