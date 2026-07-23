@@ -14,11 +14,11 @@
     <?php endif; ?>
 
     <!-- FOOTER -->
-    <footer style="background-color:#fdfaf1; padding:50px 80px 30px; border-top:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:25px; border-bottom:1px solid #3b2017; max-width:1280px; margin:0 auto;">
+    <footer style="background-color:#fdfaf1; padding:50px 80px 30px; border-top:none;" class="seccion-dtd">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:25px; border-bottom:1px solid #3b2017; max-width:1280px; margin:0 auto;" class="footer-top-responsive">
             <!-- Logo izquierda -->
             <div style="display:flex; align-items:center;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/Group%2086.svg" alt="Logo Dónde te duele la vida hoy" style="height:50px; width:auto;">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/logo-dtd-recortado.svg" alt="Logo Dónde te duele la vida hoy" style="height:45px; width:auto;">
             </div>
             <!-- Redes sociales derecha -->
             <div style="display:flex; align-items:center; gap:18px;">
@@ -27,7 +27,7 @@
                 <a href="#"><img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/ICONOS%20RRSS%20%5BConvertido%5D_tik%20tok%201.svg" alt="TikTok" style="height:36px; width:36px;"></a>
             </div>
         </div>
-        <div style="display:flex; justify-content:space-between; padding-top:20px; font-size:13px; font-family:Archivo,sans-serif; color:#3b2017; max-width:1280px; margin:0 auto;">
+        <div style="display:flex; justify-content:space-between; padding-top:20px; font-size:13px; font-family:Archivo,sans-serif; color:#3b2017; max-width:1280px; margin:0 auto;" class="footer-bottom-responsive">
             <span>© <?php echo date('Y'); ?> Dónde te duele la vida hoy. All rights reserved</span>
             <span>Desing and development by NoMad</span>
         </div>

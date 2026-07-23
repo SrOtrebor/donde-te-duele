@@ -36,14 +36,6 @@ get_header(); ?>
     transform: translateY(-4px);
     box-shadow: 4px 4px 0px #3b2017;
 }
-
-@media (max-width: 768px) {
-    .hero-side { display: none !important; }
-    .flex-responsive { flex-direction: column !important; gap: 30px !important; text-align: center; }
-    .flex-responsive > div { align-items: center; }
-    .flex-responsive img { max-width: 100%; height: auto; }
-    section { padding: 40px 20px !important; }
-}
 </style>
 
 <main class="landing-page" style="font-family: 'Roboto Condensed', sans-serif; color: #3b2017; background-color: #fdfaf1; width: 100%; overflow-x: hidden;">

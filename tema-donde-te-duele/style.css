@@ -95,3 +95,42 @@ a {
 .woocommerce-checkout #payment { background-color: var(--bg-cream); border-radius: 10px; border: 2px solid var(--border-color); }
 .woocommerce-cart .cart-collaterals .cart_totals { background-color: var(--bg-cream); border: 2px solid var(--border-color); border-radius: 10px; padding: 20px; }
 
+/* === RESPONSIVE GLOBAL === */
+@media (max-width: 768px) {
+  /* Secciones */
+  section, footer, header, .seccion-dtd {
+    padding: 40px 20px !important;
+  }
+  
+  /* Cajas flexibles (imagen + texto) */
+  .flex-responsive, .footer-top-responsive, .footer-bottom-responsive {
+    flex-direction: column !important;
+    gap: 30px !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+  
+  /* Ajustar anchos en móviles */
+  .flex-responsive > div {
+    width: 100% !important;
+  }
+  
+  /* Imágenes para que no desborden */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Textos y títulos */
+  h1 { font-size: 40px !important; }
+  h2 { font-size: 30px !important; }
+  h3 { font-size: 22px !important; }
+  .cta-title { font-size: 28px !important; }
+  .hero-subtitle { font-size: 18px !important; }
+  p { font-size: 16px !important; }
+  
+  /* Ocultar elementos de escritorio si existen */
+  .hero-side, .desktop-only {
+    display: none !important;
+  }
+}
