@@ -18,7 +18,7 @@
         <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:25px; border-bottom:1px solid #3b2017; max-width:1280px; margin:0 auto;" class="footer-top-responsive">
             <!-- Logo izquierda -->
             <div style="display:flex; align-items:center;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/logo-dtd-recortado.svg" alt="Logo Dónde te duele la vida hoy" style="height:45px; width:auto;">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/logofooter.png" alt="Logo Dónde te duele la vida hoy" style="height:45px; width:auto;">
             </div>
             <!-- Redes sociales derecha -->
             <div style="display:flex; align-items:center; gap:18px;">
