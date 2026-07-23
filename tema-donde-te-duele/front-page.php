@@ -233,7 +233,7 @@ get_header(); ?>
     <section style="background-color:#ffa872; padding:70px 100px; min-height:100vh; display:flex; flex-direction:column; justify-content:center;">
         <h2 style="text-align:center; font-size:36px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin:0 0 50px; color:#3b2017;">¿Qué vas a recibir?</h2>
         <!-- Usamos los SVG completos de Figma que ya incluyen fondo + ícono + texto -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:30px; max-width:1280px; margin:0 auto;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:30px; max-width:1200px; margin:0 auto;">
             <!-- Tarjeta 1 -->
             <div style="background:#fffa64; border:2px solid #3b2017; border-radius:10px; padding:40px 30px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:465px; box-sizing:border-box;">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/Group%2019.svg" alt="Icono" style="height:60px; margin-bottom:20px;">
@@ -260,7 +260,7 @@ get_header(); ?>
     <!-- ============================================================ -->
     <section style="background-color:#fdfaf1; padding:70px 100px; min-height:100vh; display:flex; flex-direction:column; justify-content:center;">
         <h2 style="text-align:center; font-size:36px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin:0 0 50px; color:#3b2017;">Esto es para vos</h2>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; max-width:1280px; margin:0 auto;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px; max-width:1200px; margin:0 auto;">
             <!-- Tarjeta 1 -->
             <div class="card-para-vos" style="background-color: #e59bf0; border: 2px solid #3b2017; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 180px; text-align: center; padding: 20px;">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/emojis/4.png" alt="Emoji" style="height: 45px; margin-bottom: 15px;">

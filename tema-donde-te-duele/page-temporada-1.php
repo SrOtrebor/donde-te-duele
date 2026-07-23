@@ -136,7 +136,7 @@ get_header(); ?>
                         <span style="font-size:14px; font-weight:700; font-family:'Archivo',sans-serif;">HORAS</span>
                     </div>
                 </div>
-                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Archivo',sans-serif;">4 CAPÍTULOS<br>DE 30 MINUTOS<br>CADA UNO</h3>
+                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">4 CAPÍTULOS<br>DE 30 MINUTOS<br>CADA UNO</h3>
             </div>
             <!-- Tarjeta 2 -->
             <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
@@ -144,7 +144,7 @@ get_header(); ?>
                 <div style="margin-bottom:20px;">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/COMPU-08%201.svg" alt="Acceso Online" style="width:100px; height:auto;">
                 </div>
-                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Archivo',sans-serif;">ACCESO ONLINE<br>Y A TU PROPIO<br>RITMO</h3>
+                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">ACCESO ONLINE<br>Y A TU PROPIO<br>RITMO</h3>
             </div>
             <!-- Tarjeta 3 -->
             <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
@@ -152,7 +152,7 @@ get_header(); ?>
                 <div style="margin-bottom:20px;">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/DTDLVH_Elearning_HOME_icon/Group%2019.svg" alt="Material Descargable" style="width:100px; height:auto;">
                 </div>
-                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Archivo',sans-serif;">MATERIAL<br>DESCARGABLE<br>POR TEMA</h3>
+                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">MATERIAL<br>DESCARGABLE<br>POR TEMA</h3>
             </div>
         </div>
     </section>
@@ -182,7 +182,7 @@ get_header(); ?>
                     $especialista = get_post_meta( get_the_ID(), '_dtd_especialista', true );
             ?>
                     <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; margin-bottom:15px; overflow:hidden; background-color:var(--bg-green);">
-                        <div class="accordion-header" style="padding:15px 20px; font-weight:700; font-family:'Archivo',sans-serif; font-size:16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                        <div class="accordion-header" style="padding:15px 20px; font-weight:700; font-family:'Roboto Condensed',sans-serif; font-size:16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                             <span><?php echo esc_html( get_the_title() ); ?> - Por <?php echo esc_html( $especialista ); ?></span>
                             <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                         </div>
@@ -252,7 +252,7 @@ get_header(); ?>
             <div style="display:flex; flex-direction:column; gap:15px;">
             
             <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="accordion-header" style="padding:15px 20px; font-family:'Roboto Condensed',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                     <span>¿CÓMO ACCEDO AL CONTENIDO?</span>
                     <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
@@ -262,7 +262,7 @@ get_header(); ?>
             </div>
 
             <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="accordion-header" style="padding:15px 20px; font-family:'Roboto Condensed',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                     <span>¿DURANTE CUÁNTO TIEMPO TENDRÉ ACCESO?</span>
                     <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
@@ -272,7 +272,7 @@ get_header(); ?>
             </div>
 
             <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="accordion-header" style="padding:15px 20px; font-family:'Roboto Condensed',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                     <span>¿NECESITO CONOCIMIENTOS PREVIOS?</span>
                     <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
@@ -282,7 +282,7 @@ get_header(); ?>
             </div>
 
             <div class="accordion-item" style="border:1px solid #3b2017; border-radius:5px; overflow:hidden; background-color:var(--bg-green);">
-                <div class="accordion-header" style="padding:15px 20px; font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="accordion-header" style="padding:15px 20px; font-family:'Roboto Condensed',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                     <span>¿LOS EPISODIOS DEBEN VERSE EN ORDEN?</span>
                     <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
