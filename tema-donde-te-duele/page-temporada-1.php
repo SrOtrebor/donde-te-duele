@@ -25,6 +25,13 @@ get_header(); ?>
         background: #3b2017 !important;
         color: #ffa85a !important;
     }
+    
+    @media (max-width: 768px) {
+        .hero-title { font-size: 32px !important; }
+        .hero-subtitle { font-size: 18px !important; }
+        .cta-title { font-size: 28px !important; }
+        .btn-temporada { font-size: 18px !important; padding: 15px 30px !important; }
+    }
 </style>
 
 <main id="temporada1-page" style="width: 100%; display: flex; flex-direction: column; align-items: center; background-color: #ffe8bf;">
@@ -32,10 +39,10 @@ get_header(); ?>
     <!-- HERO SECTION -->
     <section style="width:100%; background-color:var(--bg-purple); padding:80px 20px 40px; text-align:center; min-height:100vh; display:flex; align-items:center;">
         <div style="max-width:900px; margin:0 auto; width:100%;">
-            <h1 style="font-size:42px; text-transform:uppercase; font-family:'Archivo SemiExpanded',Archivo,sans-serif; font-weight:500; margin-bottom:20px; line-height:1.2;">
+            <h1 class="hero-title" style="font-size:42px; text-transform:uppercase; font-family:'Archivo SemiExpanded',Archivo,sans-serif; font-weight:500; margin-bottom:20px; line-height:1.2;">
                 Cuatro miradas para<br>comprender aquello que<br>hoy atraviesa tu vida.
             </h1>
-            <p style="font-size:22px; font-family:'Archivo',sans-serif; font-weight:400; max-width:800px; margin:0 auto 40px;">
+            <p class="hero-subtitle" style="font-size:22px; font-family:'Archivo',sans-serif; font-weight:400; max-width:800px; margin:0 auto 40px; line-height: 1.4;">
                 Una colección de contenidos online donde referentes de distintas disciplinas comparten herramientas, experiencias y nuevas perspectivas para ayudarte a comprender los conflictos que aparecen en torno al amor, el dinero, el duelo y el crecimiento personal.
             </p>
             <!-- Ícono flecha hacia abajo -->
@@ -58,7 +65,7 @@ get_header(); ?>
             La Temporada 1 es un ciclo de encuentros grabados por especialistas que abordan cada uno de los temas que más atraviesan tu experiencia humana.
         </p>
 
-        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; max-width:1200px; margin:0 auto 50px; text-align:left; width:100%;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; max-width:1200px; margin:0 auto 50px; text-align:left; width:100%;">
             
             <!-- EXPOSITOR 1 (Claudio) -->
             <div>
@@ -118,7 +125,7 @@ get_header(); ?>
         <h2 style="font-size:32px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin-bottom:50px;">
             ¿Qué te llevás?
         </h2>
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:30px; max-width:1000px; margin:0 auto; width:100%;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:30px; max-width:1000px; margin:0 auto; width:100%;">
             <!-- Tarjeta 1 -->
             <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
                 <!-- Icono de reloj -->
@@ -231,7 +238,7 @@ get_header(); ?>
 
     <!-- CTA SECTION -->
     <section style="width:100%; background-color:var(--bg-purple); padding:100px 20px; text-align:center; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h2 style="font-size:46px; text-transform:uppercase; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; max-width:1000px; margin:0 auto 40px; line-height:1.2;">
+        <h2 class="cta-title" style="font-size:46px; text-transform:uppercase; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; max-width:1000px; margin:0 auto 40px; line-height:1.2;">
             COMPRENDER LO QUE TE PASA PUEDE CAMBIAR LA FORMA EN QUE LO VIVÍS.
         </h2>
         <a href="#" class="btn-temporada">¡MIRALA AHORA!</a>
