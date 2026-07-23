@@ -17,9 +17,8 @@
     <footer style="background-color:#fdfaf1; padding:50px 80px 30px; border-top:none;">
         <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:25px; border-bottom:1px solid #3b2017; max-width:1280px; margin:0 auto;">
             <!-- Logo izquierda -->
-            <div style="display:flex; align-items:center; gap:12px;">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/marca-dtd.svg" alt="Logo" style="height:50px;">
-                <span style="font-family:'Roboto Condensed',sans-serif; font-weight:700; font-size:18px; text-transform:uppercase; line-height:1.2; color:#3b2017;">DÓNDE TE DUELE<br>LA VIDA HOY</span>
+            <div style="display:flex; align-items:center;">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/logofooter.png" alt="Logo Dónde te duele la vida hoy" style="height:70px; width:auto;">
             </div>
             <!-- Redes sociales derecha -->
             <div style="display:flex; align-items:center; gap:18px;">
