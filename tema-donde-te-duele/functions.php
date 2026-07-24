@@ -99,7 +99,7 @@ function dtd_grilla_episodios_shortcode($atts) {
     $icon_url = $has_bought ? get_template_directory_uri() . '/assets/play.png' : get_template_directory_uri() . '/assets/candado.png';
     $cart_url = wc_get_page_permalink('shop'); // O checkout
     if (!$has_bought) {
-        $link_start = '<a href="'.esc_url($cart_url).'?add-to-cart='.$producto_id.'" style="text-decoration:none; color:inherit;">';
+        $link_start = '<a href="https://dondeteduele.com/tickets/?postticket=clinica-online" style="text-decoration:none; color:inherit;">';
         $link_end = '</a>';
     } else {
         $link_start = '<a href="#" style="text-decoration:none; color:inherit;">';

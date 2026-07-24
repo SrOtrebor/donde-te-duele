@@ -172,7 +172,7 @@ get_header(); ?>
             </div>
         </div>
 
-        <a href="<?php echo esc_url( wc_get_checkout_url() . '?add-to-cart=26' ); ?>" class="btn-temporada" style="margin: 0 auto; background-color:#fdfaf1; padding: 15px 60px;">LO QUIERO</a>
+        <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" class="btn-temporada" style="margin: 0 auto; background-color:#fdfaf1; padding: 15px 60px;">LO QUIERO</a>
     </section>
 
     <!-- QUÉ VAS A EXPLORAR SECTION -->
