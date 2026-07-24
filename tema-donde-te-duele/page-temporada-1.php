@@ -138,34 +138,26 @@ get_header(); ?>
         <h2 style="font-size:32px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin-bottom:50px;">
             ¿Qué te llevás?
         </h2>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:30px; max-width:1000px; margin:0 auto; width:100%;">
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:30px; max-width:1000px; margin:0 auto; width:100%;">
             <!-- Tarjeta 1 -->
-            <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <div style="width: 280px; background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
                 <!-- Icono de reloj -->
                 <div style="position:relative; margin-bottom:20px; background-color:transparent; display:inline-block;">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/temporada1/DTDLVH_Elearning_HOME_icon/Group%2089.svg" alt="4 Capítulos" style="width:100px; height:auto; display:block;">
-                    <div style="position:absolute; top:52%; left:50%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; line-height:1;">
-                        <span style="font-size:32px; font-weight:700; font-family:'Archivo',sans-serif;">2</span>
-                        <span style="font-size:14px; font-weight:700; font-family:'Archivo',sans-serif;">HORAS</span>
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/temporada1/DTDLVH_Elearning_HOME_icon/Group%2089.svg" alt="Tiempo" style="width:100px; height:auto; display:block;">
+                    <div style="position:absolute; top:52%; left:50%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; line-height:1; width: 100%;">
+                        <span style="font-size:22px; font-weight:700; font-family:'Archivo',sans-serif;">+ de 5</span>
+                        <span style="font-size:16px; font-weight:700; font-family:'Archivo',sans-serif;">HS</span>
                     </div>
                 </div>
-                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">4 CAPÍTULOS<br>DE 30 MINUTOS<br>CADA UNO</h3>
+                <h3 style="font-size:18px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">EN CAPÍTULOS TEMÁTICOS<br>DIVIDIDOS POR BLOQUES</h3>
             </div>
             <!-- Tarjeta 2 -->
-            <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <div style="width: 280px; background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
                 <!-- Icono de laptop -->
                 <div style="margin-bottom:20px;">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/COMPU-08%201.svg" alt="Acceso Online" style="width:100px; height:auto;">
                 </div>
                 <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">ACCESO ONLINE<br>Y A TU PROPIO<br>RITMO</h3>
-            </div>
-            <!-- Tarjeta 3 -->
-            <div style="background-color:var(--bg-yellow); border:1px solid #3b2017; border-radius:5px; padding:40px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                <!-- Icono de documento -->
-                <div style="margin-bottom:20px;">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/docu.png" alt="Material Descargable" style="width:72px; height:auto; display:block; margin:0 auto;">
-                </div>
-                <h3 style="font-size:22px; font-weight:700; text-transform:uppercase; margin:0; line-height:1.2; font-family:'Roboto Condensed',sans-serif;">MATERIAL<br>DESCARGABLE<br>POR TEMA</h3>
             </div>
         </div>
         
@@ -266,7 +258,7 @@ get_header(); ?>
 
         </div>
 
-        <a href="#" class="btn-temporada" style="margin: 0 auto;">ACCEDÉ A LA TEMPORADA</a>
+        <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" class="btn-temporada" style="margin: 0 auto;">ACCEDÉ A LA TEMPORADA</a>
     </section>
 
     <!-- CTA SECTION -->
@@ -274,7 +266,7 @@ get_header(); ?>
         <h2 class="cta-title" style="font-size:46px; text-transform:uppercase; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; max-width:1000px; margin:0 auto 40px; line-height:1.2;">
             COMPRENDER LO QUE TE PASA PUEDE CAMBIAR LA FORMA EN QUE LO VIVÍS.
         </h2>
-        <a href="#" class="btn-temporada">¡MIRALA AHORA!</a>
+        <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" class="btn-temporada">¡MIRALA AHORA!</a>
     </section>
 
     <!-- FAQ SECTION -->
