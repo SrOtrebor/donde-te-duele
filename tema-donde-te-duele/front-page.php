@@ -196,7 +196,7 @@ get_header(); ?>
                 <h2 style="font-size:36px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin:0 0 20px; line-height:1.25; color:#3b2017;">Para mirar en profundidad<br>la experiencia humana</h2>
                 <p style="font-size:19px; font-family:Archivo,sans-serif; line-height:1.5; margin:0 0 35px; color:#3b2017;">Vas a descubrir nuevas formas de comprender, transitar y transformar los desafíos que suelen aparecer en torno a algunos temas que nos atraviesan.</p>
                 <!-- Botón "QUIERO SER PARTE" -->
-                <a href="<?php echo home_url('/temporada-1/'); ?>" class="btn-dtd">QUIERO SER PARTE</a>
+                <a href="<?php echo home_url('/temporada-1/'); ?>" class="btn-dtd">Ver más detalles</a>
             </div>
             <!-- 4 episodios -->
             <div style="flex:1; display:flex; flex-direction:column; gap:14px;">

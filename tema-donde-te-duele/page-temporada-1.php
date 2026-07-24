@@ -32,6 +32,19 @@ get_header(); ?>
         .cta-title { font-size: 28px !important; }
         .btn-temporada { font-size: 18px !important; padding: 15px 30px !important; }
     }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(10px); }
+    }
+    .arrow-bounce {
+        display: inline-block;
+        animation: bounce 2s infinite ease-in-out;
+        transition: transform 0.2s;
+    }
+    .arrow-bounce:hover {
+        transform: scale(1.1);
+    }
 </style>
 
 <main id="temporada1-page" style="width: 100%; display: flex; flex-direction: column; align-items: center; background-color: #ffe8bf;">
@@ -47,17 +60,19 @@ get_header(); ?>
             </p>
             <!-- Ícono flecha hacia abajo -->
             <div style="margin-top:20px;">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="20" r="19" stroke="#3b2017" stroke-width="2"/>
-                    <path d="M12 18L20 26L28 18" stroke="#3b2017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M20 10V26" stroke="#3b2017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <a href="#expositores" class="arrow-bounce" style="display:inline-block; text-decoration:none;">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="19" stroke="#3b2017" stroke-width="2"/>
+                        <path d="M12 18L20 26L28 18" stroke="#3b2017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 10V26" stroke="#3b2017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- EXPOSITORES SECTION -->
-    <section style="width:100%; background-color:#ffe8bf; text-align:center; padding:50px 20px; min-height:100vh; display:flex; flex-direction:column; justify-content:center;">
+    <section id="expositores" style="width:100%; background-color:#ffe8bf; text-align:center; padding:50px 20px; min-height:100vh; display:flex; flex-direction:column; justify-content:center;">
         <h2 style="font-size:28px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; margin-bottom:10px;">
             ¿Qué es la Temporada 1?
         </h2>

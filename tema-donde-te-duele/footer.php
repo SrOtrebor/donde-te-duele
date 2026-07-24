@@ -13,7 +13,7 @@
             TE GENERA CONFLICTO.<br>
             COMPRENDER ES EL PRIMER PASO PARA TU MEJOR VERSIÓN.
         </h2>
-        <a href="#temporada1" class="btn-dtd">QUIERO SER PARTE</a>
+        <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" class="btn-dtd">QUIERO SER PARTE</a>
     </div>
     <?php endif; ?>
 
