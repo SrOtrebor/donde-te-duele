@@ -1,47 +1,40 @@
 # Documentación de Estado del Proyecto: Dónde te duele la vida hoy
 
-Este documento detalla el progreso del desarrollo de la Clínica/Aula Virtual, lo que ya está completado y los pasos a seguir. 
+Este documento detalla el progreso del desarrollo de la Clínica/Aula Virtual, lo que ya está completado y los pasos a seguir.
 
 ## 1. Lo que ya hicimos (Completado)
 
-*   **Integración de WooCommerce (Checkout Personalizado):**
-    *   Instalación y configuración de WooCommerce para manejar la venta de la "Temporada 1".
-    *   Traducción forzada al español mediante configuración de idioma de WordPress.
-    *   Se diseñó una página de *Checkout* (Pago) totalmente a medida que respeta el manual de marca (colores beige, bordes marrones, tipografía Archivo).
-    *   Se limpió la interfaz para que el usuario no tenga distracciones a la hora de pagar.
+*   **Migración Exitosa a Producción (NutHost):**
+    *   Se creó el entorno en el subdominio `clinica.dondeteduele.com`.
+    *   Se migró todo el trabajo local usando *All-in-One WP Migration*. Para sortear las restricciones del servidor de subida (que limitaban a 2MB o 512MB), se inyectó el archivo de backup `.wpress` de forma manual usando el Administrador de Archivos de cPanel (carpeta `wp-content/ai1wm-backups`), restaurando el sitio a la perfección.
 
-*   **Aula Virtual Dinámica (Shortcode `[grilla_episodios]`):**
-    *   Se desarrolló un componente visual de "Acordeones" exacto al diseño de Figma (Cajas verdes `#bfd43b` con grilla interna de videos).
-    *   **Lógica de Acceso Inteligente:** El sistema detecta automáticamente si el usuario pagó (usando la función `wc_customer_bought_product` de WooCommerce). Si pagó, le muestra íconos de "Play". Si no pagó o no inició sesión, le muestra íconos de "Candado" que redirigen al carrito.
-    *   **Conexión con Base de Datos:** El shortcode dejó de tener textos fijos y ahora "chupa" la información automáticamente desde el Custom Post Type (CPT) de **"Episodios"**. Esto permite que el cliente edite títulos y bloques directamente desde el panel de WordPress sin tocar código.
+*   **Plan de Contingencia de Ventas (Checkout de Emergencia):**
+    *   Para garantizar que el cliente tuviera un producto 100% funcional para su presentación, se re-enrutaron todos los botones de acción ("LO QUIERO", "ACCEDÉ A LA TEMPORADA", "¡MIRALA AHORA!") y los iconos de candado del aula virtual hacia el sistema de tickets de reserva (`https://dondeteduele.com/tickets/?postticket=clinica-online`). Esto garantizó la posibilidad de hacer ventas inmediatas.
 
-*   **Ajustes Globales del Tema:**
-    *   Se eliminó la caja violeta promocional (*"Herramientas, reflexiones..."*) de forma condicional, de manera que desaparece automáticamente dentro de la página del Aula Virtual para no distraer, pero se mantiene en el resto del sitio (ej: Home).
-    *   Se actualizaron los enlaces sociales del Footer (Instagram, Facebook, TikTok) y el crédito a la agencia NoMad, asegurando que abran en una nueva pestaña.
-    *   Se limpió el repositorio ignorando archivos de video pesados (`.crdownload`) de la carpeta `Videos/` que bloqueaban la subida a GitHub (usando `.gitignore`).
+*   **Implementación de SEO Técnico y Metadatos:**
+    *   Se implementó código nativo de SEO en `header.php` para arreglar la previsualización rota de los links compartidos por WhatsApp.
+    *   **Open Graph (Redes Sociales):** Etiquetas configuradas con título, descripción y miniatura gráfica para compartir.
+    *   **GEO Tags:** Geolocalización para mejorar el SEO regional en Argentina (`AR`).
+    *   **Schema.org:** Se creó un script JSON-LD de tipo `MedicalClinic` con logo y descripción, optimizando la indexación para algoritmos de Inteligencia Artificial y buscadores.
+    *   Se cargó y se configuró el Favicon en forma nativa en WordPress.
 
----
+*   **Ajustes Críticos de Interfaz (Landing Page):**
+    *   Textos: Se reemplazaron llamadas a la acción genéricas por textos más claros (ej. "Ver más detalles").
+    *   Gráficas: Se actualizaron las métricas en las tarjetas descriptivas (ej. el reloj ahora marca "+5 HS" "EN CAPÍTULOS TEMÁTICOS DIVIDIDOS POR BLOQUES").
+    *   Layout: Se removió la tarjeta de "Material Descargable" a pedido, centrando las tarjetas restantes armónicamente para mantener la estética.
+    *   Interactividad: Se añadió una animación CSS de tipo *bounce* (rebote suave) a la flecha descendente y se la convirtió en un ancla de *scroll automático* hacia el contenido inferior para mejorar el flujo de navegación.
+
+*   **Aula Virtual y WooCommerce (Bases):**
+    *   El shortcode de acordeones `[grilla_episodios]` quedó programado y conectado a la base de datos de episodios (CPT).
+    *   Las lógicas de verificación de clientes que hayan comprado un producto de WooCommerce están hechas.
 
 ## 2. Lo que falta hacer (Pendientes)
 
-*   **Configuración de Métodos de Pago:**
-    *   Instalar y vincular **Mercado Pago** (o PayPal/Stripe) en WooCommerce > Ajustes > Pagos para habilitar transacciones reales.
-*   **Migración a Producción:**
-    *   Exportar el sitio actual de prueba (TasteWP/Local) usando *All-in-One WP Migration*.
-    *   Crear un Subdominio (`clinica.dondeteduele.com`) o una Subcarpeta (`/clinica`) en el Hosting definitivo del cliente e importar el sitio allí para no romper la web original.
-*   **SEO, GEO y Schema para Inteligencia Artificial:**
-    *   **SEO (Search Engine Optimization):** Optimizar meta-títulos, descripciones y URLs de la página de venta de la Temporada 1 para posicionamiento en Google (ej: usar Yoast SEO o RankMath).
-    *   **GEO:** Si aplica, estructurar etiquetas para posicionamiento local si el contenido está segmentado a un público de Argentina o hispanohablante.
-    *   **Schema Markup para IA:** Implementar marcado estructurado JSON-LD (ej: `Course`, `Product`, `Organization`) para que los motores de búsqueda y herramientas de Inteligencia Artificial entiendan perfectamente que se está vendiendo un "Curso de Psicología" y puedan recomendarlo en sus respuestas generativas (ChatGPT, Gemini, Google SGE).
+*   **Finalización de la Integración de Pagos:**
+    *   Terminar de integrar la pasarela de pago (ej. Mercado Pago) a WooCommerce.
+    *   Una vez que WooCommerce pueda procesar transacciones reales de manera independiente, se deben revertir los links de emergencia para que la compra se vuelva a realizar mediante la tienda interna (`?add-to-cart=XXX`).
 
----
+## 3. Estado del Repositorio y Git Workflow
 
-## 3. Flujo de Trabajo en Git (Git Workflow)
-
-Para que el plugin **WP Pusher** en el servidor de pruebas descargara correctamente los cambios sin romper el sitio en vivo, adoptamos la siguiente estrategia de ramas:
-
-1.  **Trabajo Activo:** Todo el código nuevo se desarrolla y se "commitea" en la rama secundaria llamada `actualizacion-urgente`.
-2.  **Fusión (Merge):** Una vez que el código funciona localmente, se fusiona la rama `actualizacion-urgente` hacia la rama `main`.
-3.  **Subida (Push):** Se empuja la rama `main` a GitHub. WP Pusher está configurado para "escuchar" la rama `main`, por lo que al darle "Update Theme", descarga automáticamente los cambios.
-
-*Nota para el desarrollador que continúa:* Recuerda asegurarte de estar trabajando sobre la rama `actualizacion-urgente` (haciendo un `git fetch` y `git pull`) al retomar el proyecto en la otra PC.
+*   **Gestión de Ramas de WP Pusher:** Debido a unos archivos pesados de video que causaron errores de subida (timeout) en la rama `main`, todo el despliegue a producción se está manejando actualmente a través de la rama **`actualizacion-urgente`**.
+*   WP Pusher fue reconfigurado en producción para escuchar cambios directamente de la rama `actualizacion-urgente`, garantizando que cualquier *push* a esta rama esté disponible para actualizar el tema de inmediato en WordPress.
