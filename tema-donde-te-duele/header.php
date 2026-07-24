@@ -3,7 +3,42 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Básico -->
     <title><?php wp_title('|', true, 'right'); bloginfo('name'); ?></title>
+    <meta name="description" content="Clínica Online y Aula Virtual - Dónde te duele la vida hoy.">
+    <meta name="author" content="Clínica Dónde te duele">
+    
+    <!-- Open Graph / Redes Sociales (Soluciona el problema de WhatsApp) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?php wp_title('|', true, 'right'); bloginfo('name'); ?>">
+    <meta property="og:description" content="Clínica Online y Aula Virtual - Dónde te duele la vida hoy.">
+    <meta property="og:url" content="<?php echo home_url(); ?>">
+    <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/assets/Home.png">
+    
+    <!-- GEO Tags -->
+    <meta name="geo.region" content="AR">
+    <meta name="geo.placename" content="Argentina">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/assets/marca-dtd.svg" type="image/svg+xml">
+    
+    <!-- Schema.org para IA y Buscadores -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalClinic",
+      "name": "Clínica Dónde te duele la vida hoy",
+      "url": "<?php echo home_url(); ?>",
+      "logo": "<?php echo get_template_directory_uri(); ?>/assets/logo-dtd-recortado.svg",
+      "description": "Clínica Online y Aula Virtual de Dónde te duele la vida hoy",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "AR"
+      }
+    }
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
 </head>
