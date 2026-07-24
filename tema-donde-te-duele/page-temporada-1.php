@@ -145,7 +145,7 @@ get_header(); ?>
                 <div style="position:relative; margin-bottom:20px; background-color:transparent; display:inline-block;">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/temporada1/DTDLVH_Elearning_HOME_icon/Group%2089.svg" alt="Tiempo" style="width:100px; height:auto; display:block;">
                     <div style="position:absolute; top:52%; left:50%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; line-height:1; width: 100%;">
-                        <span style="font-size:22px; font-weight:700; font-family:'Archivo',sans-serif;">+ de 5</span>
+                        <span style="font-size:22px; font-weight:700; font-family:'Archivo',sans-serif;">+5</span>
                         <span style="font-size:16px; font-weight:700; font-family:'Archivo',sans-serif;">HS</span>
                     </div>
                 </div>
