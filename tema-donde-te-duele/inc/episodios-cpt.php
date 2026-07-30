@@ -59,8 +59,8 @@ function dtd_episodio_metabox_html( $post ) {
     echo '</div>';
 
     echo '<div style="margin-bottom:20px; background:#e6f7ff; padding:15px; border:1px solid #91d5ff;">';
-    echo '<label for="dtd_video_url"><strong>URL del Video (Google Drive, Vimeo o YouTube):</strong></label><br>';
-    echo '<p style="font-size:12px; margin-top:0;">Si usas Google Drive, asegúrate de que el enlace sea público ("Cualquier usuario que tenga el vínculo").</p>';
+    echo '<label for="dtd_video_url"><strong>URL del Video de Introducción (Opcional):</strong></label><br>';
+    echo '<p style="font-size:12px; margin-top:0;">Este video aparecerá antes de seleccionar un bloque. Soporta Google Drive, YouTube o Vimeo.</p>';
     echo '<input type="url" id="dtd_video_url" name="dtd_video_url" value="' . esc_attr( $video_url ) . '" style="width:100%;" placeholder="Ej: https://drive.google.com/file/d/..." />';
     echo '</div>';
 
@@ -72,12 +72,17 @@ function dtd_episodio_metabox_html( $post ) {
         $bloque_titulo   = get_post_meta( $post->ID, "_dtd_bloque_{$i}_titulo", true );
         $bloque_objetivo = get_post_meta( $post->ID, "_dtd_bloque_{$i}_objetivo", true );
         $bloque_pregutas = get_post_meta( $post->ID, "_dtd_bloque_{$i}_preguntas", true );
+        $bloque_videos   = get_post_meta( $post->ID, "_dtd_bloque_{$i}_videos", true );
 
         echo "<div style='background:#f9f9f9; padding:15px; margin-bottom:15px; border:1px solid #ccc;'>";
         echo "<h4>Bloque {$i}</h4>";
         
         echo "<p><label><strong>Título del Bloque:</strong></label><br>";
         echo "<input type='text' name='dtd_bloque_{$i}_titulo' value='" . esc_attr( $bloque_titulo ) . "' style='width:100%;' placeholder='Ej: Bloque {$i} | Título...' /></p>";
+        
+        echo "<p><label><strong>URLs de Videos del Bloque (Un enlace por línea):</strong></label><br>";
+        echo "<p style='font-size:12px; margin-top:0; margin-bottom:5px;'>Pega enlaces de Google Drive, YouTube o Vimeo. Sepáralos con un salto de línea.</p>";
+        echo "<textarea name='dtd_bloque_{$i}_videos' style='width:100%;' rows='3' placeholder='https://drive.google.com/...&#10;https://youtube.com/...'>" . esc_textarea( $bloque_videos ) . "</textarea></p>";
         
         echo "<p><label><strong>Objetivo:</strong></label><br>";
         echo "<textarea name='dtd_bloque_{$i}_objetivo' style='width:100%;' rows='2'>" . esc_textarea( $bloque_objetivo ) . "</textarea></p>";
@@ -116,6 +121,9 @@ function dtd_guardar_episodio_meta( $post_id ) {
         }
         if ( isset( $_POST["dtd_bloque_{$i}_preguntas"] ) ) {
             update_post_meta( $post_id, "_dtd_bloque_{$i}_preguntas", sanitize_textarea_field( $_POST["dtd_bloque_{$i}_preguntas"] ) );
+        }
+        if ( isset( $_POST["dtd_bloque_{$i}_videos"] ) ) {
+            update_post_meta( $post_id, "_dtd_bloque_{$i}_videos", sanitize_textarea_field( $_POST["dtd_bloque_{$i}_videos"] ) );
         }
     }
 }

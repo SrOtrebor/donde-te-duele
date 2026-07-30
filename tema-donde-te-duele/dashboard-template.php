@@ -18,6 +18,42 @@ $has_access = false;
 if ( current_user_can('manage_options') || wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id ) ) {
     $has_access = true;
 }
+
+// Función helper para renderizar iframes de videos (GDrive, YT, Vimeo)
+function dtd_render_video_iframes($videos_text) {
+    if (empty($videos_text)) return;
+    $urls = explode("\n", str_replace("\r", "", $videos_text));
+    foreach ($urls as $url) {
+        $url = trim($url);
+        if (empty($url)) continue;
+        
+        $embed_url = '';
+        if (strpos($url, 'drive.google.com') !== false) {
+            preg_match('/d\/([a-zA-Z0-9-_]+)/', $url, $matches);
+            if (!empty($matches[1])) {
+                $embed_url = 'https://drive.google.com/file/d/' . $matches[1] . '/preview';
+            }
+        } elseif (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
+            preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url, $matches);
+            if (!empty($matches[1])) {
+                $embed_url = 'https://www.youtube.com/embed/' . $matches[1];
+            }
+        } elseif (strpos($url, 'vimeo.com') !== false) {
+            preg_match('/vimeo\.com\/(?:.*#|.*\/videos\/)?([0-9]+)/', $url, $matches);
+            if (!empty($matches[1])) {
+                $embed_url = 'https://player.vimeo.com/video/' . $matches[1];
+            }
+        } else {
+            $embed_url = $url; 
+        }
+        
+        if (!empty($embed_url)) {
+            echo '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 20px;">';
+            echo '<iframe src="' . esc_url($embed_url) . '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>';
+            echo '</div>';
+        }
+    }
+}
 ?>
 
 <style>
@@ -406,7 +442,7 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
                                         $time_start = str_pad($i*10, 2, "0", STR_PAD_LEFT) . ':00';
                                         $time_end = str_pad(($i+1)*10, 2, "0", STR_PAD_LEFT) . ':00';
                                         ?>
-                                        <li class="dash-subtopic-item">
+                                        <li class="dash-subtopic-item" onclick="showBlockVideos('<?php echo esc_attr($post_id); ?>', <?php echo $i; ?>)">
                                             <svg class="dash-subtopic-icon" width="20" height="20" viewBox="0 0 24 24" fill="#000" stroke="none"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="#fff"></polygon></svg>
                                             <strong><?php echo esc_html($b_titulo); ?></strong> &nbsp;|&nbsp; <?php echo $time_start; ?> - <?php echo $time_end; ?>
                                         </li>
@@ -415,30 +451,52 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
                                 }
                                 ?>
                             </ul>
-                            <div class="dash-subtopic-details">
+                            <div class="dash-subtopic-details" id="details-pane-<?php echo esc_attr($post_id); ?>">
                                 <?php
                                 $video_url = get_post_meta($post_id, '_dtd_video_url', true);
-                                $embed_url = '';
-                                if (!empty($video_url)) {
-                                    if (strpos($video_url, 'drive.google.com') !== false) {
-                                        preg_match('/d\/([a-zA-Z0-9-_]+)/', $video_url, $matches);
-                                        if (!empty($matches[1])) {
-                                            $embed_url = 'https://drive.google.com/file/d/' . $matches[1] . '/preview';
-                                        }
-                                    } else {
-                                        // Fallback genérico para YouTube/Vimeo
-                                        $embed_url = $video_url; 
+                                ?>
+                                
+                                <div id="details-intro-<?php echo esc_attr($post_id); ?>" class="video-pane" style="display:block;">
+                                    <h3 style="margin-top:0; color:var(--dash-text);">Introducción</h3>
+                                    <?php if (!empty($video_url)) : ?>
+                                        <?php dtd_render_video_iframes($video_url); ?>
+                                    <?php else : ?>
+                                        <p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque a la izquierda para ver su contenido.</p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <?php
+                                for ($i = 0; $i <= 4; $i++) {
+                                    $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
+                                    if (!empty($b_titulo)) {
+                                        $b_videos = get_post_meta($post_id, "_dtd_bloque_{$i}_videos", true);
+                                        $b_obj = get_post_meta($post_id, "_dtd_bloque_{$i}_objetivo", true);
+                                        $b_preguntas = get_post_meta($post_id, "_dtd_bloque_{$i}_preguntas", true);
+                                        ?>
+                                        <div id="details-block-<?php echo esc_attr($post_id); ?>-<?php echo $i; ?>" class="video-pane" style="display:none;">
+                                            <h3 style="margin-top:0; color:var(--dash-text);"><?php echo esc_html($b_titulo); ?></h3>
+                                            <?php if (!empty($b_obj)) : ?>
+                                                <p style="font-size:14px;"><strong>Objetivo:</strong> <?php echo esc_html($b_obj); ?></p>
+                                            <?php endif; ?>
+                                            
+                                            <?php 
+                                            if (!empty($b_videos)) {
+                                                dtd_render_video_iframes($b_videos); 
+                                            } else {
+                                                echo '<p style="color:var(--dash-light-text); font-size:14px;">No hay videos para este bloque.</p>';
+                                            }
+                                            
+                                            if (!empty($b_preguntas)) : ?>
+                                                <div style="background:var(--dash-bg); padding:15px; border-radius:10px; margin-top:20px;">
+                                                    <h4 style="margin-top:0;">Preguntas Guía</h4>
+                                                    <p style="font-size:14px; margin-bottom:0; white-space:pre-line;"><?php echo esc_html($b_preguntas); ?></p>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php
                                     }
                                 }
-                                
-                                if (!empty($embed_url)) : ?>
-                                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;">
-                                        <iframe src="<?php echo esc_url($embed_url); ?>" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>
-                                    </div>
-                                <?php else : ?>
-                                    <h3 style="margin-top:0; color:var(--dash-text);">Próximamente</h3>
-                                    <p style="color:var(--dash-light-text); font-size:14px;">El video de este episodio aún no ha sido cargado. Vuelve pronto.</p>
-                                <?php endif; ?>
+                                ?>
                             </div>
                         </div>
                         <?php
@@ -454,6 +512,22 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
 </div>
 
 <script>
+    // Mostrar videos de un bloque específico
+    function showBlockVideos(postId, blockIndex) {
+        // Ocultar todos los paneles de video de este episodio
+        const container = document.getElementById('details-pane-' + postId);
+        if(container) {
+            const panes = container.querySelectorAll('.video-pane');
+            panes.forEach(pane => pane.style.display = 'none');
+            
+            // Mostrar el bloque solicitado
+            const target = document.getElementById('details-block-' + postId + '-' + blockIndex);
+            if (target) {
+                target.style.display = 'block';
+            }
+        }
+    }
+
     // Lógica para mostrar/ocultar los subtemas
     function toggleSubtopics(postId) {
         // Ocultar todos
@@ -465,6 +539,16 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
         const target = document.getElementById('subtopics-' + postId);
         if (target) {
             target.classList.add('active');
+            
+            // Al abrir, volver a mostrar la introducción por defecto
+            const container = document.getElementById('details-pane-' + postId);
+            if (container) {
+                const panes = container.querySelectorAll('.video-pane');
+                panes.forEach(pane => pane.style.display = 'none');
+                const intro = document.getElementById('details-intro-' + postId);
+                if (intro) intro.style.display = 'block';
+            }
+
             // Hacer scroll suave hacia los subtemas
             target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
