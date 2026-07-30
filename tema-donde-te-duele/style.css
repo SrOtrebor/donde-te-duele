@@ -392,3 +392,86 @@ body.woocommerce-checkout, body.woocommerce-cart {
     border-bottom: 2px solid var(--border-color);
 }
 
+/* ============================================================ */
+/* WOOCOMMERCE MY ACCOUNT - PREMIUM DESIGN                      */
+/* ============================================================ */
+body.woocommerce-account .woocommerce {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 60px auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    box-shadow: 8px 8px 0px var(--bg-purple);
+    padding: 40px;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation {
+    flex: 1;
+    min-width: 250px;
+    border-right: 2px dashed var(--border-color);
+    padding-right: 20px;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li {
+    margin-bottom: 15px;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+    display: block;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li a:hover,
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a {
+    background-color: var(--bg-yellow);
+    border: 2px solid var(--border-color);
+    box-shadow: 2px 2px 0px var(--border-color);
+    transform: translateX(5px);
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content {
+    flex: 3;
+    min-width: 300px;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content mark {
+    background-color: var(--bg-yellow);
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    body.woocommerce-account .woocommerce {
+        flex-direction: column;
+        padding: 20px;
+        margin: 30px 15px;
+    }
+    body.woocommerce-account .woocommerce-MyAccount-navigation {
+        border-right: none;
+        border-bottom: 2px dashed var(--border-color);
+        padding-right: 0;
+        padding-bottom: 20px;
+    }
+}
