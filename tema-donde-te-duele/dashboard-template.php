@@ -68,7 +68,7 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
         cursor: pointer;
         transition: 0.3s;
     }
-    .dash-sidebar-icon:hover {
+    .dash-sidebar-icon:hover, .dash-sidebar-icon.active-icon {
         background-color: var(--dash-accent);
         color: #fff;
     }
@@ -270,18 +270,20 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
     
     <!-- Sidebar -->
     <aside class="dash-sidebar">
-        <!-- Ícono de Usuario -->
-        <div class="dash-sidebar-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </div>
-        <!-- Ícono de Búsqueda -->
-        <div class="dash-sidebar-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </div>
-        <!-- Ícono de Contenido/Cursos -->
-        <div class="dash-sidebar-icon">
+        <!-- Ícono de Contenido/Cursos (Activo) -->
+        <a href="#" class="dash-sidebar-icon active-icon" title="Mis Cursos" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-        </div>
+        </a>
+        
+        <!-- Ícono de Búsqueda -->
+        <a href="#" class="dash-sidebar-icon" title="Buscar" onclick="document.getElementById('dashSearchInput').focus(); return false;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+        
+        <!-- Ícono de Usuario (Mi Cuenta) -->
+        <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="dash-sidebar-icon" title="Mi Cuenta">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
         
         <!-- Salir -->
         <a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>" class="dash-sidebar-icon" style="margin-top:auto;" title="Cerrar Sesión">
@@ -298,11 +300,13 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
             <div style="display:flex; gap:20px; align-items:center;">
                 <div class="dash-search">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" placeholder="Buscar...">
+                    <input type="text" id="dashSearchInput" placeholder="Buscar...">
                 </div>
                 <div class="dash-user-profile">
                     <!-- Avatar placeholder -->
-                    <svg viewBox="0 0 24 24" fill="#999" style="width:100%; height:100%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" title="Mi Cuenta">
+                        <svg viewBox="0 0 24 24" fill="#999" style="width:100%; height:100%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </a>
                 </div>
             </div>
         </header>
