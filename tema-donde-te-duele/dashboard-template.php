@@ -416,9 +416,29 @@ if ( current_user_can('manage_options') || wc_customer_bought_product( $current_
                                 ?>
                             </ul>
                             <div class="dash-subtopic-details">
-                                <h3 style="margin-top:0; color:var(--dash-text);">Detalles del Episodio</h3>
-                                <p style="color:var(--dash-light-text); font-size:14px;">(Expanded View) Aquí mostraremos el reproductor de video o la descripción extendida del episodio seleccionado.</p>
-                                <!-- En el futuro, aquí irá el Video Player -->
+                                <?php
+                                $video_url = get_post_meta($post_id, '_dtd_video_url', true);
+                                $embed_url = '';
+                                if (!empty($video_url)) {
+                                    if (strpos($video_url, 'drive.google.com') !== false) {
+                                        preg_match('/d\/([a-zA-Z0-9-_]+)/', $video_url, $matches);
+                                        if (!empty($matches[1])) {
+                                            $embed_url = 'https://drive.google.com/file/d/' . $matches[1] . '/preview';
+                                        }
+                                    } else {
+                                        // Fallback genérico para YouTube/Vimeo
+                                        $embed_url = $video_url; 
+                                    }
+                                }
+                                
+                                if (!empty($embed_url)) : ?>
+                                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;">
+                                        <iframe src="<?php echo esc_url($embed_url); ?>" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>
+                                    </div>
+                                <?php else : ?>
+                                    <h3 style="margin-top:0; color:var(--dash-text);">Próximamente</h3>
+                                    <p style="color:var(--dash-light-text); font-size:14px;">El video de este episodio aún no ha sido cargado. Vuelve pronto.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <?php
