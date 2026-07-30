@@ -51,10 +51,17 @@ function dtd_episodio_metabox_html( $post ) {
     wp_nonce_field( 'dtd_guardar_episodio', 'dtd_episodio_nonce' );
 
     $especialista = get_post_meta( $post->ID, '_dtd_especialista', true );
+    $video_url = get_post_meta( $post->ID, '_dtd_video_url', true );
     
     echo '<div style="margin-bottom:20px;">';
     echo '<label for="dtd_especialista"><strong>Especialista (Autor del episodio):</strong></label><br>';
     echo '<input type="text" id="dtd_especialista" name="dtd_especialista" value="' . esc_attr( $especialista ) . '" size="50" />';
+    echo '</div>';
+
+    echo '<div style="margin-bottom:20px; background:#e6f7ff; padding:15px; border:1px solid #91d5ff;">';
+    echo '<label for="dtd_video_url"><strong>URL del Video (Google Drive, Vimeo o YouTube):</strong></label><br>';
+    echo '<p style="font-size:12px; margin-top:0;">Si usas Google Drive, asegúrate de que el enlace sea público ("Cualquier usuario que tenga el vínculo").</p>';
+    echo '<input type="url" id="dtd_video_url" name="dtd_video_url" value="' . esc_attr( $video_url ) . '" style="width:100%;" placeholder="Ej: https://drive.google.com/file/d/..." />';
     echo '</div>';
 
     echo '<hr>';
@@ -95,6 +102,9 @@ function dtd_guardar_episodio_meta( $post_id ) {
 
     if ( isset( $_POST['dtd_especialista'] ) ) {
         update_post_meta( $post_id, '_dtd_especialista', sanitize_text_field( $_POST['dtd_especialista'] ) );
+    }
+    if ( isset( $_POST['dtd_video_url'] ) ) {
+        update_post_meta( $post_id, '_dtd_video_url', esc_url_raw( $_POST['dtd_video_url'] ) );
     }
 
     for ( $i = 0; $i <= 4; $i++ ) {
