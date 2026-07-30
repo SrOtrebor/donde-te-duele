@@ -475,3 +475,175 @@ body.woocommerce-account .woocommerce-MyAccount-content mark {
         padding-bottom: 20px;
     }
 }
+
+/* ============================================================ */
+/* WOOCOMMERCE SHOP / ARCHIVE - PREMIUM DESIGN                  */
+/* ============================================================ */
+
+/* Contenedor principal de la tienda */
+.woocommerce-shop .content-area,
+.post-type-archive-product .content-area,
+.tax-product_cat .content-area {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Título de la página de la tienda */
+.woocommerce-products-header__title.page-title {
+    font-family: 'Archivo SemiExpanded', Archivo, sans-serif;
+    font-size: 36px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+}
+
+/* Descripción de la categoría */
+.term-description {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+/* Controles (Filtros, orderby, result count) */
+.woocommerce .woocommerce-result-count, 
+.woocommerce-page .woocommerce-result-count {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+}
+
+.woocommerce .woocommerce-ordering select {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+}
+
+/* Grid de productos */
+.woocommerce ul.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.woocommerce ul.products::before,
+.woocommerce ul.products::after {
+    display: none;
+}
+
+/* Tarjeta de producto individual */
+.woocommerce ul.products li.product {
+    background: #fff;
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0 !important;
+    width: 100% !important;
+    float: none;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.woocommerce ul.products li.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 6px 6px 0px var(--bg-purple);
+}
+
+/* Imagen del producto */
+.woocommerce ul.products li.product a img {
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #eaeaea;
+    transition: opacity 0.3s ease;
+    width: 100%;
+}
+
+.woocommerce ul.products li.product a:hover img {
+    opacity: 0.9;
+}
+
+/* Título del producto */
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+/* Precio */
+.woocommerce ul.products li.product .price {
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Insignia de oferta */
+.woocommerce span.onsale {
+    background-color: var(--bg-orange);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 8px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+    font-size: 12px;
+    top: -10px;
+    left: -10px;
+    min-width: 45px;
+    min-height: 45px;
+    line-height: 25px;
+}
+
+/* Botón Añadir al carrito */
+.woocommerce ul.products li.product .button {
+    margin-top: auto;
+    background-color: var(--bg-green);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 10px 20px;
+    transition: all 0.2s ease;
+}
+
+.woocommerce ul.products li.product .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0px var(--border-color);
+    background-color: var(--bg-yellow);
+}
+
+/* Paginación */
+.woocommerce nav.woocommerce-pagination {
+    margin-top: 40px;
+}
+.woocommerce nav.woocommerce-pagination ul {
+    border: none;
+}
+.woocommerce nav.woocommerce-pagination ul li {
+    border: none;
+    margin: 0 5px;
+}
+.woocommerce nav.woocommerce-pagination ul li a,
+.woocommerce nav.woocommerce-pagination ul li span {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: bold;
+    color: var(--text-dark);
+    background: #fff;
+}
+.woocommerce nav.woocommerce-pagination ul li span.current {
+    background: var(--bg-purple);
+}
