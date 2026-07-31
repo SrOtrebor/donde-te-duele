@@ -46,9 +46,13 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
     @media (max-width: 767px) {
         .dtd-login-wrapper {
             min-height: auto;
+            background: transparent;
+            box-shadow: none;
+            border: none;
         }
         .dtd-login-forms {
             padding: 30px 15px;
+            background: transparent;
         }
     }
     
