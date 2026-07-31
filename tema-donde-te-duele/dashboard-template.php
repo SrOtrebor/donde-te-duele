@@ -163,12 +163,15 @@ function dtd_render_video_iframes($videos_text) {
     .dash-featured {
         position: relative;
         width: 100%;
-        height: 200px;
         border-radius: 15px;
-        background: url('<?php echo get_template_directory_uri(); ?>/assets/banner-clinica.png') center/cover;
         background-color: #d1bfae; /* Fallback color */
         margin-bottom: 40px;
         overflow: hidden;
+    }
+    .dash-featured img {
+        width: 100%;
+        height: auto;
+        display: block;
     }
     .dash-featured-time {
         position: absolute;
@@ -343,8 +346,8 @@ function dtd_render_video_iframes($videos_text) {
             max-width: none;
         }
         .dash-featured {
-            height: 150px;
             margin-bottom: 25px;
+            /* Se remueve height fijo para que se autoajuste a la imagen */
         }
         .dash-subtopics.active {
             flex-direction: column;
@@ -415,6 +418,7 @@ function dtd_render_video_iframes($videos_text) {
             <!-- Featured Series -->
             <div class="dash-section-title">Featured Series</div>
             <div class="dash-featured">
+                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/banner-clinica.png" alt="Banner Clínica Online">
                 <div class="dash-featured-time">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                     Total: 2 Horas
