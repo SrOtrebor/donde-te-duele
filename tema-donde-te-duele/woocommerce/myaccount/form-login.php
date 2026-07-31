@@ -22,7 +22,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
         left: 50%;
         transform: translateX(-50%);
         margin: 40px 0;
-        background: #ffffff;
+        background: #fdfaf1;
         border-radius: 20px;
         box-shadow: 0 15px 40px rgba(59,32,23,0.08);
         overflow: hidden;
