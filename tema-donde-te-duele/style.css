@@ -467,6 +467,10 @@ body.woocommerce-account .woocommerce-MyAccount-content mark {
         flex-direction: column;
         padding: 20px;
         margin: 30px 15px;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
     }
     body.woocommerce-account .woocommerce-MyAccount-navigation {
         border-right: none;
