@@ -4,7 +4,7 @@
  */
 get_header(); ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main" style="background-color: #fdfaf1; min-height: 100vh; padding: 40px 20px; font-family: 'Archivo', sans-serif;">
     <?php
     if ( have_posts() ) :
         while ( have_posts() ) :
