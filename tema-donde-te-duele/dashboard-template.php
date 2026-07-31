@@ -165,7 +165,7 @@ function dtd_render_video_iframes($videos_text) {
         width: 100%;
         height: 200px;
         border-radius: 15px;
-        background: url('<?php echo get_template_directory_uri(); ?>/assets/temporada1/DTDLVH_Elearning_HOME_img/source/hero-bg.png') center/cover;
+        background: url('<?php echo get_template_directory_uri(); ?>/assets/banner-clinica.png') center/cover;
         background-color: #d1bfae; /* Fallback color */
         margin-bottom: 40px;
         overflow: hidden;
