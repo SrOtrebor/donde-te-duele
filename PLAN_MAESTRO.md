@@ -3,41 +3,29 @@
 ## 📌 Contexto y Estado Actual
 - **Entorno:** WordPress Local (Local WP) + WooCommerce.
 - **Tema Custom:** Se está desarrollando un tema a medida en `e:\Donde-te-duele\tema-donde-te-duele\`.
-- **Diseño a Respetar (100% Figma):** 
-  - Colores pastel: Crema (`#fdfaf1`), Amarillo (`#fffa64`), Violeta (`#e59bf0`), Naranja (`#ffa872`), Verde lima (`#bfd43b`).
-  - Tipografía: `Roboto Condensed` para títulos y `Archivo` para cuerpos de texto.
-  - El diseño depende fuertemente de assets en SVG exportados desde Figma (fondos, botones complejos, grillas).
+- **Despliegue:** Sincronizado vía Git (rama `actualizacion-urgente`) y WP Pusher al servidor en vivo.
 
-## 🚀 Hitos Alcanzados (Hoy)
-1. **Configuración Inicial:** Tema de WP enlazado al entorno de Local WP mediante scripts de copia en PowerShell.
-2. **Estructura Base (`header.php` y `footer.php`):**
-   - Header con fondo geométrico (`Group 86.svg`) y Logo centrado.
-   - Footer con logo y redes sociales vectorizadas.
-3. **Secciones de `front-page.php` completadas:**
-   - Sección Amarilla ("Clínica Online") con ilustración `Group 117.svg`.
-   - Sección Violeta ("Temporada 1") con badge en SVG y episodios.
-   - Secciones "Qué vas a recibir" y "Esto es para vos" refactorizadas para usar directamente los SVGs completos exportados de Figma (`Frame 254` al `259`), logrando un pixel-perfect instantáneo para las tarjetas con íconos.
-4. **Herramienta de Mapeo Creada:** Se creó un script en HTML/JS (`icon-mapper.html`) para arrastrar y soltar íconos, lo que permitió descubrir las coordenadas exactas de la grilla del Hero.
+## 🚀 Hitos Alcanzados
+1. **Página de Inicio (Front Page):**
+   - Header, Footer y Hero con SVG dinámicos integrados y alineados a Figma.
+2. **Infraestructura de Aulas (Backend):**
+   - Creación del Custom Post Type (CPT) **Episodios**.
+   - Cajas personalizadas (Metaboxes) para cada episodio: Especialista, Video de Introducción, y hasta 5 Bloques de Contenido.
+   - **Soporte Multivideo:** Cada bloque permite uno o varios videos de Google Drive, YouTube o Vimeo (pegando un enlace por línea).
+3. **Dashboard de Usuario (Frontend):**
+   - Plantilla `dashboard-template.php` terminada.
+   - Diseño moderno con barra lateral de navegación interactiva y perfil de usuario.
+   - Grilla de episodios dinámica (desplazamiento horizontal).
+   - Lógica de JavaScript que permite navegar entre bloques y cargar los reproductores de video instantáneamente sin recargar la página.
+4. **Comercio Electrónico:**
+   - Se aplicó estilado a medida para la página de **Tienda (Shop)** de WooCommerce, implementando tarjetas de productos redondeadas, botones corporativos y etiquetas de rebajas en naranja, manteniendo la estética premium de la web.
 
-## 🚧 Bloqueante Actual / Próximos Pasos (Mañana)
-- **El Hero Section:** A pesar de haber mapeado la grilla de íconos laterales (10 celdas por lado) usando CSS Grid, y de incluir el SVG grande (`Group-8.svg`) que abarca 2x2 celdas, el layout visual en el navegador aún no se alinea perfectamente con la visión del Figma del usuario ("falta eso a la izquierda y el otro a la derecha").
-- **Acción para mañana:** 
-  1. Revisar con mayor detalle cómo CSS Grid está renderizando el contenedor principal frente a las resoluciones de pantalla.
-  2. Ajustar los anchos de columna (`hero-side` vs `hero-center-area`) y el comportamiento responsivo de la grilla.
-  3. Asegurar que las imágenes SVG ocupen el grid-span exacto sin romper el flujo (particularmente el `Group-8.svg`).
+## 🚧 Bloqueantes Actuales / Próximos Pasos
+- **Página "Mi Cuenta" de WooCommerce:** Aún pendiente de diseño. El usuario solicitó rediseñar esta página para que no se vea como el panel por defecto de WooCommerce, sino alineada al resto del sitio.
+- **Prueba de Videos (QA):** Es necesario que el usuario cargue enlaces reales de Google Drive en el panel de Episodios y verifique cómo se ven en el Dashboard del Frontend en vivo.
+- **Flujo de Compra:** Validar la experiencia del usuario desde el Checkout hasta la redirección al Aula Virtual (Dashboard).
 
 ---
-> **Mapeo de Íconos del Hero (Aprobado por el usuario):**
-> 
-> **Izquierda (2 cols x 5 filas):**
-> - Fila 1: Group-14 | Vector-21
-> - Fila 2: Vector-21 | Group-12
-> - Fila 3: Vector-21 | Vector-21
-> - Fila 4 y 5: [Group-8 ocupa estas 4 celdas 2x2]
->
-> **Derecha (2 cols x 5 filas):**
-> - Fila 1: Group-13 | Vector-26
-> - Fila 2: Vector-26 | Group-11
-> - Fila 3: Vector-26 | Group-8 (este es de 1x1)
-> - Fila 4: Vector-26 | Vector-26
-> - Fila 5: Group-6 | Vector-26
+> **Notas de Integración de Video:**
+> - En Google Drive, el video debe tener permiso: "Cualquier usuario que tenga el vínculo".
+> - El código en `dashboard-template.php` se encarga automáticamente de extraer el ID y renderizar el iframe (ya sea GDrive, YT o Vimeo).
