@@ -50,7 +50,7 @@ function dtd_render_video_iframes($videos_text) {
         }
         
         if (!empty($embed_url)) {
-            echo '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 20px; z-index: 1;">';
+            echo '<div class="dtd-video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 20px; z-index: 1;">';
             echo '<iframe src="' . esc_url($embed_url) . '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allow="autoplay; fullscreen" allowfullscreen="allowfullscreen" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>';
             if (strpos($url, 'drive.google.com') !== false) {
                 // Bloqueador invisible para evitar el clic en el ícono de "Pop-out" (descarga) de Google Drive
@@ -371,6 +371,9 @@ function dtd_render_video_iframes($videos_text) {
             border-top: 1px solid var(--dash-border);
             padding-left: 0;
             padding-top: 20px;
+        }
+        .dtd-video-wrapper {
+            padding-bottom: 80% !important;
         }
     }
 </style>
