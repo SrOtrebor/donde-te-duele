@@ -14,9 +14,14 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
     /* Estilos Premium para la pantalla de Login y Registro */
     .dtd-login-wrapper {
         display: flex;
+        flex-direction: column;
         min-height: 70vh;
+        width: 90vw;
         max-width: 1200px;
-        margin: 40px auto;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 40px 0;
         background: #ffffff;
         border-radius: 20px;
         box-shadow: 0 15px 40px rgba(59,32,23,0.08);
@@ -30,9 +35,11 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
         background-color: #3b2017;
         position: relative;
         display: none;
+        min-height: 200px;
     }
     
     @media (min-width: 768px) {
+        .dtd-login-wrapper { flex-direction: row; }
         .dtd-login-banner { display: block; }
     }
     
@@ -61,11 +68,17 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
     
     .dtd-login-forms {
         flex: 1;
-        padding: 50px;
+        padding: 40px 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         background: #fdfaf1;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    @media (min-width: 768px) {
+        .dtd-login-forms { padding: 50px; }
     }
     
     .dtd-login-forms h2 {

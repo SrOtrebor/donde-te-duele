@@ -15,7 +15,9 @@ $current_user = wp_get_current_user();
 // Verificamos si el usuario tiene acceso a la Temporada 1 (Producto ID 26)
 $producto_id = 26; // ID de la Temporada 1
 $has_access = false;
-if ( current_user_can('manage_options') || wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id ) ) {
+$has_manual_access = get_user_meta( $current_user->ID, '_dtd_acceso_manual_' . $producto_id, true );
+
+if ( current_user_can('manage_options') || $has_manual_access || wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id ) ) {
     $has_access = true;
 }
 
