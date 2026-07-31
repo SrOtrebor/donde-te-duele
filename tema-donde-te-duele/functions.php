@@ -32,6 +32,7 @@ add_filter( 'stylesheet_directory_uri', 'wp_make_link_relative' );
 // Incluir registro de Custom Post Type y Metaboxes para Episodios
 require_once get_template_directory() . '/inc/episodios-cpt.php';
 require_once get_template_directory() . '/inc/import-episodios.php';
+require_once get_template_directory() . '/inc/alta-alumnos.php';
 // ==============================================================================
 // SHORTCODE PARA RESTRINGIR CONTENIDO (SOLO COMPRADORES DE WOOCOMMERCE)
 // ==============================================================================
@@ -56,9 +57,14 @@ function dtd_restringir_contenido($atts, $content = null) {
                 </div>';
     }
 
-    // 2. Si está logueado, verificamos si compró el producto
+    // 2. Si está logueado, verificamos si compró el producto o si tiene alta manual
     $current_user = wp_get_current_user();
     $has_bought = wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id );
+    
+    // Verificación adicional para Alta Manual
+    if ( get_user_meta( $current_user->ID, '_dtd_acceso_manual_' . $producto_id, true ) ) {
+        $has_bought = true;
+    }
 
     // 3. Si es el administrador (para que vos puedas verlo y editarlo) siempre le damos acceso
     if ( current_user_can('manage_options') ) {
@@ -91,7 +97,9 @@ function dtd_grilla_episodios_shortcode($atts) {
 
     if ( is_user_logged_in() ) {
         $current_user = wp_get_current_user();
-        if ( current_user_can('manage_options') || wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id ) ) {
+        $has_manual_access = get_user_meta( $current_user->ID, '_dtd_acceso_manual_' . $producto_id, true );
+        
+        if ( current_user_can('manage_options') || $has_manual_access || wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id ) ) {
             $has_bought = true;
         }
     }
