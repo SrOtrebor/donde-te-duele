@@ -50,8 +50,12 @@ function dtd_render_video_iframes($videos_text) {
         }
         
         if (!empty($embed_url)) {
-            echo '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 20px;">';
-            echo '<iframe src="' . esc_url($embed_url) . '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen></iframe>';
+            echo '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 20px; z-index: 1;">';
+            echo '<iframe src="' . esc_url($embed_url) . '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allow="autoplay; fullscreen" allowfullscreen="allowfullscreen" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>';
+            if (strpos($url, 'drive.google.com') !== false) {
+                // Bloqueador invisible para evitar el clic en el ícono de "Pop-out" (descarga) de Google Drive
+                echo '<div style="position:absolute; top:0; right:0; width:60px; height:60px; z-index:10; background:transparent;"></div>';
+            }
             echo '</div>';
         }
     }
@@ -349,9 +353,18 @@ function dtd_render_video_iframes($videos_text) {
             margin-bottom: 25px;
             /* Se remueve height fijo para que se autoajuste a la imagen */
         }
+        .dash-subtopics {
+            padding: 20px 10px;
+        }
         .dash-subtopics.active {
             flex-direction: column;
             gap: 20px;
+        }
+        .dash-subtopics-list,
+        .dash-subtopic-details {
+            width: 100%;
+            box-sizing: border-box;
+            flex: none;
         }
         .dash-subtopic-details {
             border-left: none;

@@ -43,6 +43,21 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
         .dtd-login-banner { display: block; }
     }
     
+    @media (max-width: 767px) {
+        .dtd-login-wrapper {
+            width: 100vw;
+            min-height: 100vh;
+            margin: 0;
+            left: 0;
+            transform: none;
+            border-radius: 0;
+            position: relative;
+        }
+        .dtd-login-forms {
+            padding: 30px 15px;
+        }
+    }
+    
     .dtd-login-banner-overlay {
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
