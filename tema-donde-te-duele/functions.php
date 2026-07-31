@@ -217,3 +217,26 @@ function dtd_grilla_episodios_shortcode($atts) {
 
     return $html;
 }
+
+// ==============================================================================
+// REDIRECCIÓN TRAS LOGIN HACIA EL DASHBOARD DE ALUMNOS
+// ==============================================================================
+add_filter( 'woocommerce_login_redirect', 'dtd_woo_login_redirect', 10, 2 );
+function dtd_woo_login_redirect( $redirect_url, $user ) {
+    // Si es administrador, lo mandamos al panel normal
+    if ( isset( $user->roles ) && is_array( $user->roles ) && in_array( 'administrator', $user->roles ) ) {
+        return admin_url();
+    }
+    
+    // Buscamos dinámicamente la página que usa la plantilla dashboard-template.php
+    $pages = get_pages(array(
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'dashboard-template.php'
+    ));
+    
+    if (!empty($pages)) {
+        return get_permalink($pages[0]->ID);
+    }
+    
+    return $redirect_url;
+}
