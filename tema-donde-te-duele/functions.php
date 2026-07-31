@@ -240,3 +240,42 @@ function dtd_woo_login_redirect( $redirect_url, $user ) {
     
     return $redirect_url;
 }
+
+// ==============================================================================
+// MODIFICAR MENÚ DE MI CUENTA (WOOCOMMERCE)
+// ==============================================================================
+add_filter( 'woocommerce_account_menu_items', 'dtd_custom_my_account_menu_items' );
+function dtd_custom_my_account_menu_items( $items ) {
+    // Eliminar pestañas no deseadas
+    unset($items['orders']);
+    unset($items['downloads']);
+    unset($items['edit-address']);
+
+    // Crear un nuevo array para ordenar los items
+    $new_items = array();
+    
+    foreach ($items as $key => $item) {
+        $new_items[$key] = $item;
+        // Insertar "Temporada 1" justo después de "dashboard" (Escritorio)
+        if ( $key == 'dashboard' ) {
+            $new_items['temporada1'] = 'Temporada 1 (Aula Virtual)';
+        }
+    }
+    
+    return $new_items;
+}
+
+// Interceptar la URL del botón Temporada 1 para que lleve al Dashboard real
+add_filter( 'woocommerce_get_endpoint_url', 'dtd_custom_woo_endpoint', 10, 4 );
+function dtd_custom_woo_endpoint( $url, $endpoint, $value, $permalink ) {
+    if ( $endpoint === 'temporada1' ) {
+        $pages = get_pages(array(
+            'meta_key' => '_wp_page_template',
+            'meta_value' => 'dashboard-template.php'
+        ));
+        if (!empty($pages)) {
+            $url = get_permalink($pages[0]->ID);
+        }
+    }
+    return $url;
+}
