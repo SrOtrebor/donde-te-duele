@@ -155,6 +155,7 @@ function dtd_render_video_iframes($videos_text) {
         border-radius: 50%;
         background: #ccc;
         overflow: hidden;
+        flex-shrink: 0;
     }
     
     /* Featured Series */
