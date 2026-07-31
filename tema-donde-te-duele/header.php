@@ -42,7 +42,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?> style="margin: 0; padding: 0; background-color: #ffffff; display: flex; flex-direction: column; align-items: center;">
+<body <?php body_class(); ?> style="margin: 0; padding: 0; background-color: #fdfaf1; display: flex; flex-direction: column; align-items: center;">
 <?php wp_body_open(); ?>
 
 <div id="page-wrapper" style="width: 100%; background-color: #fdfaf1; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
