@@ -46,7 +46,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
     @media (max-width: 767px) {
         .dtd-login-wrapper {
             min-height: auto;
-            background: transparent;
+            background: #fdfaf1;
             box-shadow: none;
             border: none;
         }
