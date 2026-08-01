@@ -445,6 +445,13 @@ body.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a {
     transform: translateX(5px);
 }
 
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--customer-logout a {
+    text-decoration: underline;
+    text-decoration-color: var(--bg-purple);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+}
+
 body.woocommerce-account .woocommerce-MyAccount-content {
     flex: 3;
     min-width: 300px;

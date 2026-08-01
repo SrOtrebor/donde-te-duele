@@ -150,10 +150,22 @@ get_header(); ?>
                 background-color: #d182dc; transform: scale(1.05);
             }
             </style>
+            <?php 
+                $dash_url = wc_get_page_permalink( 'myaccount' );
+                if ( is_user_logged_in() ) {
+                    $pages = get_pages(array(
+                        'meta_key' => '_wp_page_template',
+                        'meta_value' => 'dashboard-template.php'
+                    ));
+                    if (!empty($pages)) {
+                        $dash_url = get_permalink($pages[0]->ID);
+                    }
+                }
+            ?>
             <?php if ( ! is_user_logged_in() ) : ?>
                 <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn-login-sutil">INGRESAR</a>
             <?php else : ?>
-                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn-login-sutil">IR A MI AULA</a>
+                <a href="<?php echo esc_url( $dash_url ); ?>" class="btn-login-sutil">IR A MI AULA</a>
             <?php endif; ?>
         </div>
 
