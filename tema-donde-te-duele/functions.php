@@ -451,27 +451,47 @@ function dtd_custom_woo_endpoint( $url, $endpoint, $value, $permalink ) {
 }
 
 // ==============================================================================
-// DEBUG: PROBAR ENVÍO DE CORREO DE RECUPERACIÓN
+// DEBUG: PROBAR ENVÍO DE CORREO Y DIAGNÓSTICO SMTP
 // ==============================================================================
-add_shortcode('test_reset_email', 'dtd_debug_reset_email');
-function dtd_debug_reset_email() {
+add_shortcode('test_smtp', 'dtd_debug_smtp');
+function dtd_debug_smtp() {
     if ( ! current_user_can('administrator') ) {
         return "Solo administradores pueden hacer esto.";
     }
-    
+
     $current_user = wp_get_current_user();
-    echo "<div style='background:#000; color:#0f0; padding:20px; font-family:monospace;'>";
-    echo "Iniciando prueba de restablecimiento de contraseña para: " . $current_user->user_email . "<br>";
-    
-    $result = retrieve_password( $current_user->user_login );
-    
-    if ( is_wp_error( $result ) ) {
-        echo "ERROR CRÍTICO de WordPress al intentar enviar: " . $result->get_error_message() . "<br>";
+    $to = $current_user->user_email;
+
+    ob_start();
+    echo "<div style='background:#111; color:#0f0; padding:20px; font-family:monospace; border-radius:8px; line-height:2;'>";
+    echo "<b>== DIAGNÓSTICO SMTP ==</b><br>";
+
+    // Verificar si la contraseña está cargada
+    if ( defined('DTD_SMTP_PASSWORD') && DTD_SMTP_PASSWORD !== '' ) {
+        echo "✅ smtp-config.php cargado correctamente.<br>";
     } else {
-        echo "ÉXITO: WordPress reporta que entregó el correo al servidor (la función devolvió TRUE).<br>";
-        echo "Si no llega, el problema está 100% en el servidor de correo o cayó en spam.<br>";
+        echo "❌ smtp-config.php NO encontrado o vacío. El archivo no existe en el servidor.<br>";
     }
+
+    echo "📧 Intentando enviar mail de prueba a: <b>$to</b><br>";
+
+    // Intentar enviar con wp_mail
+    $result = wp_mail(
+        $to,
+        'Prueba SMTP - Clínica Donde Te Duele',
+        'Si recibís este mail, el SMTP está funcionando correctamente.'
+    );
+
+    if ( $result ) {
+        echo "✅ wp_mail() devolvió TRUE — el mail fue aceptado por el servidor SMTP.<br>";
+        echo "📬 Revisá tu bandeja de entrada (y la carpeta de spam).<br>";
+    } else {
+        global $phpmailer;
+        $error = isset($phpmailer) ? $phpmailer->ErrorInfo : 'Error desconocido';
+        echo "❌ wp_mail() falló. Error SMTP: <b>" . esc_html($error) . "</b><br>";
+    }
+
     echo "</div>";
-    
-    return "";
+    return ob_get_clean();
 }
+
