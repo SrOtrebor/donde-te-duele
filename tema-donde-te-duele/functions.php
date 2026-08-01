@@ -355,16 +355,7 @@ function dtd_save_progress() {
 // ==============================================================================
 // 11. Cambiar remitente de correos de WordPress (Ej. Restablecer contraseña)
 // ==============================================================================
-add_filter( 'wp_mail_from', 'dtd_custom_wp_mail_from' );
-function dtd_custom_wp_mail_from( $original_email_address ) {
-    // Reemplaza esto con el correo oficial que quieras usar
-    return 'hola@dondeteduele.com';
-}
-
-add_filter( 'wp_mail_from_name', 'dtd_custom_wp_mail_from_name' );
-function dtd_custom_wp_mail_from_name( $original_email_from ) {
-    return 'Clínica Dónde te duele';
-}
+// (Removido temporalmente porque algunos servidores bloquean correos si la dirección "hola@dondeteduele.com" no está creada en el hosting)
 
 // ==============================================================================
 // REDIRECCIÓN TRAS LOGIN HACIA EL DASHBOARD DE ALUMNOS
