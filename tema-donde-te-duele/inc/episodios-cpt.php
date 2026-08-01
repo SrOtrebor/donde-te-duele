@@ -87,7 +87,7 @@ function dtd_episodio_metabox_html( $post ) {
         echo "<input type='text' name='dtd_bloque_{$i}_titulo' value='" . esc_attr( $bloque_titulo ) . "' style='width:100%;' placeholder='Ej: Bloque {$i} | Título...' /></p>";
         
         echo "<p><label><strong>URLs de Videos del Bloque (Un enlace por línea):</strong></label><br>";
-        echo "<p style='font-size:12px; margin-top:0; margin-bottom:5px;'>Pega enlaces de Google Drive, YouTube o Vimeo. Sepáralos con un salto de línea.</p>";
+        echo "<p style='font-size:12px; margin-top:0; margin-bottom:5px;'>Pega enlaces de Google Drive, YouTube o Vimeo. <strong>Si aún no hay video, puedes escribir aquí el texto de disponibilidad (Ej: 'Disponible el jueves 14 de Agosto')</strong>.</p>";
         echo "<textarea name='dtd_bloque_{$i}_videos' style='width:100%;' rows='3' placeholder='https://drive.google.com/...&#10;https://youtube.com/...'>" . esc_textarea( $bloque_videos ) . "</textarea></p>";
         
         echo "<p><label><strong>Objetivo:</strong></label><br>";

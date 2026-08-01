@@ -588,7 +588,12 @@ function dtd_render_video_iframes($videos_text) {
                                             
                                             <?php 
                                             if (!empty($b_videos)) {
-                                                dtd_render_video_iframes($b_videos); 
+                                                if (strpos($b_videos, 'http') === false) {
+                                                    // No hay enlaces, tratar como texto de disponibilidad
+                                                    echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html(trim($b_videos)) . '</p>';
+                                                } else {
+                                                    dtd_render_video_iframes($b_videos); 
+                                                }
                                             } else {
                                                 echo '<p style="color:var(--dash-light-text); font-size:14px;">No hay videos para este bloque.</p>';
                                             }
