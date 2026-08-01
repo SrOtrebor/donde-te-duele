@@ -17,12 +17,13 @@
    - Diseño moderno con barra lateral de navegación interactiva y perfil de usuario.
    - Grilla de episodios dinámica (desplazamiento horizontal).
    - Lógica de JavaScript que permite navegar entre bloques y cargar los reproductores de video instantáneamente sin recargar la página.
-4. **Comercio Electrónico:**
-   - Se aplicó estilado a medida para la página de **Tienda (Shop)** de WooCommerce, implementando tarjetas de productos redondeadas, botones corporativos y etiquetas de rebajas en naranja, manteniendo la estética premium de la web.
+   - Ajustes responsivos: Breakpoint subido a 1200px para priorizar el video a pantalla completa en modo horizontal, con un hack específico para forzar la UI de escritorio de GDrive/Vimeo en celulares verticales.
+4. **Comercio Electrónico y UX General:**
+   - Se aplicó estilado a medida para la página de **Tienda (Shop)** de WooCommerce.
+   - Botón de Login relocalizado de forma estratégica en el Hero de la portada y debajo del CTA principal de la Temporada 1, con un diseño sutil y dinámico.
 
 ## 🚧 Bloqueantes Actuales / Próximos Pasos
 - **Página "Mi Cuenta" de WooCommerce:** Aún pendiente de diseño. El usuario solicitó rediseñar esta página para que no se vea como el panel por defecto de WooCommerce, sino alineada al resto del sitio.
-- **Prueba de Videos (QA):** Es necesario que el usuario cargue enlaces reales de Google Drive en el panel de Episodios y verifique cómo se ven en el Dashboard del Frontend en vivo.
 - **Flujo de Compra:** Validar la experiencia del usuario desde el Checkout hasta la redirección al Aula Virtual (Dashboard).
 
 ---
