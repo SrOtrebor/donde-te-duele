@@ -136,7 +136,30 @@ function dtd_custom_login_url( $login_url, $redirect, $force_reauth ) {
 }
 
 // ==============================================================================
-// 13. [Removido]
+// 13. Personalizar email por defecto de WordPress para nuevos usuarios
+// ==============================================================================
+add_filter( 'wp_new_user_notification_email', 'dtd_custom_wp_new_user_email', 10, 3 );
+function dtd_custom_wp_new_user_email( $wp_new_user_notification_email, $user, $blogname ) {
+    $key = get_password_reset_key( $user );
+    
+    // Si por alguna razón falla la generación de la key, usamos wp-login.php genérico
+    if ( is_wp_error( $key ) ) {
+        $reset_url = network_site_url( 'wp-login.php?action=lostpassword', 'login' );
+    } else {
+        $reset_url = network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user->user_login), 'login');
+    }
+    
+    $message = "Hola! Te enviamos tu acceso a la clínica online. A partir de ahora ya puedes disfrutar de los contenidos.\n\n";
+    $message .= "Tu usuario es: " . $user->user_email . "\n\n";
+    $message .= "Si quieres personalizar tu contraseña, hazlo en la siguiente dirección: \n";
+    $message .= $reset_url . "\n\n";
+    $message .= "Ingresa a tu cuenta aquí: " . wc_get_page_permalink( 'myaccount' ) . "\n";
+    
+    $wp_new_user_notification_email['message'] = $message;
+    $wp_new_user_notification_email['subject'] = 'Tu acceso a la Clínica Online - ' . $blogname;
+    
+    return $wp_new_user_notification_email;
+}
 // ==============================================================================
 
 // SHORTCODE PARA RESTRINGIR CONTENIDO (SOLO COMPRADORES DE WOOCOMMERCE)
