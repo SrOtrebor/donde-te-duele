@@ -382,6 +382,16 @@ function dtd_render_video_iframes($videos_text) {
             transform: none;
         }
     }
+    
+    /* Hack para engañar a Vimeo en móviles verticales y evitar que ponga los botones gigantes */
+    @media (max-width: 600px) {
+        .dtd-video-wrapper iframe {
+            width: 200% !important;
+            height: 200% !important;
+            transform: scale(0.5);
+            transform-origin: top left;
+        }
+    }
 </style>
 
 <div class="dashboard-container">
