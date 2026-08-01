@@ -456,10 +456,6 @@ function dtd_render_video_iframes($videos_text) {
             <div class="dash-section-title">Estas viendo</div>
             <div class="dash-featured">
                 <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/banner-clinica.png" alt="Banner Clínica Online">
-                <div class="dash-featured-time">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    Total: <?php echo esc_html(get_theme_mod('dtd_banner_duration', '2 Horas')); ?>
-                </div>
             </div>
 
             <!-- Episodes Section -->
