@@ -41,9 +41,14 @@ function dtd_render_video_iframes($videos_text) {
                 $embed_url = 'https://www.youtube.com/embed/' . $matches[1];
             }
         } elseif (strpos($url, 'vimeo.com') !== false) {
-            preg_match('/vimeo\.com\/(?:.*#|.*\/videos\/)?([0-9]+)/', $url, $matches);
+            // Soporte para enlaces privados/ocultos de Vimeo (ej: vimeo.com/123456/abcdef)
+            preg_match('/vimeo\.com\/(?:.*#|.*\/videos\/)?([0-9]+)(?:\/([a-zA-Z0-9]+))?/', $url, $matches);
             if (!empty($matches[1])) {
                 $embed_url = 'https://player.vimeo.com/video/' . $matches[1];
+                // Si hay un hash para videos privados, lo agregamos a la URL
+                if (isset($matches[2]) && !empty($matches[2])) {
+                    $embed_url .= '?h=' . $matches[2];
+                }
             }
         } else {
             $embed_url = $url; 
