@@ -75,8 +75,64 @@ function dtd_change_woo_texts( $translated, $text, $domain ) {
         if ( 'A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.' === $text ) {
             $translated = 'Se ha enviado un correo electrónico de restablecimiento de contraseña a la dirección de correo electrónico de tu cuenta, pero puede llevar varios minutos que aparezca en tu bandeja de entrada. Por favor, espera al menos 10 minutos antes de intentar otro restablecimiento. También te recomendamos revisar tu carpeta de spam.';
         }
+        if ( 'Thanks for creating an account on %1$s. Your username is %2$s. You can access your account area to view orders, change your password, and more at: %3$s' === $text || 'Thanks for creating an account on %1$s. Your username is %2$s.' === $text ) {
+            $translated = 'Hola! Te enviamos tu acceso a la clínica online. A partir de ahora ya puedes disfrutar de los contenidos. Tu usuario es %2$s. Ingresa a tu cuenta aquí: %3$s';
+        }
     }
     return $translated;
+}
+
+// ==============================================================================
+// 12. Estilos personalizados para wp-login.php y redirecciones
+// ==============================================================================
+add_action( 'login_enqueue_scripts', 'dtd_custom_login_logo' );
+function dtd_custom_login_logo() {
+    ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(<?php echo get_template_directory_uri(); ?>/assets/logo-dtd-recortado.svg);
+            height: 100px;
+            width: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            padding-bottom: 10px;
+        }
+        body.login {
+            background-color: #fdfaf1;
+            font-family: 'Archivo', sans-serif;
+        }
+        body.login #login {
+            padding: 8% 0 0;
+        }
+        body.login #backtoblog a, body.login #nav a {
+            color: #3b2017 !important;
+        }
+        body.login #login form {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .wp-core-ui .button-primary {
+            background: #e59bf0 !important;
+            border-color: #d182dc !important;
+            color: #3b2017 !important;
+            border-radius: 20px !important;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+    </style>
+    <?php
+}
+
+add_filter( 'login_headerurl', 'dtd_custom_login_logo_url' );
+function dtd_custom_login_logo_url() {
+    return home_url();
+}
+
+add_filter( 'login_url', 'dtd_custom_login_url', 10, 3 );
+function dtd_custom_login_url( $login_url, $redirect, $force_reauth ) {
+    return wc_get_page_permalink( 'myaccount' );
 }
 
 // ==============================================================================
