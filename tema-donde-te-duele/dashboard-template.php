@@ -312,7 +312,7 @@ function dtd_render_video_iframes($videos_text) {
     }
     
     /* Responsive Media Queries */
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         .dashboard-container {
             flex-direction: column;
             margin: 10px;
