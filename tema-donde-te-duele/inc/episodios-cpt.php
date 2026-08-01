@@ -51,11 +51,17 @@ function dtd_episodio_metabox_html( $post ) {
     wp_nonce_field( 'dtd_guardar_episodio', 'dtd_episodio_nonce' );
 
     $especialista = get_post_meta( $post->ID, '_dtd_especialista', true );
+    $fecha_disp = get_post_meta( $post->ID, '_dtd_fecha_disponibilidad', true );
     $video_url = get_post_meta( $post->ID, '_dtd_video_url', true );
     
     echo '<div style="margin-bottom:20px;">';
     echo '<label for="dtd_especialista"><strong>Especialista (Autor del episodio):</strong></label><br>';
     echo '<input type="text" id="dtd_especialista" name="dtd_especialista" value="' . esc_attr( $especialista ) . '" size="50" />';
+    echo '</div>';
+
+    echo '<div style="margin-bottom:20px;">';
+    echo '<label for="dtd_fecha_disponibilidad"><strong>Texto de Disponibilidad (si no hay video cargado):</strong></label><br>';
+    echo '<input type="text" id="dtd_fecha_disponibilidad" name="dtd_fecha_disponibilidad" value="' . esc_attr( $fecha_disp ) . '" size="70" placeholder="Ej: disponible el miércoles 6 de Agosto" />';
     echo '</div>';
 
     echo '<div style="margin-bottom:20px; background:#e6f7ff; padding:15px; border:1px solid #91d5ff;">';
@@ -107,6 +113,9 @@ function dtd_guardar_episodio_meta( $post_id ) {
 
     if ( isset( $_POST['dtd_especialista'] ) ) {
         update_post_meta( $post_id, '_dtd_especialista', sanitize_text_field( $_POST['dtd_especialista'] ) );
+    }
+    if ( isset( $_POST['dtd_fecha_disponibilidad'] ) ) {
+        update_post_meta( $post_id, '_dtd_fecha_disponibilidad', sanitize_text_field( $_POST['dtd_fecha_disponibilidad'] ) );
     }
     if ( isset( $_POST['dtd_video_url'] ) ) {
         update_post_meta( $post_id, '_dtd_video_url', esc_url_raw( $_POST['dtd_video_url'] ) );

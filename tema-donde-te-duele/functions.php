@@ -33,6 +33,47 @@ add_filter( 'stylesheet_directory_uri', 'wp_make_link_relative' );
 require_once get_template_directory() . '/inc/episodios-cpt.php';
 require_once get_template_directory() . '/inc/import-episodios.php';
 require_once get_template_directory() . '/inc/alta-alumnos.php';
+
+// ==============================================================================
+// CUSTOMIZER (OPCIONES DEL TEMA)
+// ==============================================================================
+add_action( 'customize_register', 'dtd_customize_register' );
+function dtd_customize_register( $wp_customize ) {
+    $wp_customize->add_section( 'dtd_textos_section', array(
+        'title'      => 'Textos del Sitio',
+        'priority'   => 30,
+    ) );
+    
+    $wp_customize->add_setting( 'dtd_banner_duration', array(
+        'default' => '2 Horas',
+        'sanitize_callback' => 'sanitize_text_field'
+    ) );
+    $wp_customize->add_control( 'dtd_banner_duration', array(
+        'label'    => 'Duración Banner Dashboard (Ej: 2 Horas)',
+        'section'  => 'dtd_textos_section',
+        'type'     => 'text',
+    ) );
+    
+    $wp_customize->add_setting( 'dtd_footer_banner_title', array(
+        'default' => 'HERRAMIENTAS, REFLEXIONES<br>Y NUEVAS PERSPECTIVAS PARA COMPRENDER AQUELLO QUE HOY<br>TE GENERA CONFLICTO.<br>COMPRENDER ES EL PRIMER PASO PARA TU MEJOR VERSIÓN.',
+        'sanitize_callback' => 'wp_kses_post'
+    ) );
+    $wp_customize->add_control( 'dtd_footer_banner_title', array(
+        'label'    => 'Título Banner Violeta (Footer) - Soporta <br>',
+        'section'  => 'dtd_textos_section',
+        'type'     => 'textarea',
+    ) );
+}
+
+// Cambiar texto de botón "Acceder" por "Iniciar sesión"
+add_filter( 'gettext', 'dtd_cambiar_texto_acceder', 10, 3 );
+function dtd_cambiar_texto_acceder( $translated, $text, $domain ) {
+    if ( $text === 'Log in' || $text === 'Acceder' ) {
+        $translated = 'Iniciar sesión';
+    }
+    return $translated;
+}
+
 // ==============================================================================
 // SHORTCODE PARA RESTRINGIR CONTENIDO (SOLO COMPRADORES DE WOOCOMMERCE)
 // ==============================================================================
@@ -258,7 +299,7 @@ function dtd_custom_my_account_menu_items( $items ) {
         $new_items[$key] = $item;
         // Insertar "Temporada 1" justo después de "dashboard" (Escritorio)
         if ( $key == 'dashboard' ) {
-            $new_items['temporada1'] = 'Temporada 1 (Aula Virtual)';
+            $new_items['temporada1'] = 'Ver la temporada 1';
         }
     }
     

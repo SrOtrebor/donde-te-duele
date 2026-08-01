@@ -228,6 +228,10 @@ function dtd_render_video_iframes($videos_text) {
     .dash-nav-prev { left: -20px; }
     .dash-nav-next { right: -20px; }
 
+    @media (min-width: 1300px) {
+        .dash-nav-btn { display: none; }
+    }
+
     .dash-episode-card {
         min-width: 280px;
         background: #fff;
@@ -403,8 +407,8 @@ function dtd_render_video_iframes($videos_text) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
         </a>
         
-        <!-- Ícono de Búsqueda -->
-        <a href="#" class="dash-sidebar-icon" title="Buscar" onclick="document.getElementById('dashSearchInput').focus(); return false;">
+        <!-- Ícono de Búsqueda (Oculto a petición) -->
+        <a href="#" class="dash-sidebar-icon" title="Buscar" onclick="document.getElementById('dashSearchInput').focus(); return false;" style="display:none;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </a>
         
@@ -448,17 +452,17 @@ function dtd_render_video_iframes($videos_text) {
         <?php else: ?>
 
             <!-- Featured Series -->
-            <div class="dash-section-title">Featured Series</div>
+            <div class="dash-section-title">Estas viendo</div>
             <div class="dash-featured">
                 <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/banner-clinica.png" alt="Banner Clínica Online">
                 <div class="dash-featured-time">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    Total: 2 Horas
+                    Total: <?php echo esc_html(get_theme_mod('dtd_banner_duration', '2 Horas')); ?>
                 </div>
             </div>
 
             <!-- Episodes Section -->
-            <div class="dash-section-title">Temporadas / Episodios</div>
+            <div class="dash-section-title">Episodios</div>
             
             <div class="dash-episodes-wrapper">
                 <button class="dash-nav-btn dash-nav-prev">
@@ -498,8 +502,11 @@ function dtd_render_video_iframes($videos_text) {
                                 <div class="dash-episode-info">
                                     <h3 class="dash-episode-title">Episodio <?php echo $count; ?> | <?php echo esc_html(get_the_title()); ?> | <?php echo esc_html($especialista); ?></h3>
                                     <div class="dash-episode-meta">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                        30 min
+                                        <?php if ($count == 1 || $count == 4) : ?>
+                                            <span style="font-weight:bold; color:var(--dash-accent);">Comenzar a mirar</span>
+                                        <?php else : ?>
+                                            <span style="font-weight:bold; color:var(--dash-accent);">Pronto disponible</span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -550,11 +557,18 @@ function dtd_render_video_iframes($videos_text) {
                                 ?>
                                 
                                 <div id="details-intro-<?php echo esc_attr($post_id); ?>" class="video-pane" style="display:block;">
-                                    <h3 style="margin-top:0; color:var(--dash-text);">Introducción</h3>
+                                    <h3 style="margin-top:0; color:var(--dash-text);">Bienvenido</h3>
                                     <?php if (!empty($video_url)) : ?>
                                         <?php dtd_render_video_iframes($video_url); ?>
                                     <?php else : ?>
-                                        <p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque a la izquierda para ver su contenido.</p>
+                                        <?php 
+                                        $fecha_disp = get_post_meta($post_id, '_dtd_fecha_disponibilidad', true);
+                                        if (!empty($fecha_disp)) {
+                                            echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html($fecha_disp) . '</p>';
+                                        } else {
+                                            echo '<p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque a la izquierda para ver su contenido.</p>';
+                                        }
+                                        ?>
                                     <?php endif; ?>
                                 </div>
 

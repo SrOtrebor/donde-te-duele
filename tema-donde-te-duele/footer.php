@@ -8,12 +8,21 @@
     ?>
     <div style="background-color:#e59bf0; height:720px; box-sizing:border-box; padding:80px 100px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
         <h2 style="font-size:46px; font-weight:500; font-family:'Archivo SemiExpanded',Archivo,sans-serif; text-transform:uppercase; line-height:1.3; max-width:1100px; margin:0 auto 50px; color:#3b2017;">
-            HERRAMIENTAS, REFLEXIONES<br>
-            Y NUEVAS PERSPECTIVAS PARA COMPRENDER AQUELLO QUE HOY<br>
-            TE GENERA CONFLICTO.<br>
-            COMPRENDER ES EL PRIMER PASO PARA TU MEJOR VERSIÓN.
+            <?php echo wp_kses_post(get_theme_mod('dtd_footer_banner_title', 'HERRAMIENTAS, REFLEXIONES<br>Y NUEVAS PERSPECTIVAS PARA COMPRENDER AQUELLO QUE HOY<br>TE GENERA CONFLICTO.<br>COMPRENDER ES EL PRIMER PASO PARA TU MEJOR VERSIÓN.')); ?>
         </h2>
-        <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" class="btn-dtd">QUIERO SER PARTE</a>
+        <?php 
+        $has_access = false;
+        if ( is_user_logged_in() ) {
+            $current_user = wp_get_current_user();
+            $has_manual_access = get_user_meta( $current_user->ID, '_dtd_acceso_manual_26', true );
+            if ( current_user_can('manage_options') || $has_manual_access || wc_customer_bought_product( $current_user->user_email, $current_user->ID, 26 ) ) {
+                $has_access = true;
+            }
+        }
+        if ( ! $has_access ) : 
+        ?>
+            <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" class="btn-dtd">QUIERO SER PARTE</a>
+        <?php endif; ?>
     </div>
     <?php endif; ?>
 
