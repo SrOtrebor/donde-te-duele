@@ -363,6 +363,24 @@ function dtd_save_progress() {
 // ==============================================================================
 
 // ==============================================================================
+// 12. PERSONALIZAR EMAIL DE RESTABLECIMIENTO DE CONTRASEÑA
+// ==============================================================================
+add_filter( 'retrieve_password_message', 'dtd_custom_reset_password_message', 10, 4 );
+function dtd_custom_reset_password_message( $message, $key, $user_login, $user_data ) {
+    $reset_link = network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' );
+
+    $message  = "Hola " . $user_data->display_name . ",\n\n";
+    $message .= "Has solicitado restablecer la contraseña de tu cuenta en Clínica Donde Te Duele.\n\n";
+    $message .= "Si no fuiste vos, ignorá este correo. De lo contrario, hacé clic en el siguiente enlace para crear una nueva contraseña:\n\n";
+    $message .= $reset_link . "\n\n";
+    $message .= "Este enlace expirará en 24 horas.\n\n";
+    $message .= "¡Hasta pronto!\n";
+    $message .= "El equipo de Clínica Donde Te Duele\n";
+
+    return $message;
+}
+
+// ==============================================================================
 // REDIRECCIÓN TRAS LOGIN HACIA EL DASHBOARD DE ALUMNOS
 // ==============================================================================
 add_filter( 'woocommerce_login_redirect', 'dtd_woo_login_redirect', 10, 2 );
