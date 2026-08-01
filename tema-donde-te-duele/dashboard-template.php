@@ -377,10 +377,9 @@ function dtd_render_video_iframes($videos_text) {
             padding-bottom: 56.25% !important;
         }
         .dtd-video-wrapper iframe {
-            width: 200% !important;
-            height: 200% !important;
-            transform: scale(0.5);
-            transform-origin: top left;
+            width: 100% !important;
+            height: 100% !important;
+            transform: none;
         }
     }
 </style>

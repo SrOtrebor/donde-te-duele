@@ -54,5 +54,27 @@
         <img src="<?php echo get_template_directory_uri(); ?>/assets/Group 86.svg" alt="Header" style="width:100%; display:block;">
         <!-- Enlace transparente superpuesto justo al medio donde está el logo (ancho aprox 250px) -->
         <a href="<?php echo home_url('/'); ?>" style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:250px; height:100%; display:block;" title="Inicio"></a>
+
+        <!-- Botón de Login a la derecha -->
+        <div style="position:absolute; top:50%; right:4%; transform:translateY(-50%); z-index:10;">
+            <style>
+                .btn-login-header {
+                    background:#3b2017; color:#ffa85a; padding:10px 24px; border-radius:30px; font-family:'Roboto Condensed', sans-serif; font-weight:700; text-transform:uppercase; text-decoration:none; display:inline-block; transition:0.3s; border:2px solid #3b2017; font-size: 16px;
+                }
+                .btn-login-header:hover {
+                    background:#fdfaf1; color:#3b2017;
+                }
+                @media (max-width: 768px) {
+                    .btn-login-header {
+                        padding: 6px 12px; font-size: 13px;
+                    }
+                }
+            </style>
+            <?php if ( ! is_user_logged_in() ) : ?>
+                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn-login-header">INGRESAR</a>
+            <?php else : ?>
+                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn-login-header">MI AULA</a>
+            <?php endif; ?>
+        </div>
     </div>
 </header>
