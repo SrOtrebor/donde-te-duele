@@ -424,3 +424,29 @@ function dtd_custom_woo_endpoint( $url, $endpoint, $value, $permalink ) {
     }
     return $url;
 }
+
+// ==============================================================================
+// DEBUG: PROBAR ENVÍO DE CORREO DE RECUPERACIÓN
+// ==============================================================================
+add_shortcode('test_reset_email', 'dtd_debug_reset_email');
+function dtd_debug_reset_email() {
+    if ( ! current_user_can('administrator') ) {
+        return "Solo administradores pueden hacer esto.";
+    }
+    
+    $current_user = wp_get_current_user();
+    echo "<div style='background:#000; color:#0f0; padding:20px; font-family:monospace;'>";
+    echo "Iniciando prueba de restablecimiento de contraseña para: " . $current_user->user_email . "<br>";
+    
+    $result = retrieve_password( $current_user->user_login );
+    
+    if ( is_wp_error( $result ) ) {
+        echo "ERROR CRÍTICO de WordPress al intentar enviar: " . $result->get_error_message() . "<br>";
+    } else {
+        echo "ÉXITO: WordPress reporta que entregó el correo al servidor (la función devolvió TRUE).<br>";
+        echo "Si no llega, el problema está 100% en el servidor de correo o cayó en spam.<br>";
+    }
+    echo "</div>";
+    
+    return "";
+}
