@@ -138,35 +138,6 @@ get_header(); ?>
             <h1 style="font-size:clamp(30px,4vw,62px); font-weight:700; line-height:1.05; text-transform:uppercase; margin:0 0 22px; color:#3b2017; font-family:'Roboto Condensed',sans-serif;">DÓNDE TE DUELE<br>LA VIDA HOY</h1>
             <a href="#temporada1" class="btn-dtd" style="font-size:16px; padding:12px 28px;">VER DE QUÉ SE TRATA</a>
             
-            <style>
-            .btn-login-sutil {
-                display: inline-block; margin-top: 15px; padding: 6px 18px;
-                background-color: #e59bf0; color: #3b2017; border-radius: 20px;
-                font-size: 13px; font-family: 'Roboto Condensed', sans-serif;
-                font-weight: 700; text-transform: uppercase; text-decoration: none;
-                transition: transform 0.2s, background-color 0.2s;
-            }
-            .btn-login-sutil:hover {
-                background-color: #d182dc; transform: scale(1.05);
-            }
-            </style>
-            <?php 
-                $dash_url = wc_get_page_permalink( 'myaccount' );
-                if ( is_user_logged_in() ) {
-                    $pages = get_pages(array(
-                        'meta_key' => '_wp_page_template',
-                        'meta_value' => 'dashboard-template.php'
-                    ));
-                    if (!empty($pages)) {
-                        $dash_url = get_permalink($pages[0]->ID);
-                    }
-                }
-            ?>
-            <?php if ( ! is_user_logged_in() ) : ?>
-                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn-login-sutil">INGRESAR</a>
-            <?php else : ?>
-                <a href="<?php echo esc_url( $dash_url ); ?>" class="btn-login-sutil">IR A MI AULA</a>
-            <?php endif; ?>
         </div>
 
         <!-- COLUMNA DERECHA: 2×5 grid -->
