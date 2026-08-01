@@ -23,7 +23,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email );
 </p>
 
 <?php if ( 'yes' === get_option( 'woocommerce_registration_generate_password' ) && $password_generated && $set_password_url ) : ?>
-    <p><a href="<?php echo esc_attr( $set_password_url ); ?>"><?php esc_html_e( 'Click here to set your new password.', 'woocommerce' ); ?></a></p>
+    <p>Si quieres personalizar tu contraseña, hazlo en la siguiente dirección: <a href="<?php echo esc_attr( $set_password_url ); ?>"><?php echo esc_html( $set_password_url ); ?></a></p>
 <?php endif; ?>
 
 <?php
