@@ -65,11 +65,13 @@ function dtd_customize_register( $wp_customize ) {
     ) );
 }
 
-// Cambiar texto de botón "Acceder" por "Iniciar sesión"
-add_filter( 'gettext', 'dtd_cambiar_texto_acceder', 10, 3 );
-function dtd_cambiar_texto_acceder( $translated, $text, $domain ) {
-    if ( $text === 'Log in' || $text === 'Acceder' ) {
-        $translated = 'Iniciar sesión';
+// Cambiar texto de botón "Acceder" por "Ingresar"
+add_filter( 'gettext', 'dtd_change_login_button_text', 10, 3 );
+function dtd_change_login_button_text( $translated, $text, $domain ) {
+    if ( 'woocommerce' === $domain ) {
+        if ( 'Log in' === $text || 'Acceder' === $text || 'Iniciar sesión' === $text ) {
+            $translated = 'Ingresar';
+        }
     }
     return $translated;
 }
@@ -154,7 +156,6 @@ function dtd_grilla_episodios_shortcode($atts) {
         $link_start = '<a href="#" style="text-decoration:none; color:inherit;">';
         $link_end = '</a>';
     }
-
     // OBTENER LOS EPISODIOS DESDE LA BASE DE DATOS (CPT)
     $args = array(
         'post_type'      => 'episodio',
@@ -257,6 +258,19 @@ function dtd_grilla_episodios_shortcode($atts) {
     </script>';
 
     return $html;
+}
+
+// ==============================================================================
+// 10. AJAX para guardar progreso de video
+// ==============================================================================
+add_action('wp_ajax_dtd_save_progress', 'dtd_save_progress');
+function dtd_save_progress() {
+    if (is_user_logged_in() && isset($_POST['post_id']) && isset($_POST['block_index'])) {
+        $user_id = get_current_user_id();
+        update_user_meta($user_id, '_dtd_last_watched_post', intval($_POST['post_id']));
+        update_user_meta($user_id, '_dtd_last_watched_block', sanitize_text_field($_POST['block_index']));
+    }
+    wp_die();
 }
 
 // ==============================================================================

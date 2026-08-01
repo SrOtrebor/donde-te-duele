@@ -44,10 +44,10 @@ function dtd_render_video_iframes($videos_text) {
             // Soporte para enlaces privados/ocultos de Vimeo (ej: vimeo.com/123456/abcdef)
             preg_match('/vimeo\.com\/(?:.*#|.*\/videos\/)?([0-9]+)(?:\/([a-zA-Z0-9]+))?/', $url, $matches);
             if (!empty($matches[1])) {
-                $embed_url = 'https://player.vimeo.com/video/' . $matches[1];
+                $embed_url = 'https://player.vimeo.com/video/' . $matches[1] . '?api=1';
                 // Si hay un hash para videos privados, lo agregamos a la URL
                 if (isset($matches[2]) && !empty($matches[2])) {
-                    $embed_url .= '?h=' . $matches[2];
+                    $embed_url .= '&h=' . $matches[2];
                 }
             }
         } else {
@@ -55,12 +55,8 @@ function dtd_render_video_iframes($videos_text) {
         }
         
         if (!empty($embed_url)) {
-            echo '<div class="dtd-video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 20px; z-index: 1;">';
-            echo '<iframe src="' . esc_url($embed_url) . '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allow="autoplay; fullscreen" allowfullscreen="allowfullscreen" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>';
-            if (strpos($url, 'drive.google.com') !== false) {
-                // Bloqueador invisible para evitar el clic en el ícono de "Pop-out" (descarga) de Google Drive
-                echo '<div style="position:absolute; top:0; right:0; width:60px; height:60px; z-index:10; background:transparent;"></div>';
-            }
+            echo '<div class="dtd-video-wrapper" style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:15px; margin-bottom:20px; box-shadow:0 10px 30px rgba(0,0,0,0.1);">';
+            echo '<iframe src="' . esc_url($embed_url) . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;" class="vimeo-player-iframe"></iframe>';
             echo '</div>';
         }
     }
@@ -502,7 +498,7 @@ function dtd_render_video_iframes($videos_text) {
                             $img_src = isset($images[$count-1]) ? $images[$count-1] : $images[0];
                     ?>
                             
-                            <div class="dash-episode-card" onclick="toggleSubtopics('<?php echo esc_attr($post_id); ?>')">
+                            <div class="dash-episode-card dash-accordion-title" onclick="toggleSubtopics('<?php echo esc_attr($post_id); ?>')">
                                 <img src="<?php echo esc_url($img_src); ?>" class="dash-episode-img" alt="Episodio">
                                 <div class="dash-episode-info">
                                     <h3 class="dash-episode-title">Episodio <?php echo $count; ?> | <?php echo esc_html(get_the_title()); ?> | <?php echo esc_html($especialista); ?></h3>
@@ -533,6 +529,7 @@ function dtd_render_video_iframes($videos_text) {
             <div id="subtopicsContainer" style="margin-top: 20px;">
                 <?php
                 // Generar los bloques ocultos por cada episodio
+                $query->rewind_posts();
                 if ( $query->have_posts() ) :
                     while ( $query->have_posts() ) : $query->the_post();
                         $post_id = get_the_ID();
@@ -571,7 +568,7 @@ function dtd_render_video_iframes($videos_text) {
                                         if (!empty($fecha_disp)) {
                                             echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html($fecha_disp) . '</p>';
                                         } else {
-                                            echo '<p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque a la izquierda para ver su contenido.</p>';
+                                            echo '<p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque para comenzar a ver el contenido.</p>';
                                         }
                                         ?>
                                     <?php endif; ?>
@@ -628,9 +625,60 @@ function dtd_render_video_iframes($videos_text) {
     </main>
 </div>
 
+ <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
+    let activePlayer = null;
+    
+    // Función para guardar progreso
+    function saveProgress(postId, blockIndex) {
+        fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=dtd_save_progress&post_id=' + postId + '&block_index=' + blockIndex
+        });
+    }
+
+    // Función para encontrar el siguiente bloque (o el primer bloque del siguiente episodio)
+    function playNextBlock(currentPostId, currentBlockIndex) {
+        let container = document.getElementById('details-pane-' + currentPostId);
+        if(!container) return;
+        
+        let nextBlock = document.getElementById('details-block-' + currentPostId + '-' + (currentBlockIndex + 1));
+        
+        if (nextBlock) {
+            // Ir al siguiente bloque del mismo episodio
+            showBlockVideos(currentPostId, currentBlockIndex + 1);
+        } else {
+            // Ya no hay más bloques en este episodio, intentar ir al siguiente episodio
+            let allTitles = Array.from(document.querySelectorAll('.dash-accordion-title'));
+            let currentIndex = allTitles.findIndex(el => el.getAttribute('onclick').includes(currentPostId));
+            
+            if (currentIndex !== -1 && currentIndex + 1 < allTitles.length) {
+                let nextTitle = allTitles[currentIndex + 1];
+                let nextPostId = nextTitle.getAttribute('onclick').match(/toggleSubtopics\('(\d+)'\)/)[1];
+                
+                // Abrir el siguiente acordeón
+                if (!nextTitle.nextElementSibling || !nextTitle.nextElementSibling.classList.contains('active')) {
+                    nextTitle.click();
+                }
+                
+                // Buscar el primer bloque de ese episodio (índice 0 o 1, o el intro)
+                setTimeout(() => {
+                    let nextFirstBlock = document.getElementById('details-block-' + nextPostId + '-0');
+                    if (nextFirstBlock) {
+                        showBlockVideos(nextPostId, 0);
+                    } else {
+                        showBlockVideos(nextPostId, 'intro');
+                    }
+                }, 300);
+            }
+        }
+    }
+
     // Mostrar videos de un bloque específico
     function showBlockVideos(postId, blockIndex) {
+        saveProgress(postId, blockIndex);
+        
         // Ocultar todos los paneles de video de este episodio
         const container = document.getElementById('details-pane-' + postId);
         if(container) {
@@ -638,9 +686,33 @@ function dtd_render_video_iframes($videos_text) {
             panes.forEach(pane => pane.style.display = 'none');
             
             // Mostrar el bloque solicitado
-            const target = document.getElementById('details-block-' + postId + '-' + blockIndex);
-            if (target) {
-                target.style.display = 'block';
+            let targetId = blockIndex === 'intro' ? 'details-intro-' + postId : 'details-block-' + postId + '-' + blockIndex;
+            const targetPane = document.getElementById(targetId);
+            if(targetPane) {
+                targetPane.style.display = 'block';
+                
+                // Destruir el reproductor activo anterior para no consumir recursos/audio cruzado
+                if (activePlayer) {
+                    activePlayer.pause().catch(e => {});
+                    activePlayer = null;
+                }
+                
+                // Inicializar nuevo reproductor de Vimeo si existe
+                let iframe = targetPane.querySelector('.vimeo-player-iframe');
+                if (iframe) {
+                    activePlayer = new Vimeo.Player(iframe);
+                    activePlayer.on('ended', function() {
+                        if (blockIndex !== 'intro') {
+                            playNextBlock(postId, parseInt(blockIndex));
+                        } else {
+                            playNextBlock(postId, -1); // Del intro va al bloque 0
+                        }
+                    });
+                    // Intentar Autoplay 
+                    activePlayer.play().catch(function(error) {
+                        console.log("Autoplay prevent by browser", error);
+                    });
+                }
             }
         }
     }
@@ -686,6 +758,31 @@ function dtd_render_video_iframes($videos_text) {
             grid.scrollBy({ left: -300, behavior: 'smooth' });
         });
     }
+    
+    // Auto-load last watched video on init
+    document.addEventListener("DOMContentLoaded", function() {
+        <?php
+        $last_post = get_user_meta(get_current_user_id(), '_dtd_last_watched_post', true);
+        $last_block = get_user_meta(get_current_user_id(), '_dtd_last_watched_block', true);
+        ?>
+        let lastPost = '<?php echo esc_js($last_post); ?>';
+        let lastBlock = '<?php echo esc_js($last_block); ?>';
+        
+        if (lastPost && lastBlock) {
+            let titleEl = document.querySelector('.dash-accordion-title[onclick*="' + lastPost + '"]');
+            if (titleEl) {
+                // Si no está abierto, lo abrimos
+                let subtopicsContainer = titleEl.nextElementSibling;
+                if (subtopicsContainer && !subtopicsContainer.classList.contains('active')) {
+                    titleEl.click();
+                }
+                setTimeout(() => {
+                    showBlockVideos(lastPost, lastBlock);
+                }, 500);
+            }
+        }
+    });
+
 </script>
 
 <?php get_footer(); ?>

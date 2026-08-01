@@ -55,6 +55,13 @@
         <!-- Enlace transparente superpuesto justo al medio donde está el logo (ancho aprox 250px) -->
         <a href="<?php echo home_url('/'); ?>" style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:250px; height:100%; display:block;" title="Inicio"></a>
 
-
+        <!-- Botón de Iniciar Sesión / Mi Aula -->
+        <div class="header-login-btn">
+            <?php if ( is_user_logged_in() ) : ?>
+                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>">MI AULA</a>
+            <?php else : ?>
+                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>">INGRESAR</a>
+            <?php endif; ?>
+        </div>
     </div>
 </header>

@@ -658,3 +658,41 @@ body.woocommerce-account .woocommerce-MyAccount-content mark {
 .woocommerce nav.woocommerce-pagination ul li span.current {
     background: var(--bg-purple);
 }
+
+ / *   H e a d e r   L o g i n   B u t t o n   * / 
+ . h e a d e r - l o g i n - b t n   { 
+         p o s i t i o n :   a b s o l u t e ; 
+         t o p :   5 0 % ; 
+         r i g h t :   5 % ; 
+         t r a n s f o r m :   t r a n s l a t e Y ( - 5 0 % ) ; 
+         z - i n d e x :   1 0 ; 
+ } 
+ . h e a d e r - l o g i n - b t n   a   { 
+         d i s p l a y :   i n l i n e - b l o c k ; 
+         p a d d i n g :   1 0 p x   2 0 p x ; 
+         b a c k g r o u n d - c o l o r :   v a r ( - - t e x t - d a r k ) ; 
+         c o l o r :   v a r ( - - b g - c r e a m ) ; 
+         t e x t - d e c o r a t i o n :   n o n e ; 
+         f o n t - f a m i l y :   ' A r c h i v o ' ,   s a n s - s e r i f ; 
+         f o n t - w e i g h t :   7 0 0 ; 
+         f o n t - s i z e :   1 4 p x ; 
+         b o r d e r - r a d i u s :   3 0 p x ; 
+         l e t t e r - s p a c i n g :   1 p x ; 
+         t e x t - t r a n s f o r m :   u p p e r c a s e ; 
+         t r a n s i t i o n :   t r a n s f o r m   0 . 2 s   e a s e ,   o p a c i t y   0 . 2 s   e a s e ; 
+ } 
+ . h e a d e r - l o g i n - b t n   a : h o v e r   { 
+         t r a n s f o r m :   s c a l e ( 1 . 0 5 ) ; 
+         o p a c i t y :   0 . 9 ; 
+ } 
+ @ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   { 
+         . h e a d e r - l o g i n - b t n   { 
+                 r i g h t :   2 % ; 
+         } 
+         . h e a d e r - l o g i n - b t n   a   { 
+                 p a d d i n g :   6 p x   1 0 p x ; 
+                 f o n t - s i z e :   1 0 p x ; 
+         } 
+ } 
+  
+ 
