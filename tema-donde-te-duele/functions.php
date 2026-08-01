@@ -359,9 +359,34 @@ function dtd_save_progress() {
 }
 
 // ==============================================================================
-// 11. Cambiar remitente de correos de WordPress (Ej. Restablecer contraseña)
+// 11. CONFIGURACIÓN SMTP - Envío de correos via noreply@dondeteduele.com
 // ==============================================================================
-// (Removido completamente para evitar conflictos con el plugin SMTP de Gmail)
+
+// Cargar credenciales SMTP desde archivo externo (no incluido en git)
+$smtp_config_file = get_template_directory() . '/smtp-config.php';
+if ( file_exists( $smtp_config_file ) ) {
+    require_once $smtp_config_file;
+}
+
+// Cambiar el remitente de todos los correos de WordPress
+add_filter( 'wp_mail_from', function( $email ) {
+    return 'noreply@dondeteduele.com';
+});
+add_filter( 'wp_mail_from_name', function( $name ) {
+    return 'Clínica Online - Donde Te Duele';
+});
+
+// Configurar PHPMailer para usar el servidor SMTP de cPanel
+add_action( 'phpmailer_init', 'dtd_configure_smtp' );
+function dtd_configure_smtp( $phpmailer ) {
+    $phpmailer->isSMTP();
+    $phpmailer->Host       = 'mail.dondeteduele.com';
+    $phpmailer->SMTPAuth   = true;
+    $phpmailer->Port       = 465;
+    $phpmailer->SMTPSecure = 'ssl';
+    $phpmailer->Username   = 'noreply@dondeteduele.com';
+    $phpmailer->Password   = defined('DTD_SMTP_PASSWORD') ? DTD_SMTP_PASSWORD : '';
+}
 
 // ==============================================================================
 // REDIRECCIÓN TRAS LOGIN HACIA EL DASHBOARD DE ALUMNOS
