@@ -180,6 +180,24 @@ get_header(); ?>
         </div>
 
         <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" class="btn-temporada" style="margin: 0 auto; background-color:#fdfaf1; padding: 15px 60px;">LO QUIERO</a>
+        
+        <style>
+        .btn-login-sutil-t1 {
+            display: inline-block; margin-top: 15px; padding: 6px 18px;
+            background-color: #e59bf0; color: #3b2017; border-radius: 20px;
+            font-size: 13px; font-family: 'Roboto Condensed', sans-serif;
+            font-weight: 700; text-transform: uppercase; text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-login-sutil-t1:hover {
+            background-color: #d182dc; transform: scale(1.05);
+        }
+        </style>
+        <?php if ( ! is_user_logged_in() ) : ?>
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn-login-sutil-t1">YA SOY ALUMNO: INGRESAR</a>
+        <?php else : ?>
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn-login-sutil-t1">IR A MI AULA</a>
+        <?php endif; ?>
     </section>
 
     <!-- QUÉ VAS A EXPLORAR SECTION -->
