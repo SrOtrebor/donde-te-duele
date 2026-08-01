@@ -65,12 +65,15 @@ function dtd_customize_register( $wp_customize ) {
     ) );
 }
 
-// Cambiar texto de botón "Acceder" por "Ingresar"
-add_filter( 'gettext', 'dtd_change_login_button_text', 10, 3 );
-function dtd_change_login_button_text( $translated, $text, $domain ) {
+// Cambiar textos de WooCommerce (Botón Ingresar y mensaje de restablecer contraseña)
+add_filter( 'gettext', 'dtd_change_woo_texts', 10, 3 );
+function dtd_change_woo_texts( $translated, $text, $domain ) {
     if ( 'woocommerce' === $domain ) {
         if ( 'Log in' === $text || 'Acceder' === $text || 'Iniciar sesión' === $text ) {
             $translated = 'Ingresar';
+        }
+        if ( 'A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.' === $text ) {
+            $translated = 'Se ha enviado un correo electrónico de restablecimiento de contraseña a la dirección de correo electrónico de tu cuenta, pero puede llevar varios minutos que aparezca en tu bandeja de entrada. Por favor, espera al menos 10 minutos antes de intentar otro restablecimiento. También te recomendamos revisar tu carpeta de spam.';
         }
     }
     return $translated;
