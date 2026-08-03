@@ -405,6 +405,30 @@ function dtd_custom_reset_password_message( $message, $key, $user_login, $user_d
 }
 
 // ==============================================================================
+// PERSONALIZAR EMAIL DE CONTRASEÑA CAMBIADA (REEMPLAZAR EMAIL ADMIN)
+// ==============================================================================
+add_filter( 'wp_password_change_notification_email', 'dtd_custom_wp_password_change_email', 10, 3 );
+function dtd_custom_wp_password_change_email( $pass_change_email, $user, $blogname ) {
+    $nuevo_admin_email = 'info@dondeteduele.com';
+    $current_admin_email = get_option('admin_email');
+    
+    if ( $current_admin_email ) {
+        $pass_change_email['message'] = str_replace( $current_admin_email, $nuevo_admin_email, $pass_change_email['message'] );
+    }
+    
+    return $pass_change_email;
+}
+
+// ==============================================================================
+// REDIRIGIR EMAIL DE "NUEVO USUARIO" (NOTIFICACIÓN AL ADMIN) A INFO@
+// ==============================================================================
+add_filter( 'wp_new_user_notification_email_admin', 'dtd_custom_new_user_admin_email', 10, 3 );
+function dtd_custom_new_user_admin_email( $email_admin, $user, $blogname ) {
+    $email_admin['to'] = 'info@dondeteduele.com';
+    return $email_admin;
+}
+
+// ==============================================================================
 // REDIRECCIÓN TRAS LOGIN HACIA EL DASHBOARD DE ALUMNOS
 // ==============================================================================
 add_filter( 'woocommerce_login_redirect', 'dtd_woo_login_redirect', 10, 2 );
