@@ -50,6 +50,7 @@ function dtd_alta_alumnos_page() {
                 // Si el usuario ya existe, solo le damos acceso
                 $user = get_user_by('email', $email);
                 update_user_meta($user->ID, '_dtd_acceso_manual_' . $producto_id, true);
+                update_user_meta($user->ID, '_dtd_acceso_temporada_1', true);
                 $mensaje = 'El usuario ya existía. Se le ha otorgado acceso exitosamente.';
                 $tipo_mensaje = 'updated';
             } else {
@@ -74,6 +75,7 @@ function dtd_alta_alumnos_page() {
                 } else {
                     // Dar acceso manual a la temporada
                     update_user_meta($user_id, '_dtd_acceso_manual_' . $producto_id, true);
+                    update_user_meta($user_id, '_dtd_acceso_temporada_1', true);
 
                     // Enviar email de bienvenida de WordPress
                     // Esto enviará un link al usuario para que setee su propia contraseña

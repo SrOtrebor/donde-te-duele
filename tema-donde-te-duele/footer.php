@@ -12,12 +12,8 @@
         </h2>
         <?php 
         $has_access = false;
-        if ( is_user_logged_in() ) {
-            $current_user = wp_get_current_user();
-            $has_manual_access = get_user_meta( $current_user->ID, '_dtd_acceso_manual_26', true );
-            if ( current_user_can('manage_options') || $has_manual_access || wc_customer_bought_product( $current_user->user_email, $current_user->ID, 26 ) ) {
-                $has_access = true;
-            }
+        if ( is_user_logged_in() && dtd_user_has_access() ) {
+            $has_access = true;
         }
         if ( ! $has_access ) : 
         ?>

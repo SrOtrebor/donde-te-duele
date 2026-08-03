@@ -164,17 +164,62 @@ function dtd_custom_wp_new_user_email( $wp_new_user_notification_email, $user, $
 
 // SHORTCODE PARA RESTRINGIR CONTENIDO (SOLO COMPRADORES DE WOOCOMMERCE)
 // ==============================================================================
+// ==============================================================================
+// FUNCION AUXILIAR DE VERIFICACIÓN DE ACCESO ROBUSTA
+// ==============================================================================
+function dtd_user_has_access($user_id = null) {
+    if (!$user_id) {
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
+    }
+    
+    if (!$user_id) return false;
+    
+    // 1. Administradores siempre tienen acceso
+    if ( user_can($user_id, 'manage_options') ) {
+        return true;
+    }
+    
+    // 2. Revisar si tiene la nueva meta genérica (independiente del ID del producto)
+    if ( get_user_meta( $user_id, '_dtd_acceso_temporada_1', true ) ) {
+        return true;
+    }
+    
+    // 3. Revisar si tiene la vieja meta hardcodeada al ID 26
+    if ( get_user_meta( $user_id, '_dtd_acceso_manual_26', true ) ) {
+        return true;
+    }
+    
+    // 4. Verificación de WooCommerce (compras reales)
+    $user = get_userdata($user_id);
+    if ($user && function_exists('wc_customer_bought_product')) {
+        // Chequear producto 26 (histórico)
+        if ( wc_customer_bought_product( $user->user_email, $user->ID, 26 ) ) {
+            return true;
+        }
+        // Intentar recuperar el producto actual dinámicamente si cambió de ID
+        $producto_dinamico = get_page_by_path('clinica-online', OBJECT, 'product');
+        if ( $producto_dinamico && $producto_dinamico->ID != 26 ) {
+            if ( wc_customer_bought_product( $user->user_email, $user->ID, $producto_dinamico->ID ) ) {
+                return true;
+            }
+            // Por las dudas, revisar si se agregó manualmente con el nuevo ID
+            if ( get_user_meta( $user_id, '_dtd_acceso_manual_' . $producto_dinamico->ID, true ) ) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+// ==============================================================================
+// SHORTCODE PARA RESTRINGIR CONTENIDO (SOLO COMPRADORES DE WOOCOMMERCE)
+// ==============================================================================
 // Uso: [contenido_exclusivo id="26"] Aquí van los videos y textos [/contenido_exclusivo]
 
 add_shortcode('contenido_exclusivo', 'dtd_restringir_contenido');
 function dtd_restringir_contenido($atts, $content = null) {
-    // Definimos el ID del producto por defecto (26 = Temporada 1)
-    $a = shortcode_atts(array(
-        'id' => '26'
-    ), $atts);
-
-    $producto_id = intval($a['id']);
-
     // 1. Si no está logueado, le pedimos que inicie sesión
     if ( ! is_user_logged_in() ) {
         $login_url = wc_get_page_permalink( 'myaccount' );
@@ -185,21 +230,10 @@ function dtd_restringir_contenido($atts, $content = null) {
                 </div>';
     }
 
-    // 2. Si está logueado, verificamos si compró el producto o si tiene alta manual
-    $current_user = wp_get_current_user();
-    $has_bought = wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id );
-    
-    // Verificación adicional para Alta Manual
-    if ( get_user_meta( $current_user->ID, '_dtd_acceso_manual_' . $producto_id, true ) ) {
-        $has_bought = true;
-    }
+    // 2. Verificamos si tiene acceso
+    $has_bought = dtd_user_has_access();
 
-    // 3. Si es el administrador (para que vos puedas verlo y editarlo) siempre le damos acceso
-    if ( current_user_can('manage_options') ) {
-        $has_bought = true;
-    }
-
-    // 4. Mostramos el contenido si lo compró, o un error si no lo compró
+    // 3. Mostramos el contenido si lo compró, o un error si no lo compró
     if ( $has_bought ) {
         return '<div class="contenido-desbloqueado">' . do_shortcode($content) . '</div>';
     } else {
@@ -216,20 +250,10 @@ function dtd_restringir_contenido($atts, $content = null) {
 // ==============================================================================
 add_shortcode('grilla_episodios', 'dtd_grilla_episodios_shortcode');
 function dtd_grilla_episodios_shortcode($atts) {
-    $a = shortcode_atts(array(
-        'producto_id' => '26'
-    ), $atts);
-
-    $producto_id = intval($a['producto_id']);
     $has_bought = false;
 
     if ( is_user_logged_in() ) {
-        $current_user = wp_get_current_user();
-        $has_manual_access = get_user_meta( $current_user->ID, '_dtd_acceso_manual_' . $producto_id, true );
-        
-        if ( current_user_can('manage_options') || $has_manual_access || wc_customer_bought_product( $current_user->user_email, $current_user->ID, $producto_id ) ) {
-            $has_bought = true;
-        }
+        $has_bought = dtd_user_has_access();
     }
 
     $icon_url = $has_bought ? get_template_directory_uri() . '/assets/play.png' : get_template_directory_uri() . '/assets/candado.png';
