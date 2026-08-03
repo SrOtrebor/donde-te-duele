@@ -81,9 +81,21 @@ function dtd_alta_alumnos_page() {
                     update_user_meta($user_id, '_dtd_acceso_manual_' . $producto_id, true);
                     update_user_meta($user_id, '_dtd_acceso_temporada_1', true);
 
-                    // Enviar email de bienvenida de WordPress
-                    // Esto enviará un link al usuario para que setee su propia contraseña
-                    wp_new_user_notification($user_id, null, 'user');
+                    // Enviar email personalizado con usuario y contraseña
+                    $site_name = get_bloginfo('name');
+                    $login_url = wp_login_url();
+                    
+                    $subject = sprintf('Bienvenido/a a %s', $site_name);
+                    $body = "Hola $nombre,\n\n";
+                    $body .= "Tu cuenta ha sido creada exitosamente y ya tienes acceso al Aula Virtual.\n\n";
+                    $body .= "Tus credenciales de acceso son:\n";
+                    $body .= "Usuario: $email\n";
+                    $body .= "Contraseña: $password\n\n";
+                    $body .= "Puedes ingresar desde el siguiente enlace:\n";
+                    $body .= "$login_url\n\n";
+                    $body .= "Saludos,\nEl equipo de $site_name";
+                    
+                    wp_mail($email, $subject, $body);
 
                     $mensaje = "Usuario creado exitosamente ($nombre $apellido). Se le ha dado acceso a la Temporada y se le envió un correo de bienvenida.<br><br><strong>CREDENCIALES:</strong><br>Usuario: $email<br>Contraseña: $password<br><em>(Guárdala si necesitas pasársela manualmente)</em>";
                     $tipo_mensaje = 'updated';
@@ -143,8 +155,23 @@ function dtd_alta_alumnos_page() {
                     } else {
                         update_user_meta($user_id, '_dtd_acceso_manual_' . $producto_id, true);
                         update_user_meta($user_id, '_dtd_acceso_temporada_1', true);
-                        wp_new_user_notification($user_id, null, 'user');
-                        $resultados_masivos[] = array('linea' => "$nombre $apellido ($email)", 'estado' => '<strong style="color:green">Creado exitosamente</strong>', 'pass' => "<strong>$password</strong>");
+                        // Enviar email personalizado con usuario y contraseña
+                        $site_name = get_bloginfo('name');
+                        $login_url = wp_login_url();
+                        
+                        $subject = sprintf('Bienvenido/a a %s', $site_name);
+                        $body = "Hola $nombre,\n\n";
+                        $body .= "Tu cuenta ha sido creada exitosamente y ya tienes acceso al Aula Virtual.\n\n";
+                        $body .= "Tus credenciales de acceso son:\n";
+                        $body .= "Usuario: $email\n";
+                        $body .= "Contraseña: $password\n\n";
+                        $body .= "Puedes ingresar desde el siguiente enlace:\n";
+                        $body .= "$login_url\n\n";
+                        $body .= "Saludos,\nEl equipo de $site_name";
+                        
+                        wp_mail($email, $subject, $body);
+
+                        $resultados_masivos[] = array('linea' => "$nombre $apellido ($email)", 'estado' => '<strong style="color:green">Creado y email enviado</strong>', 'pass' => "<strong>$password</strong>");
                     }
                 }
             }
