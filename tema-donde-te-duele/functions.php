@@ -405,16 +405,26 @@ function dtd_custom_reset_password_message( $message, $key, $user_login, $user_d
 }
 
 // ==============================================================================
-// PERSONALIZAR EMAIL DE CONTRASEÑA CAMBIADA (REEMPLAZAR EMAIL ADMIN)
+// PERSONALIZAR EMAIL DE CONTRASEÑA CAMBIADA (MENSAJE AMIGABLE)
 // ==============================================================================
 add_filter( 'wp_password_change_notification_email', 'dtd_custom_wp_password_change_email', 10, 3 );
 function dtd_custom_wp_password_change_email( $pass_change_email, $user, $blogname ) {
     $nuevo_admin_email = 'info@dondeteduele.com';
-    $current_admin_email = get_option('admin_email');
-    
-    if ( $current_admin_email ) {
-        $pass_change_email['message'] = str_replace( $current_admin_email, $nuevo_admin_email, $pass_change_email['message'] );
+    $nombre = $user->first_name ? $user->first_name : $user->display_name;
+    if ( empty($nombre) ) {
+        $nombre = $user->user_login;
     }
+    
+    $message  = "Hola " . $nombre . ",\n\n";
+    $message .= "Te escribimos para confirmarte que la contraseña de tu cuenta en Clínica Donde Te Duele ha sido actualizada con éxito.\n\n";
+    $message .= "Si fuiste vos quien realizó este cambio, no tenés que hacer nada más. ¡Ya podés ingresar y disfrutar de la clínica online!\n\n";
+    $message .= "Si NO realizaste este cambio y creés que es un error, por favor contactanos urgentemente escribiendo a " . $nuevo_admin_email . " para que podamos ayudarte a proteger tu cuenta.\n\n";
+    $message .= "Un abrazo grande,\n";
+    $message .= "El equipo de Clínica Donde Te Duele\n";
+    $message .= home_url() . "\n";
+    
+    $pass_change_email['message'] = $message;
+    $pass_change_email['to']      = $user->user_email; // Aseguramos que el destinatario sea siempre el usuario
     
     return $pass_change_email;
 }
