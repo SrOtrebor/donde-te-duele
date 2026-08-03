@@ -85,14 +85,12 @@ function dtd_alta_alumnos_page() {
                     $site_name = get_bloginfo('name');
                     $login_url = wp_login_url();
                     
-                    $subject = sprintf('Bienvenido/a a %s', $site_name);
-                    $body = "Hola $nombre,\n\n";
-                    $body .= "Tu cuenta ha sido creada exitosamente y ya tienes acceso al Aula Virtual.\n\n";
+                    $subject = sprintf('Tu acceso a la Clínica Online - %s', $site_name);
+                    $body = "Hola! Te enviamos tu acceso a la clínica online. A partir de ahora ya puedes disfrutar de los contenidos.\n\n";
                     $body .= "Tus credenciales de acceso son:\n";
                     $body .= "Usuario: $email\n";
                     $body .= "Contraseña: $password\n\n";
-                    $body .= "Puedes ingresar desde el siguiente enlace:\n";
-                    $body .= "$login_url\n\n";
+                    $body .= "Ingresa a tu cuenta aquí: " . wc_get_page_permalink( 'myaccount' ) . "\n\n";
                     $body .= "Saludos,\nEl equipo de $site_name";
                     
                     wp_mail($email, $subject, $body);
@@ -159,14 +157,12 @@ function dtd_alta_alumnos_page() {
                         $site_name = get_bloginfo('name');
                         $login_url = wp_login_url();
                         
-                        $subject = sprintf('Bienvenido/a a %s', $site_name);
-                        $body = "Hola $nombre,\n\n";
-                        $body .= "Tu cuenta ha sido creada exitosamente y ya tienes acceso al Aula Virtual.\n\n";
+                        $subject = sprintf('Tu acceso a la Clínica Online - %s', $site_name);
+                        $body = "Hola! Te enviamos tu acceso a la clínica online. A partir de ahora ya puedes disfrutar de los contenidos.\n\n";
                         $body .= "Tus credenciales de acceso son:\n";
                         $body .= "Usuario: $email\n";
                         $body .= "Contraseña: $password\n\n";
-                        $body .= "Puedes ingresar desde el siguiente enlace:\n";
-                        $body .= "$login_url\n\n";
+                        $body .= "Ingresa a tu cuenta aquí: " . wc_get_page_permalink( 'myaccount' ) . "\n\n";
                         $body .= "Saludos,\nEl equipo de $site_name";
                         
                         wp_mail($email, $subject, $body);
