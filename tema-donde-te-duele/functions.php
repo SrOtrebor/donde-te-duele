@@ -452,6 +452,37 @@ function dtd_custom_wp_mail_from_name( $original_email_from ) {
 }
 
 // ==============================================================================
+// SALVAGUARDA: INTERCEPTAR CORREOS ANTES DE ENVIAR (PARA WOOCOMMERCE DASHBOARD)
+// ==============================================================================
+add_filter( 'wp_mail', 'dtd_intercept_password_change_email', 99 );
+function dtd_intercept_password_change_email( $args ) {
+    // Si el mensaje contiene el texto clásico de cambio de contraseña (en español o inglés)
+    if ( strpos( $args['message'], 'Este aviso confirma que tu contraseña ha cambiado' ) !== false || 
+         strpos( $args['message'], 'This notice confirms that your password was changed' ) !== false ) {
+        
+        $nuevo_admin_email = 'info@dondeteduele.com';
+        
+        // Intentar extraer el nombre o correo de la primera línea ("Hola XXX,")
+        $nombre = 'usuario';
+        if ( preg_match('/Hola (.*?),\s/i', $args['message'], $matches) ) {
+            $nombre = trim($matches[1]);
+        }
+        
+        $message  = "Hola " . $nombre . ",\n\n";
+        $message .= "Te escribimos para confirmarte que la contraseña de tu cuenta en Clínica Donde Te Duele ha sido actualizada con éxito.\n\n";
+        $message .= "Si fuiste vos quien realizó este cambio, no tenés que hacer nada más. ¡Ya podés ingresar y disfrutar de la clínica online!\n\n";
+        $message .= "Si NO realizaste este cambio y creés que es un error, por favor contactanos urgentemente escribiendo a " . $nuevo_admin_email . " para que podamos ayudarte a proteger tu cuenta.\n\n";
+        $message .= "Un abrazo grande,\n";
+        $message .= "El equipo de Clínica Donde Te Duele\n";
+        $message .= home_url() . "\n";
+        
+        $args['message'] = $message;
+    }
+    
+    return $args;
+}
+
+// ==============================================================================
 // REDIRECCIÓN TRAS LOGIN HACIA EL DASHBOARD DE ALUMNOS
 // ==============================================================================
 add_filter( 'woocommerce_login_redirect', 'dtd_woo_login_redirect', 10, 2 );
