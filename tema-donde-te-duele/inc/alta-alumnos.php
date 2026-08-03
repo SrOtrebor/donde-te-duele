@@ -54,8 +54,12 @@ function dtd_alta_alumnos_page() {
                 $mensaje = 'El usuario ya existía. Se le ha otorgado acceso exitosamente.';
                 $tipo_mensaje = 'updated';
             } else {
-                // Generar contraseña segura
-                $password = wp_generate_password(12, true, false);
+                // Generar contraseña si no se proporcionó una
+                if (!empty($_POST['dtd_password'])) {
+                    $password = $_POST['dtd_password'];
+                } else {
+                    $password = wp_generate_password(12, true, false);
+                }
 
                 // Crear usuario
                 $userdata = array(
@@ -81,7 +85,7 @@ function dtd_alta_alumnos_page() {
                     // Esto enviará un link al usuario para que setee su propia contraseña
                     wp_new_user_notification($user_id, null, 'user');
 
-                    $mensaje = "Usuario creado exitosamente ($nombre $apellido). Se le ha dado acceso a la Temporada y se le envió un correo de bienvenida.";
+                    $mensaje = "Usuario creado exitosamente ($nombre $apellido). Se le ha dado acceso a la Temporada y se le envió un correo de bienvenida.<br><br><strong>CREDENCIALES:</strong><br>Usuario: $email<br>Contraseña: $password<br><em>(Guárdala si necesitas pasársela manualmente)</em>";
                     $tipo_mensaje = 'updated';
                 }
             }
@@ -116,6 +120,13 @@ function dtd_alta_alumnos_page() {
                     <tr>
                         <th><label for="dtd_email">Email *</label></th>
                         <td><input type="email" name="dtd_email" id="dtd_email" class="regular-text" required /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="dtd_password">Contraseña</label></th>
+                        <td>
+                            <input type="text" name="dtd_password" id="dtd_password" class="regular-text" placeholder="Dejar vacío para autogenerar" />
+                            <p class="description">Si la dejas vacía, se generará una automáticamente.</p>
+                        </td>
                     </tr>
                     <tr>
                         <th><label for="dtd_producto">Dar acceso a *</label></th>
