@@ -462,10 +462,25 @@ function dtd_intercept_password_change_email( $args ) {
         
         $nuevo_admin_email = 'info@dondeteduele.com';
         
-        // Intentar extraer el nombre o correo de la primera línea ("Hola XXX,")
+        // Obtener el nombre real del usuario a partir de su correo de destino
         $nombre = 'usuario';
-        if ( preg_match('/Hola (.*?),\s/i', $args['message'], $matches) ) {
-            $nombre = trim($matches[1]);
+        if ( ! empty( $args['to'] ) ) {
+            // $args['to'] podría ser un string o un array, aseguramos pasarlo como string al buscar
+            $correo_destino = is_array( $args['to'] ) ? $args['to'][0] : $args['to'];
+            $user_obj = get_user_by( 'email', $correo_destino );
+            if ( $user_obj ) {
+                $nombre = $user_obj->first_name ? $user_obj->first_name : $user_obj->display_name;
+                if ( empty( $nombre ) ) {
+                    $nombre = $user_obj->user_login;
+                }
+            }
+        }
+        
+        // Evitar que el nombre sea el correo electrónico (por si el display_name o user_login es el correo)
+        if ( is_email( $nombre ) ) {
+            // Extraer la parte antes del @ como nombre
+            $partes = explode( '@', $nombre );
+            $nombre = ucfirst( $partes[0] );
         }
         
         $message  = "Hola " . $nombre . ",\n\n";
