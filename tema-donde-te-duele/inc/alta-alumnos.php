@@ -90,6 +90,7 @@ function dtd_alta_alumnos_page() {
                 }
             }
         }
+    }
     // Procesar Alta Masiva
     $resultados_masivos = null;
     if (isset($_POST['dtd_alta_masiva_submit'])) {
