@@ -28,6 +28,11 @@ Este documento detalla el progreso del desarrollo de la Clínica/Aula Virtual, l
     *   El shortcode de acordeones `[grilla_episodios]` quedó programado y conectado a la base de datos de episodios (CPT).
     *   Las lógicas de verificación de clientes que hayan comprado un producto de WooCommerce están hechas.
 
+*   **Alta Manual y Masiva de Alumnos (Bypass de WooCommerce):**
+    *   Se creó una herramienta de "Alta Alumnos (Rápida)" en el panel de WordPress para registrar alumnos y otorgarles acceso inmediato al Aula Virtual (Temporada 1) sin pasar por el flujo de pago.
+    *   Soporta registro individual y carga masiva mediante listado CSV (`Nombre, Apellido, Email, Contraseña`).
+    *   Se configuró un sistema de notificaciones personalizado que envía un correo de bienvenida automático. Este correo iguala el texto e imagen del sistema original pero, además, incluye la contraseña (autogenerada o asignada) directamente en el cuerpo del mensaje para agilizar el ingreso de los alumnos pre-registrados.
+
 ## 2. Lo que falta hacer (Pendientes)
 
 *   **Finalización de la Integración de Pagos:**
