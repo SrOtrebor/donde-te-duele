@@ -90,6 +90,66 @@ function dtd_alta_alumnos_page() {
                 }
             }
         }
+    // Procesar Alta Masiva
+    $resultados_masivos = null;
+    if (isset($_POST['dtd_alta_masiva_submit'])) {
+        if (!isset($_POST['dtd_alta_masiva_nonce']) || !wp_verify_nonce($_POST['dtd_alta_masiva_nonce'], 'dtd_alta_masiva_action')) {
+            $mensaje = 'Error de seguridad. Intente nuevamente.';
+            $tipo_mensaje = 'error';
+        } else {
+            $csv_data = sanitize_textarea_field(wp_unslash($_POST['dtd_csv_data']));
+            $producto_id = intval($_POST['dtd_producto_masivo']);
+            $lines = explode("\n", str_replace("\r", "", $csv_data));
+            $resultados_masivos = array();
+            
+            foreach ($lines as $line) {
+                if (empty(trim($line))) continue;
+                
+                // Usar str_getcsv para soportar comas dentro de campos si es necesario
+                $fields = str_getcsv(trim($line));
+                if (count($fields) < 3) {
+                    $resultados_masivos[] = array('linea' => $line, 'estado' => 'Error: Faltan campos (Nombre, Apellido, Email requeridos)', 'pass' => '-');
+                    continue;
+                }
+                
+                $nombre = sanitize_text_field(trim($fields[0]));
+                $apellido = sanitize_text_field(trim($fields[1]));
+                $email = sanitize_email(trim($fields[2]));
+                $password = (isset($fields[3]) && !empty(trim($fields[3]))) ? trim($fields[3]) : wp_generate_password(12, true, false);
+                
+                if (empty($nombre) || empty($apellido) || empty($email) || !is_email($email)) {
+                    $resultados_masivos[] = array('linea' => $line, 'estado' => 'Error: Formato inválido o email incorrecto', 'pass' => '-');
+                    continue;
+                }
+                
+                if (email_exists($email)) {
+                    $user = get_user_by('email', $email);
+                    update_user_meta($user->ID, '_dtd_acceso_manual_' . $producto_id, true);
+                    update_user_meta($user->ID, '_dtd_acceso_temporada_1', true);
+                    $resultados_masivos[] = array('linea' => "$nombre $apellido ($email)", 'estado' => 'Actualizado: Ya existía, se le dio acceso.', 'pass' => '- (usa su clave anterior)');
+                } else {
+                    $userdata = array(
+                        'user_login' => $email,
+                        'user_email' => $email,
+                        'user_pass'  => $password,
+                        'first_name' => $nombre,
+                        'last_name'  => $apellido,
+                        'role'       => 'subscriber'
+                    );
+                    $user_id = wp_insert_user($userdata);
+                    if (is_wp_error($user_id)) {
+                        $resultados_masivos[] = array('linea' => "$nombre $apellido ($email)", 'estado' => 'Error: ' . $user_id->get_error_message(), 'pass' => '-');
+                    } else {
+                        update_user_meta($user_id, '_dtd_acceso_manual_' . $producto_id, true);
+                        update_user_meta($user_id, '_dtd_acceso_temporada_1', true);
+                        wp_new_user_notification($user_id, null, 'user');
+                        $resultados_masivos[] = array('linea' => "$nombre $apellido ($email)", 'estado' => '<strong style="color:green">Creado exitosamente</strong>', 'pass' => "<strong>$password</strong>");
+                    }
+                }
+            }
+            $mensaje = 'Procesamiento masivo completado. Revisa el reporte al final de la página.';
+            $tipo_mensaje = 'updated';
+        }
     }
 
     // HTML del Formulario
@@ -144,6 +204,66 @@ function dtd_alta_alumnos_page() {
                 </p>
             </form>
         </div>
+
+        <div class="postbox" style="padding: 20px; margin-top: 20px;">
+            <h2>Alta Masiva (Varios Alumnos)</h2>
+            <p>Pega aquí la lista de alumnos, un alumno por línea, separados por comas (formato CSV).</p>
+            <p><strong>Formato requerido:</strong> <code>Nombre, Apellido, Email, Contraseña</code></p>
+            <p><em>La contraseña es opcional. Si no la incluyes, el sistema generará una segura automáticamente.</em></p>
+            <p><strong>Ejemplo:</strong><br>
+            <code>Juan, Perez, juan@email.com, miclave123</code><br>
+            <code>Maria, Gomez, maria@email.com</code></p>
+            
+            <form method="post" action="">
+                <?php wp_nonce_field('dtd_alta_masiva_action', 'dtd_alta_masiva_nonce'); ?>
+                
+                <table class="form-table">
+                    <tr>
+                        <th><label for="dtd_csv_data">Lista de Alumnos *</label></th>
+                        <td>
+                            <textarea name="dtd_csv_data" id="dtd_csv_data" rows="8" style="width:100%; font-family:monospace;" required placeholder="Juan, Perez, juan@email.com, clave123&#10;Maria, Gomez, maria@email.com"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="dtd_producto_masivo">Dar acceso a *</label></th>
+                        <td>
+                            <select name="dtd_producto_masivo" id="dtd_producto_masivo">
+                                <option value="26">Temporada 1 (ID 26)</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <p class="submit">
+                    <input type="submit" name="dtd_alta_masiva_submit" class="button button-primary" value="Procesar Alta Masiva">
+                </p>
+            </form>
+        </div>
+
+        <?php if ($resultados_masivos !== null): ?>
+            <div class="postbox" style="padding: 20px; margin-top: 20px; border-left: 4px solid #46b450;">
+                <h2>Reporte de Alta Masiva</h2>
+                <table class="wp-list-table widefat fixed striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Alumno</th>
+                            <th style="width: 40%">Estado</th>
+                            <th style="width: 20%">Contraseña</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($resultados_masivos as $res): ?>
+                            <tr>
+                                <td><?php echo esc_html($res['linea']); ?></td>
+                                <td><?php echo wp_kses_post($res['estado']); ?></td>
+                                <td style="font-family:monospace; font-size:14px;"><?php echo wp_kses_post($res['pass']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <p><em>* Si la contraseña fue autogenerada o ingresada manualmente, puedes copiarla desde la tabla de arriba.</em></p>
+            </div>
+        <?php endif; ?>
+
     </div>
     <?php
 }
