@@ -439,6 +439,19 @@ function dtd_custom_new_user_admin_email( $email_admin, $user, $blogname ) {
 }
 
 // ==============================================================================
+// FORZAR QUE TODOS LOS CORREOS SALIENTES SE ENVÍEN DESDE INFO@DONDETEDUELE.COM
+// ==============================================================================
+add_filter( 'wp_mail_from', 'dtd_custom_wp_mail_from' );
+function dtd_custom_wp_mail_from( $original_email_address ) {
+    return 'info@dondeteduele.com';
+}
+
+add_filter( 'wp_mail_from_name', 'dtd_custom_wp_mail_from_name' );
+function dtd_custom_wp_mail_from_name( $original_email_from ) {
+    return 'Clínica Donde Te Duele';
+}
+
+// ==============================================================================
 // REDIRECCIÓN TRAS LOGIN HACIA EL DASHBOARD DE ALUMNOS
 // ==============================================================================
 add_filter( 'woocommerce_login_redirect', 'dtd_woo_login_redirect', 10, 2 );
