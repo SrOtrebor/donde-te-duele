@@ -183,11 +183,12 @@ get_header(); ?>
         
         <style>
         .btn-login-sutil-t1 {
-            display: inline-block; margin-top: 15px; padding: 6px 18px;
+            display: inline-block; margin: 15px auto 0; padding: 10px 25px;
             background-color: #e59bf0; color: #3b2017; border-radius: 20px;
             font-size: 13px; font-family: 'Roboto Condensed', sans-serif;
             font-weight: 700; text-transform: uppercase; text-decoration: none;
             transition: transform 0.2s, background-color 0.2s;
+            max-width: max-content; width: fit-content;
         }
         .btn-login-sutil-t1:hover {
             background-color: #d182dc; transform: scale(1.05);
