@@ -604,3 +604,18 @@ function dtd_debug_smtp() {
     return ob_get_clean();
 }
 
+// ==============================================================================
+// FORZAR CONFIGURACIÓN DE WOOCOMMERCE PARA CREACIÓN DE USUARIOS AL PAGAR
+// ==============================================================================
+// 1. Deshabilitar la compra como invitado (requiere cuenta)
+add_filter( 'pre_option_woocommerce_enable_guest_checkout', '__return_no' );
+
+// 2. Habilitar la creación de cuenta en el checkout
+add_filter( 'pre_option_woocommerce_enable_signup_and_login_from_checkout', '__return_yes' );
+
+// 3. Autogenerar nombre de usuario basado en nombre/email
+add_filter( 'pre_option_woocommerce_registration_generate_username', '__return_yes' );
+
+// 4. Autogenerar contraseña y enviarla por mail
+add_filter( 'pre_option_woocommerce_registration_generate_password', '__return_yes' );
+
