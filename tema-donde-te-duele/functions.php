@@ -12,6 +12,25 @@ function donde_te_duele_scripts() {
 add_action( 'wp_enqueue_scripts', 'donde_te_duele_scripts' );
 
 // Soporte para menú y miniaturas
+// ==============================================================================
+// POLYFILLS DE WOOCOMMERCE PARA EVITAR ERROR CRÍTICO CUANDO ESTÁ DESACTIVADO
+// ==============================================================================
+if ( ! function_exists( 'is_woocommerce_activated' ) ) {
+    function is_woocommerce_activated() {
+        return class_exists( 'WooCommerce' );
+    }
+}
+
+if ( ! is_woocommerce_activated() ) {
+    if ( ! function_exists( 'wc_get_page_permalink' ) ) { function wc_get_page_permalink( $page ) { return home_url(); } }
+    if ( ! function_exists( 'wc_customer_bought_product' ) ) { function wc_customer_bought_product( $email, $id, $pid ) { return false; } }
+    if ( ! function_exists( 'wc_price' ) ) { function wc_price( $price ) { return '$' . $price; } }
+    if ( ! function_exists( 'wc_product_class' ) ) { function wc_product_class( $class = '', $product = null ) { echo 'class="' . esc_attr( is_array($class) ? implode(' ', $class) : $class ) . '"'; } }
+    if ( ! function_exists( 'wc_logout_url' ) ) { function wc_logout_url() { return wp_logout_url( home_url() ); } }
+    if ( ! function_exists( 'wc_get_loop_prop' ) ) { function wc_get_loop_prop( $prop ) { return false; } }
+    if ( ! function_exists( 'wc_get_template_part' ) ) { function wc_get_template_part( $slug, $name = '' ) { return; } }
+}
+
 function donde_te_duele_setup() {
     add_theme_support( 'post-thumbnails' );
     add_theme_support( 'title-tag' );
