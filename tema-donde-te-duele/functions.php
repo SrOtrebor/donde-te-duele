@@ -167,7 +167,7 @@ function dtd_custom_wp_new_user_email( $wp_new_user_notification_email, $user, $
 // ==============================================================================
 // FUNCION AUXILIAR DE VERIFICACIÓN DE ACCESO ROBUSTA
 // ==============================================================================
-function dtd_user_has_access($user_id = null) {
+function dtd_user_has_access($user_id = null, $curso_slug = '') {
     if (!$user_id) {
         $current_user = wp_get_current_user();
         $user_id = $current_user->ID;
@@ -180,32 +180,48 @@ function dtd_user_has_access($user_id = null) {
         return true;
     }
     
-    // 2. Revisar si tiene la nueva meta genérica (independiente del ID del producto)
-    if ( get_user_meta( $user_id, '_dtd_acceso_temporada_1', true ) ) {
-        return true;
-    }
-    
-    // 3. Revisar si tiene la vieja meta hardcodeada al ID 26
-    if ( get_user_meta( $user_id, '_dtd_acceso_manual_26', true ) ) {
-        return true;
-    }
-    
-    // 4. Verificación de WooCommerce (compras reales)
-    $user = get_userdata($user_id);
-    if ($user && function_exists('wc_customer_bought_product')) {
-        // Chequear producto 26 (histórico)
-        if ( wc_customer_bought_product( $user->user_email, $user->ID, 26 ) ) {
-            return true;
-        }
-        // Intentar recuperar el producto actual dinámicamente si cambió de ID
-        $producto_dinamico = get_page_by_path('clinica-online', OBJECT, 'product');
-        if ( $producto_dinamico && $producto_dinamico->ID != 26 ) {
-            if ( wc_customer_bought_product( $user->user_email, $user->ID, $producto_dinamico->ID ) ) {
-                return true;
+    // 2. NUEVA LÓGICA MULTI-CURSO (WooCommerce)
+    if (!empty($curso_slug) && function_exists('wc_customer_bought_product')) {
+        $user = get_userdata($user_id);
+        if ($user) {
+            // Buscar todos los productos que desbloqueen este curso específico
+            $args = array(
+                'post_type'      => 'product',
+                'posts_per_page' => -1,
+                'fields'         => 'ids',
+                'meta_query'     => array(
+                    array(
+                        'key'     => '_dtd_unlocks_curso',
+                        'value'   => $curso_slug,
+                        'compare' => 'LIKE'
+                    )
+                )
+            );
+            $product_ids = get_posts($args);
+            foreach ($product_ids as $pid) {
+                if (wc_customer_bought_product($user->user_email, $user->ID, $pid)) {
+                    return true;
+                }
             }
-            // Por las dudas, revisar si se agregó manualmente con el nuevo ID
-            if ( get_user_meta( $user_id, '_dtd_acceso_manual_' . $producto_dinamico->ID, true ) ) {
-                return true;
+        }
+    }
+    
+    // 3. BACKWARDS COMPATIBILITY (Temporada 1 y compras históricas)
+    // Si no se especifica curso o si se busca específicamente la temporada 1
+    $is_legacy = empty($curso_slug) || $curso_slug === 'temporada-1';
+    
+    if ($is_legacy) {
+        if ( get_user_meta( $user_id, '_dtd_acceso_temporada_1', true ) ) return true;
+        if ( get_user_meta( $user_id, '_dtd_acceso_manual_26', true ) ) return true;
+        
+        $user = get_userdata($user_id);
+        if ($user && function_exists('wc_customer_bought_product')) {
+            if ( wc_customer_bought_product( $user->user_email, $user->ID, 26 ) ) return true;
+            
+            $producto_dinamico = get_page_by_path('clinica-online', OBJECT, 'product');
+            if ( $producto_dinamico && $producto_dinamico->ID != 26 ) {
+                if ( wc_customer_bought_product( $user->user_email, $user->ID, $producto_dinamico->ID ) ) return true;
+                if ( get_user_meta( $user_id, '_dtd_acceso_manual_' . $producto_dinamico->ID, true ) ) return true;
             }
         }
     }
@@ -602,6 +618,22 @@ function dtd_debug_smtp() {
 
     echo "</div>";
     return ob_get_clean();
+}
+add_shortcode('dtd_test_smtp', 'dtd_test_smtp_email');
+
+// ==============================================================================
+// CORRECCIONES DE WOOCOMMERCE: CUPONES Y CORREOS
+// ==============================================================================
+
+// 1. Forzar la activación de cupones en WooCommerce
+update_option('woocommerce_enable_coupons', 'yes');
+
+// 2. Desactivar el correo de "Pedido Procesando" para evitar spam al cliente
+add_action( 'woocommerce_email', 'dtd_unhook_woocommerce_emails' );
+function dtd_unhook_woocommerce_emails( $email_class ) {
+    // Quitar correo de procesando
+    remove_action( 'woocommerce_order_status_pending_to_processing_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );
+    remove_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );
 }
 
 // Fin del archivo

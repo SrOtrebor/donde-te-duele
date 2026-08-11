@@ -34,6 +34,35 @@ function dtd_register_episodio_cpt() {
 }
 add_action( 'init', 'dtd_register_episodio_cpt' );
 
+// Registrar Taxonomía: Cursos (para agrupar episodios por temporada o curso)
+function dtd_register_curso_taxonomy() {
+    $labels = array(
+        'name'              => 'Cursos / Temporadas',
+        'singular_name'     => 'Curso',
+        'search_items'      => 'Buscar Cursos',
+        'all_items'         => 'Todos los Cursos',
+        'parent_item'       => 'Curso Padre',
+        'parent_item_colon' => 'Curso Padre:',
+        'edit_item'         => 'Editar Curso',
+        'update_item'       => 'Actualizar Curso',
+        'add_new_item'      => 'Agregar Nuevo Curso',
+        'new_item_name'     => 'Nuevo Nombre de Curso',
+        'menu_name'         => 'Cursos',
+    );
+
+    $args = array(
+        'hierarchical'      => true, // Como categorías
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'curso' ),
+    );
+
+    register_taxonomy( 'curso', array( 'episodio' ), $args );
+}
+add_action( 'init', 'dtd_register_curso_taxonomy' );
+
 // Agregar Metaboxes para los datos del episodio
 function dtd_add_episodio_metaboxes() {
     add_meta_box(

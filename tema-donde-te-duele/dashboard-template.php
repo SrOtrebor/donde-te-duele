@@ -12,9 +12,6 @@ if ( ! is_user_logged_in() ) {
 get_header(); 
 $current_user = wp_get_current_user();
 
-// Verificamos si el usuario tiene acceso a la Temporada 1
-$has_access = dtd_user_has_access();
-
 // Función helper para renderizar iframes de videos (GDrive, YT, Vimeo)
 function dtd_render_video_iframes($videos_text) {
     if (empty($videos_text)) return;
@@ -423,7 +420,7 @@ function dtd_render_video_iframes($videos_text) {
         
         <!-- Header -->
         <header class="dash-header">
-            <h1 class="dash-title">Clínica Online | Dónde te duele la vida hoy | Temporada 1 - Buenos Aires</h1>
+            <h1 class="dash-title">Clínica Online | Dónde te duele la vida hoy</h1>
             <div style="display:flex; gap:20px; align-items:center;">
                 <div class="dash-search">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -438,180 +435,335 @@ function dtd_render_video_iframes($videos_text) {
             </div>
         </header>
 
-        <?php if ( ! $has_access ) : ?>
-            <div style="background:#fffa64; padding:40px; border:2px solid #3b2017; border-radius:15px; text-align:center;">
-                <h2>Contenido Bloqueado 🔒</h2>
-                <p style="font-size:18px;">Aún no tienes acceso a la Temporada 1. Para ver los episodios, necesitas adquirir el pase.</p>
-                <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" style="display:inline-block; background:var(--dash-accent); color:#fff; padding:15px 30px; text-decoration:none; border-radius:30px; font-weight:bold; margin-top:20px;">Adquirir Temporada 1</a>
-            </div>
-        <?php else: ?>
-
-            <!-- Featured Series -->
-            <div class="dash-section-title">Estas viendo</div>
-            <div class="dash-featured">
-                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/banner-clinica.png" alt="Banner Clínica Online">
-            </div>
-
-            <!-- Episodes Section -->
-            <div class="dash-section-title">Episodios</div>
-            
-            <div class="dash-episodes-wrapper">
-                <button class="dash-nav-btn dash-nav-prev">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-
-                <div class="dash-episodes-grid" id="episodesGrid">
-                    
+        <?php
+        // Obtener todos los Cursos/Temporadas (taxonomía 'curso')
+        $cursos = get_terms( array(
+            'taxonomy'   => 'curso',
+            'hide_empty' => false,
+        ) );
+        
+        // MODO COMPATIBILIDAD (FALLBACK): Si no hay taxonomías creadas, mostramos todo como antes
+        if ( empty($cursos) || is_wp_error($cursos) ) {
+            $has_access = dtd_user_has_access();
+            if ( ! $has_access ) : ?>
+                <div style="background:#fffa64; padding:40px; border:2px solid #3b2017; border-radius:15px; text-align:center;">
+                    <h2>Contenido Bloqueado 🔒</h2>
+                    <p style="font-size:18px;">Aún no tienes acceso a la Temporada 1. Para ver los episodios, necesitas adquirir el pase.</p>
+                    <a href="https://dondeteduele.com/tickets/?postticket=clinica-online" style="display:inline-block; background:var(--dash-accent); color:#fff; padding:15px 30px; text-decoration:none; border-radius:30px; font-weight:bold; margin-top:20px;">Adquirir Temporada 1</a>
+                </div>
+            <?php else: ?>
+                <!-- Featured Series -->
+                <div class="dash-section-title">Estas viendo</div>
+                <div class="dash-featured">
+                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/banner-clinica.png" alt="Banner Clínica Online">
+                </div>
+                <!-- Episodes Section -->
+                <div class="dash-section-title">Episodios</div>
+                
+                <div class="dash-episodes-wrapper">
+                    <button class="dash-nav-btn dash-nav-prev" onclick="this.nextElementSibling.scrollBy({ left: -300, behavior: 'smooth' });">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <div class="dash-episodes-grid" id="episodesGrid">
+                        <?php
+                        $args = array(
+                            'post_type'      => 'episodio',
+                            'posts_per_page' => -1,
+                            'orderby'        => 'menu_order',
+                            'order'          => 'ASC'
+                        );
+                        $query = new WP_Query( $args );
+                        $count = 1;
+                        $images = [
+                            get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/claudio.png',
+                            get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/maxi.png',
+                            get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/mery.png',
+                            get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/cesar.png'
+                        ];
+                        if ( $query->have_posts() ) :
+                            while ( $query->have_posts() ) : $query->the_post();
+                                $post_id = get_the_ID();
+                                $especialista = get_post_meta($post_id, '_dtd_especialista', true);
+                                $img_src = isset($images[$count-1]) ? $images[$count-1] : $images[0];
+                        ?>
+                                <div class="dash-episode-card dash-accordion-title" onclick="toggleSubtopics('<?php echo esc_attr($post_id); ?>')">
+                                    <img src="<?php echo esc_url($img_src); ?>" class="dash-episode-img" alt="Episodio">
+                                    <div class="dash-episode-info">
+                                        <h3 class="dash-episode-title">Episodio <?php echo $count; ?> | <?php echo esc_html(get_the_title()); ?> | <?php echo esc_html($especialista); ?></h3>
+                                        <div class="dash-episode-meta">
+                                            <?php if ($count == 1 || $count == 4) : ?>
+                                                <span style="font-weight:bold; color:var(--dash-accent);">Comenzar a mirar</span>
+                                            <?php else : ?>
+                                                <span style="font-weight:bold; color:var(--dash-accent);">Pronto disponible</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            $count++;
+                            endwhile;
+                        endif;
+                        ?>
+                    </div>
+                    <button class="dash-nav-btn dash-nav-next" onclick="this.previousElementSibling.scrollBy({ left: 300, behavior: 'smooth' });">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+                <!-- Contenedor dinámico de subtemas -->
+                <div id="subtopicsContainer" style="margin-top: 20px;">
                     <?php
-                    // Consultar los episodios
-                    $args = array(
-                        'post_type'      => 'episodio',
-                        'posts_per_page' => -1,
-                        'orderby'        => 'menu_order',
-                        'order'          => 'ASC'
-                    );
-                    $query = new WP_Query( $args );
-                    $count = 1;
-
-                    // Imágenes de reemplazo temporales para que se parezca al diseño
-                    $images = [
-                        get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/claudio.png',
-                        get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/maxi.png',
-                        get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/mery.png',
-                        get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/cesar.png'
-                    ];
-
+                    $query->rewind_posts();
                     if ( $query->have_posts() ) :
                         while ( $query->have_posts() ) : $query->the_post();
                             $post_id = get_the_ID();
-                            $especialista = get_post_meta($post_id, '_dtd_especialista', true);
-                            $img_src = isset($images[$count-1]) ? $images[$count-1] : $images[0];
-                    ?>
-                            
-                            <div class="dash-episode-card dash-accordion-title" onclick="toggleSubtopics('<?php echo esc_attr($post_id); ?>')">
-                                <img src="<?php echo esc_url($img_src); ?>" class="dash-episode-img" alt="Episodio">
-                                <div class="dash-episode-info">
-                                    <h3 class="dash-episode-title">Episodio <?php echo $count; ?> | <?php echo esc_html(get_the_title()); ?> | <?php echo esc_html($especialista); ?></h3>
-                                    <div class="dash-episode-meta">
-                                        <?php if ($count == 1 || $count == 4) : ?>
-                                            <span style="font-weight:bold; color:var(--dash-accent);">Comenzar a mirar</span>
+                            ?>
+                            <div class="dash-subtopics" id="subtopics-<?php echo esc_attr($post_id); ?>">
+                                <ul class="dash-subtopics-list">
+                                    <?php 
+                                    for ($i = 0; $i <= 4; $i++) {
+                                        $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
+                                        if (!empty($b_titulo)) {
+                                            $time_start = str_pad($i*10, 2, "0", STR_PAD_LEFT) . ':00';
+                                            $time_end = str_pad(($i+1)*10, 2, "0", STR_PAD_LEFT) . ':00';
+                                            ?>
+                                            <li class="dash-subtopic-item" onclick="showBlockVideos('<?php echo esc_attr($post_id); ?>', <?php echo $i; ?>)">
+                                                <svg class="dash-subtopic-icon" width="20" height="20" viewBox="0 0 24 24" fill="#000" stroke="none"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="#fff"></polygon></svg>
+                                                <strong><?php echo esc_html($b_titulo); ?></strong> &nbsp;|&nbsp; <?php echo $time_start; ?> - <?php echo $time_end; ?>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                                <div class="dash-subtopic-details" id="details-pane-<?php echo esc_attr($post_id); ?>">
+                                    <?php $video_url = get_post_meta($post_id, '_dtd_video_url', true); ?>
+                                    <div id="details-intro-<?php echo esc_attr($post_id); ?>" class="video-pane" style="display:block;">
+                                        <h3 style="margin-top:0; color:var(--dash-text);">Bienvenido</h3>
+                                        <?php if (!empty($video_url)) : ?>
+                                            <?php dtd_render_video_iframes($video_url); ?>
                                         <?php else : ?>
-                                            <span style="font-weight:bold; color:var(--dash-accent);">Pronto disponible</span>
+                                            <?php 
+                                            $fecha_disp = get_post_meta($post_id, '_dtd_fecha_disponibilidad', true);
+                                            if (!empty($fecha_disp)) {
+                                                echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html($fecha_disp) . '</p>';
+                                            } else {
+                                                echo '<p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque para comenzar a ver el contenido.</p>';
+                                            }
+                                            ?>
                                         <?php endif; ?>
                                     </div>
+                                    <?php
+                                    for ($i = 0; $i <= 4; $i++) {
+                                        $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
+                                        if (!empty($b_titulo)) {
+                                            $b_videos = get_post_meta($post_id, "_dtd_bloque_{$i}_videos", true);
+                                            $b_obj = get_post_meta($post_id, "_dtd_bloque_{$i}_objetivo", true);
+                                            $b_preguntas = get_post_meta($post_id, "_dtd_bloque_{$i}_preguntas", true);
+                                            ?>
+                                            <div id="details-block-<?php echo esc_attr($post_id); ?>-<?php echo $i; ?>" class="video-pane" style="display:none;">
+                                                <h3 style="margin-top:0; color:var(--dash-text);"><?php echo esc_html($b_titulo); ?></h3>
+                                                <?php if (!empty($b_obj)) : ?>
+                                                    <p style="font-size:14px;"><strong>Objetivo:</strong> <?php echo esc_html($b_obj); ?></p>
+                                                <?php endif; ?>
+                                                <?php 
+                                                if (!empty($b_videos)) {
+                                                    if (strpos($b_videos, 'http') === false) {
+                                                        echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html(trim($b_videos)) . '</p>';
+                                                    } else {
+                                                        dtd_render_video_iframes($b_videos); 
+                                                    }
+                                                } else {
+                                                    echo '<p style="color:var(--dash-light-text); font-size:14px;">No hay videos para este bloque.</p>';
+                                                }
+                                                if (!empty($b_preguntas)) : ?>
+                                                    <div style="background:var(--dash-bg); padding:15px; border-radius:10px; margin-top:20px;">
+                                                        <h4 style="margin-top:0;">Preguntas Guía</h4>
+                                                        <p style="font-size:14px; margin-bottom:0; white-space:pre-line;"><?php echo esc_html($b_preguntas); ?></p>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </div>
                             </div>
-
-                    <?php
-                        $count++;
+                            <?php
                         endwhile;
+                        wp_reset_postdata();
                     endif;
                     ?>
-                    
                 </div>
-                
-                <button class="dash-nav-btn dash-nav-next">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
-            </div>
-
-            <!-- Contenedor dinámico de subtemas -->
-            <div id="subtopicsContainer" style="margin-top: 20px;">
-                <?php
-                // Generar los bloques ocultos por cada episodio
-                $query->rewind_posts();
-                if ( $query->have_posts() ) :
-                    while ( $query->have_posts() ) : $query->the_post();
-                        $post_id = get_the_ID();
-                        ?>
-                        <div class="dash-subtopics" id="subtopics-<?php echo esc_attr($post_id); ?>">
-                            <ul class="dash-subtopics-list">
-                                <?php 
-                                for ($i = 0; $i <= 4; $i++) {
-                                    $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
-                                    if (!empty($b_titulo)) {
-                                        // Tiempo simulado para mantener diseño
-                                        $time_start = str_pad($i*10, 2, "0", STR_PAD_LEFT) . ':00';
-                                        $time_end = str_pad(($i+1)*10, 2, "0", STR_PAD_LEFT) . ':00';
-                                        ?>
-                                        <li class="dash-subtopic-item" onclick="showBlockVideos('<?php echo esc_attr($post_id); ?>', <?php echo $i; ?>)">
-                                            <svg class="dash-subtopic-icon" width="20" height="20" viewBox="0 0 24 24" fill="#000" stroke="none"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="#fff"></polygon></svg>
-                                            <strong><?php echo esc_html($b_titulo); ?></strong> &nbsp;|&nbsp; <?php echo $time_start; ?> - <?php echo $time_end; ?>
-                                        </li>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                            </ul>
-                            <div class="dash-subtopic-details" id="details-pane-<?php echo esc_attr($post_id); ?>">
+            <?php endif; // fin if has_access 
+        
+        } else {
+            
+            // =========================================================================
+            // MODO MULTI-CURSO (NUEVA ARQUITECTURA)
+            // =========================================================================
+            foreach ( $cursos as $curso ) {
+                $has_access = dtd_user_has_access(null, $curso->slug);
+                ?>
+                <div class="dash-curso-section" style="margin-bottom: 50px;">
+                    <div class="dash-section-title" style="font-size:24px; color:var(--dash-accent); margin-bottom: 20px; border-bottom: 2px solid var(--dash-border); padding-bottom: 10px;">
+                        <?php echo esc_html($curso->name); ?>
+                    </div>
+                    
+                    <?php if ( ! $has_access ) : ?>
+                        <div style="background:#fffa64; padding:40px; border:2px solid #3b2017; border-radius:15px; text-align:center;">
+                            <h2>Contenido Bloqueado 🔒</h2>
+                            <p style="font-size:18px;">Aún no tienes acceso a <?php echo esc_html($curso->name); ?>. Para ver los episodios, necesitas adquirir el pase.</p>
+                            <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" style="display:inline-block; background:var(--dash-accent); color:#fff; padding:15px 30px; text-decoration:none; border-radius:30px; font-weight:bold; margin-top:20px;">Adquirir <?php echo esc_html($curso->name); ?></a>
+                        </div>
+                    <?php else: ?>
+                        
+                        <!-- Episodes Section -->
+                        <div class="dash-episodes-wrapper">
+                            <button class="dash-nav-btn dash-nav-prev" onclick="this.nextElementSibling.scrollBy({ left: -300, behavior: 'smooth' });">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            </button>
+                            <div class="dash-episodes-grid" id="episodesGrid-<?php echo esc_attr($curso->slug); ?>" style="display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth;">
                                 <?php
-                                $video_url = get_post_meta($post_id, '_dtd_video_url', true);
+                                $args = array(
+                                    'post_type'      => 'episodio',
+                                    'posts_per_page' => -1,
+                                    'orderby'        => 'menu_order',
+                                    'order'          => 'ASC',
+                                    'tax_query'      => array(
+                                        array(
+                                            'taxonomy' => 'curso',
+                                            'field'    => 'slug',
+                                            'terms'    => $curso->slug,
+                                        ),
+                                    ),
+                                );
+                                $query = new WP_Query( $args );
+                                $count = 1;
+                                $images = [
+                                    get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/claudio.png',
+                                    get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/maxi.png',
+                                    get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/mery.png',
+                                    get_template_directory_uri() . '/assets/temporada1/DTDLVH_Elearning_HOME_img/source/cesar.png'
+                                ];
+                                if ( $query->have_posts() ) :
+                                    while ( $query->have_posts() ) : $query->the_post();
+                                        $post_id = get_the_ID();
+                                        $especialista = get_post_meta($post_id, '_dtd_especialista', true);
+                                        $img_src = isset($images[$count-1]) ? $images[$count-1] : $images[0];
                                 ?>
-                                
-                                <div id="details-intro-<?php echo esc_attr($post_id); ?>" class="video-pane" style="display:block;">
-                                    <h3 style="margin-top:0; color:var(--dash-text);">Bienvenido</h3>
-                                    <?php if (!empty($video_url)) : ?>
-                                        <?php dtd_render_video_iframes($video_url); ?>
-                                    <?php else : ?>
-                                        <?php 
-                                        $fecha_disp = get_post_meta($post_id, '_dtd_fecha_disponibilidad', true);
-                                        if (!empty($fecha_disp)) {
-                                            echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html($fecha_disp) . '</p>';
-                                        } else {
-                                            echo '<p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque para comenzar a ver el contenido.</p>';
-                                        }
-                                        ?>
-                                    <?php endif; ?>
-                                </div>
-
-                                <?php
-                                for ($i = 0; $i <= 4; $i++) {
-                                    $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
-                                    if (!empty($b_titulo)) {
-                                        $b_videos = get_post_meta($post_id, "_dtd_bloque_{$i}_videos", true);
-                                        $b_obj = get_post_meta($post_id, "_dtd_bloque_{$i}_objetivo", true);
-                                        $b_preguntas = get_post_meta($post_id, "_dtd_bloque_{$i}_preguntas", true);
-                                        ?>
-                                        <div id="details-block-<?php echo esc_attr($post_id); ?>-<?php echo $i; ?>" class="video-pane" style="display:none;">
-                                            <h3 style="margin-top:0; color:var(--dash-text);"><?php echo esc_html($b_titulo); ?></h3>
-                                            <?php if (!empty($b_obj)) : ?>
-                                                <p style="font-size:14px;"><strong>Objetivo:</strong> <?php echo esc_html($b_obj); ?></p>
-                                            <?php endif; ?>
-                                            
-                                            <?php 
-                                            if (!empty($b_videos)) {
-                                                if (strpos($b_videos, 'http') === false) {
-                                                    // No hay enlaces, tratar como texto de disponibilidad
-                                                    echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html(trim($b_videos)) . '</p>';
-                                                } else {
-                                                    dtd_render_video_iframes($b_videos); 
-                                                }
-                                            } else {
-                                                echo '<p style="color:var(--dash-light-text); font-size:14px;">No hay videos para este bloque.</p>';
-                                            }
-                                            
-                                            if (!empty($b_preguntas)) : ?>
-                                                <div style="background:var(--dash-bg); padding:15px; border-radius:10px; margin-top:20px;">
-                                                    <h4 style="margin-top:0;">Preguntas Guía</h4>
-                                                    <p style="font-size:14px; margin-bottom:0; white-space:pre-line;"><?php echo esc_html($b_preguntas); ?></p>
+                                        <div class="dash-episode-card dash-accordion-title" onclick="toggleSubtopics('<?php echo esc_attr($post_id); ?>')">
+                                            <img src="<?php echo esc_url($img_src); ?>" class="dash-episode-img" alt="Episodio">
+                                            <div class="dash-episode-info">
+                                                <h3 class="dash-episode-title">Episodio <?php echo $count; ?> | <?php echo esc_html(get_the_title()); ?> | <?php echo esc_html($especialista); ?></h3>
+                                                <div class="dash-episode-meta">
+                                                    <span style="font-weight:bold; color:var(--dash-accent);">Comenzar a mirar</span>
                                                 </div>
-                                            <?php endif; ?>
+                                            </div>
                                         </div>
-                                        <?php
-                                    }
-                                }
+                                <?php
+                                    $count++;
+                                    endwhile;
+                                else:
+                                    echo '<p style="padding: 20px; color: var(--dash-light-text);">No hay episodios en este curso aún.</p>';
+                                endif;
                                 ?>
                             </div>
+                            <button class="dash-nav-btn dash-nav-next" onclick="this.previousElementSibling.scrollBy({ left: 300, behavior: 'smooth' });">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
                         </div>
-                        <?php
-                    endwhile;
-                    wp_reset_postdata();
-                endif;
-                ?>
-            </div>
-            
-        <?php endif; // fin if has_access ?>
+                        <!-- Contenedor dinámico de subtemas -->
+                        <div id="subtopicsContainer-<?php echo esc_attr($curso->slug); ?>" style="margin-top: 20px;">
+                            <?php
+                            $query->rewind_posts();
+                            if ( $query->have_posts() ) :
+                                while ( $query->have_posts() ) : $query->the_post();
+                                    $post_id = get_the_ID();
+                                    ?>
+                                    <div class="dash-subtopics" id="subtopics-<?php echo esc_attr($post_id); ?>">
+                                        <ul class="dash-subtopics-list">
+                                            <?php 
+                                            for ($i = 0; $i <= 4; $i++) {
+                                                $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
+                                                if (!empty($b_titulo)) {
+                                                    $time_start = str_pad($i*10, 2, "0", STR_PAD_LEFT) . ':00';
+                                                    $time_end = str_pad(($i+1)*10, 2, "0", STR_PAD_LEFT) . ':00';
+                                                    ?>
+                                                    <li class="dash-subtopic-item" onclick="showBlockVideos('<?php echo esc_attr($post_id); ?>', <?php echo $i; ?>)">
+                                                        <svg class="dash-subtopic-icon" width="20" height="20" viewBox="0 0 24 24" fill="#000" stroke="none"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="#fff"></polygon></svg>
+                                                        <strong><?php echo esc_html($b_titulo); ?></strong> &nbsp;|&nbsp; <?php echo $time_start; ?> - <?php echo $time_end; ?>
+                                                    </li>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </ul>
+                                        <div class="dash-subtopic-details" id="details-pane-<?php echo esc_attr($post_id); ?>">
+                                            <?php $video_url = get_post_meta($post_id, '_dtd_video_url', true); ?>
+                                            <div id="details-intro-<?php echo esc_attr($post_id); ?>" class="video-pane" style="display:block;">
+                                                <h3 style="margin-top:0; color:var(--dash-text);">Bienvenido</h3>
+                                                <?php if (!empty($video_url)) : ?>
+                                                    <?php dtd_render_video_iframes($video_url); ?>
+                                                <?php else : ?>
+                                                    <?php 
+                                                    $fecha_disp = get_post_meta($post_id, '_dtd_fecha_disponibilidad', true);
+                                                    if (!empty($fecha_disp)) {
+                                                        echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html($fecha_disp) . '</p>';
+                                                    } else {
+                                                        echo '<p style="color:var(--dash-light-text); font-size:14px;">Selecciona un bloque para comenzar a ver el contenido.</p>';
+                                                    }
+                                                    ?>
+                                                <?php endif; ?>
+                                            </div>
 
+                                            <?php
+                                            for ($i = 0; $i <= 4; $i++) {
+                                                $b_titulo = get_post_meta($post_id, "_dtd_bloque_{$i}_titulo", true);
+                                                if (!empty($b_titulo)) {
+                                                    $b_videos = get_post_meta($post_id, "_dtd_bloque_{$i}_videos", true);
+                                                    $b_obj = get_post_meta($post_id, "_dtd_bloque_{$i}_objetivo", true);
+                                                    $b_preguntas = get_post_meta($post_id, "_dtd_bloque_{$i}_preguntas", true);
+                                                    ?>
+                                                    <div id="details-block-<?php echo esc_attr($post_id); ?>-<?php echo $i; ?>" class="video-pane" style="display:none;">
+                                                        <h3 style="margin-top:0; color:var(--dash-text);"><?php echo esc_html($b_titulo); ?></h3>
+                                                        <?php if (!empty($b_obj)) : ?>
+                                                            <p style="font-size:14px;"><strong>Objetivo:</strong> <?php echo esc_html($b_obj); ?></p>
+                                                        <?php endif; ?>
+                                                        <?php 
+                                                        if (!empty($b_videos)) {
+                                                            if (strpos($b_videos, 'http') === false) {
+                                                                echo '<p style="color:var(--dash-accent); font-size:16px; font-weight:bold;">' . esc_html(trim($b_videos)) . '</p>';
+                                                            } else {
+                                                                dtd_render_video_iframes($b_videos); 
+                                                            }
+                                                        } else {
+                                                            echo '<p style="color:var(--dash-light-text); font-size:14px;">No hay videos para este bloque.</p>';
+                                                        }
+                                                        if (!empty($b_preguntas)) : ?>
+                                                            <div style="background:var(--dash-bg); padding:15px; border-radius:10px; margin-top:20px;">
+                                                                <h4 style="margin-top:0;">Preguntas Guía</h4>
+                                                                <p style="font-size:14px; margin-bottom:0; white-space:pre-line;"><?php echo esc_html($b_preguntas); ?></p>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <?php
+                                endwhile;
+                                wp_reset_postdata();
+                            endif;
+                            ?>
+                        </div>
+                    <?php endif; // fin if has_access ?>
+                </div>
+                <?php
+            } // fin foreach cursos
+        } // fin if-else modo
+        ?>
     </main>
 </div>
 
@@ -733,22 +885,6 @@ function dtd_render_video_iframes($videos_text) {
         }
     }
 
-    // Scroll de la grilla
-    const grid = document.getElementById('episodesGrid');
-    const btnNext = document.querySelector('.dash-nav-next');
-    const btnPrev = document.querySelector('.dash-nav-prev');
-
-    if (btnNext && grid) {
-        btnNext.addEventListener('click', () => {
-            grid.scrollBy({ left: 300, behavior: 'smooth' });
-        });
-    }
-    if (btnPrev && grid) {
-        btnPrev.addEventListener('click', () => {
-            grid.scrollBy({ left: -300, behavior: 'smooth' });
-        });
-    }
-    
     // Auto-load last watched video on init
     document.addEventListener("DOMContentLoaded", function() {
         <?php
