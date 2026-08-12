@@ -8,23 +8,26 @@
 ## 🚀 Hitos Alcanzados
 1. **Página de Inicio (Front Page):**
    - Header, Footer y Hero con SVG dinámicos integrados y alineados a Figma.
-2. **Infraestructura de Aulas (Backend):**
+2. **Infraestructura de Aulas (Backend) y MULTI-CURSOS:**
    - Creación del Custom Post Type (CPT) **Episodios**.
-   - Cajas personalizadas (Metaboxes) para cada episodio: Especialista, Video de Introducción, y hasta 5 Bloques de Contenido.
-   - **Soporte Multivideo:** Cada bloque permite uno o varios videos de Google Drive, YouTube o Vimeo (pegando un enlace por línea).
+   - **NUEVO:** Creación de Taxonomía **"Cursos"** (ej: Temporada 1, Temporada 2).
+   - Cajas personalizadas (Metaboxes) para cada episodio: Especialista, Video de Introducción, y hasta 5 Bloques de Contenido (soporte multivideo).
 3. **Dashboard de Usuario (Frontend):**
-   - Plantilla `dashboard-template.php` terminada.
-   - Diseño moderno con barra lateral de navegación interactiva y perfil de usuario.
-   - Grilla de episodios dinámica (desplazamiento horizontal).
-   - Lógica de JavaScript que permite navegar entre bloques y cargar los reproductores de video instantáneamente sin recargar la página.
-   - Ajustes responsivos: Breakpoint subido a 1200px para priorizar el video a pantalla completa en modo horizontal, con un hack específico para forzar la UI de escritorio de GDrive/Vimeo en celulares verticales.
-4. **Comercio Electrónico y UX General:**
-   - Se aplicó estilado a medida para la página de **Tienda (Shop)** de WooCommerce.
-   - Botón de Login relocalizado de forma estratégica en el Hero de la portada y debajo del CTA principal de la Temporada 1, con un diseño sutil y dinámico.
+   - Plantilla `dashboard-template.php` terminada y dinámica.
+   - Si el usuario tiene varios cursos habilitados, aparecen sus miniaturas correspondientes ("Temporada 1", "Temporada 2").
+   - Si no los tiene pagados, se muestran como **"Contenido Bloqueado 🔒"** con un botón que enlaza a la tienda para comprarlo.
+4. **Comercio Electrónico, Accesos y UX:**
+   - **Lógica de Accesos (`dtd_user_has_access`):** Al comprar un producto en WooCommerce con el custom field `_dtd_unlocks_curso` (ej. valor: `temporada-1`), el usuario desbloquea ese curso automáticamente.
+   - **Compatibilidad hacia atrás (Backward Compatibility):** Los alumnos antiguos que fueron dados de alta a mano (tienen la meta `_dtd_acceso_temporada_1`) o compraron el producto original (ID 26), siguen teniendo acceso a la Temporada 1 automáticamente.
+   - **Cupones:** Se activó por código el soporte de cupones nativo de WooCommerce en el Carrito.
+   - **Correos:** Se desactivaron por código y panel los correos nativos redundantes de WooCommerce ("Pedido Procesando" y "Pedido Completado"), dejando solo el correo personalizado de Bienvenida y el de Mercado Pago.
 
-## 🚧 Bloqueantes Actuales / Próximos Pasos
-- **Página "Mi Cuenta" de WooCommerce:** Aún pendiente de diseño. El usuario solicitó rediseñar esta página para que no se vea como el panel por defecto de WooCommerce, sino alineada al resto del sitio.
-- **Flujo de Compra:** Validar la experiencia del usuario desde el Checkout hasta la redirección al Aula Virtual (Dashboard).
+## 🚧 Próximos Pasos (Flujo de nuevas temporadas)
+- **Para vender una nueva temporada:** 
+  1. Crear la categoría/curso en "Cursos" (ej: `temporada-2`).
+  2. Subir los episodios y marcarlos con esa categoría.
+  3. Crear un producto en WooCommerce y añadirle un Campo Personalizado: Nombre `_dtd_unlocks_curso`, Valor `temporada-2`.
+  4. (Opcional) Crear una Landing Page como `/temporada-2/` con botones directos hacia la página de pago (Checkout) del producto nuevo.
 
 ---
 > **Notas de Integración de Video:**
