@@ -698,4 +698,7 @@ function dtd_force_checkout_translation_js() {
     }
 }
 
+// 7. Quitar el campo de "Información Adicional" (Notas del pedido) en Checkout
+add_filter( 'woocommerce_enable_order_notes_field', '__return_false', 9999 );
+
 // Fin del archivo
