@@ -696,48 +696,52 @@ body.woocommerce-account .woocommerce-MyAccount-content mark {
 }
 
 /* === WOOCOMMERCE SINGLE PRODUCT FIXES === */
-.woocommerce.single-product .product {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    align-items: flex-start;
-    justify-content: space-between;
+body.woocommerce.single-product div.product {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 40px !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    width: 100% !important;
 }
 
-.woocommerce.single-product .product .woocommerce-product-gallery {
+body.woocommerce.single-product div.product div.images,
+body.woocommerce.single-product div.product div.woocommerce-product-gallery {
     width: 100% !important;
     max-width: 48% !important;
     float: none !important;
     margin: 0 !important;
 }
 
-.woocommerce.single-product .product .summary {
+body.woocommerce.single-product div.product div.summary {
     width: 100% !important;
     max-width: 48% !important;
     float: none !important;
     margin: 0 !important;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    border: 2px solid var(--border-color);
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+    background-color: #fff !important;
+    padding: 30px !important;
+    border-radius: 12px !important;
+    border: 2px solid var(--border-color) !important;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.05) !important;
 }
 
-.woocommerce.single-product .woocommerce-tabs {
-    width: 100%;
-    margin-top: 50px;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    border: 2px solid var(--border-color);
+body.woocommerce.single-product div.product .woocommerce-tabs {
+    width: 100% !important;
+    margin-top: 50px !important;
+    background-color: #fff !important;
+    padding: 30px !important;
+    border-radius: 12px !important;
+    border: 2px solid var(--border-color) !important;
+    clear: both !important;
 }
 
 @media (max-width: 768px) {
-    .woocommerce.single-product .product {
-        flex-direction: column;
+    body.woocommerce.single-product div.product {
+        flex-direction: column !important;
     }
-    .woocommerce.single-product .product .woocommerce-product-gallery,
-    .woocommerce.single-product .product .summary {
+    body.woocommerce.single-product div.product div.images,
+    body.woocommerce.single-product div.product div.woocommerce-product-gallery,
+    body.woocommerce.single-product div.product div.summary {
         max-width: 100% !important;
     }
 }
