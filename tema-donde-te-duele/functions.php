@@ -639,4 +639,20 @@ function dtd_unhook_woocommerce_emails( $email_class ) {
 // 3. Desactivar el sidebar de WooCommerce en la página de producto individual
 remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
 
+// 4. Quitar el método de pago en Efectivo (Ticket - Pago Fácil / Rapipago) de Mercado Pago
+add_filter( 'woocommerce_available_payment_gateways', 'dtd_remove_cash_payment_methods' );
+function dtd_remove_cash_payment_methods( $available_gateways ) {
+    $gateways_to_remove = array(
+        'woo-mercado-pago-ticket',
+        'woo-mercado-pago-custom-ticket',
+        'mercadopago_ticket'
+    );
+    foreach ( $gateways_to_remove as $gateway ) {
+        if ( isset( $available_gateways[ $gateway ] ) ) {
+            unset( $available_gateways[ $gateway ] );
+        }
+    }
+    return $available_gateways;
+}
+
 // Fin del archivo
