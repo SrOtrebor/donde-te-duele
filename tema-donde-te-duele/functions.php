@@ -666,4 +666,36 @@ function dtd_registration_privacy_policy_text( $text ) {
     return 'Tus datos personales se utilizarán para respaldar tu experiencia en este sitio web, para administrar el acceso a tu cuenta y para otros fines descritos en nuestra [privacy_policy].';
 }
 
+// 6. Forzar traducción en caso de usar WooCommerce Blocks (JS Fallback)
+add_action( 'wp_footer', 'dtd_force_checkout_translation_js', 99 );
+function dtd_force_checkout_translation_js() {
+    if ( is_checkout() || is_account_page() ) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function replaceText() {
+                var elements = document.querySelectorAll('p, span, div');
+                elements.forEach(function(el) {
+                    if (el.childNodes.length > 0) {
+                        el.childNodes.forEach(function(node) {
+                            if (node.nodeType === 3 && node.nodeValue.includes('Your personal data will be used')) {
+                                node.nodeValue = node.nodeValue.replace(
+                                    'Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our',
+                                    'Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web y para otros propósitos descritos en nuestra'
+                                );
+                            }
+                        });
+                    }
+                });
+            }
+            // Ejecutar inmediatamente y luego de un segundo por si carga asíncrono
+            replaceText();
+            setTimeout(replaceText, 1000);
+            setTimeout(replaceText, 2500);
+        });
+        </script>
+        <?php
+    }
+}
+
 // Fin del archivo
