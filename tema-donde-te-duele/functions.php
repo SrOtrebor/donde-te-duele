@@ -636,4 +636,7 @@ function dtd_unhook_woocommerce_emails( $email_class ) {
     remove_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );
 }
 
+// 3. Desactivar el sidebar de WooCommerce en la página de producto individual
+remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+
 // Fin del archivo
