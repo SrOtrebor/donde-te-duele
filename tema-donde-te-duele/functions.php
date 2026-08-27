@@ -655,4 +655,15 @@ function dtd_remove_cash_payment_methods( $available_gateways ) {
     return $available_gateways;
 }
 
+// 5. Traducir textos de privacidad al español
+add_filter( 'woocommerce_checkout_privacy_policy_text', 'dtd_checkout_privacy_policy_text' );
+function dtd_checkout_privacy_policy_text( $text ) {
+    return 'Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web y para otros propósitos descritos en nuestra [privacy_policy].';
+}
+
+add_filter( 'woocommerce_registration_privacy_policy_text', 'dtd_registration_privacy_policy_text' );
+function dtd_registration_privacy_policy_text( $text ) {
+    return 'Tus datos personales se utilizarán para respaldar tu experiencia en este sitio web, para administrar el acceso a tu cuenta y para otros fines descritos en nuestra [privacy_policy].';
+}
+
 // Fin del archivo
