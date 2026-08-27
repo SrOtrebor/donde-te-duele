@@ -38,6 +38,16 @@ Nos encontramos actualmente completando la **Fase 2 (Front-End Landing)** e inic
     *   Se inyectó en `functions.php` el soporte oficial para **WooCommerce** y **Tutor LMS**.
     *   Se agregó CSS base en `style.css` para que los botones y recuadros de WooCommerce hereden la estética de la marca (bordes redondeados, sombra dura, colores verde/crema).
 
+6.  **Personalización y Fixes de WooCommerce (Checkout, Producto y Correos):**
+    *   **Página de Producto Individual:** Se eliminó la barra lateral (sidebar) nativa de WooCommerce y se ajustó el CSS para forzar un diseño a dos columnas a pantalla completa y responsive, anulando los estilos por defecto de WooCommerce.
+    *   **Página de Checkout:** 
+        *   Se ocultó la opción de pago en "Efectivo/Ticket" de Mercado Pago.
+        *   Se eliminó la sección de "Información Adicional" (notas del pedido) y se ajustaron los márgenes del título "TU PEDIDO" para un diseño más limpio.
+        *   Se implementó un script JS de respaldo en `functions.php` para asegurar que el texto de privacidad se traduzca al español, sorteando posibles problemas de caché o con WooCommerce Blocks.
+    *   **Flujo de Usuario (Correos y Contraseña):**
+        *   Se modificó la plantilla de correo `customer-new-account.php` para cambiar el texto y asegurar que el botón principal redirija al usuario a crear su contraseña por primera vez, en lugar de ir al login sin credenciales.
+        *   Se arregló el diseño flexbox de la pantalla de "Restablecer / Crear Contraseña" (`.woocommerce-ResetPassword`) en `style.css` para que los campos queden bien alineados y legibles.
+
 ## 🚀 Próximos Pasos (Lo que falta hacer)
 
 1.  **Diseño de la Pasarela de Pago (Checkout):**
