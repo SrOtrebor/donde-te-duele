@@ -750,3 +750,35 @@ body.woocommerce.single-product div.product .woocommerce-tabs {
         max-width: 100% !important;
     }
 }
+
+/* === WOOCOMMERCE RESET PASSWORD FIX === */
+.woocommerce form.woocommerce-ResetPassword,
+.woocommerce-form-lost_reset_password {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.woocommerce form.woocommerce-ResetPassword p,
+.woocommerce-form-lost_reset_password p {
+    width: 100% !important;
+    float: none !important;
+    margin: 0 !important;
+}
+
+.woocommerce form.woocommerce-ResetPassword input[type="password"],
+.woocommerce-form-lost_reset_password input[type="password"] {
+    width: 100% !important;
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.woocommerce form.woocommerce-ResetPassword button,
+.woocommerce-form-lost_reset_password button {
+    align-self: flex-start;
+    margin-top: 10px;
+}
