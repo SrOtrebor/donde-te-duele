@@ -33,6 +33,7 @@ add_filter( 'stylesheet_directory_uri', 'wp_make_link_relative' );
 require_once get_template_directory() . '/inc/episodios-cpt.php';
 require_once get_template_directory() . '/inc/import-episodios.php';
 require_once get_template_directory() . '/inc/alta-alumnos.php';
+require_once get_template_directory() . '/inc/editor-paginas.php';
 
 // ==============================================================================
 // CUSTOMIZER (OPCIONES DEL TEMA)
